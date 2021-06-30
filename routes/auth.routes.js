@@ -14,7 +14,6 @@ router.post('/register',
 ],
  async (request,response)=>{
     try {
-        console.log('Body:', request.body);
         const errors=validationResult(request);
         if (!errors.isEmpty()) {
             return response.status(400).json({
@@ -22,7 +21,8 @@ router.post('/register',
                 message:'Invalid registration data'
             });
         }
-        const {email,password}=request.body;
+
+        const {email,password,name}=request.body;
         const candidate=await User.findOne({email});
         if (candidate) {
             response.status(400).json({
@@ -30,15 +30,13 @@ router.post('/register',
             });
         }
         const hashedPassword=await bcrypt.hash(password,12);
-        const user=new User({email,password:hashedPassword});
+        const user=new User({email,password:hashedPassword,name:name||"E-traveler"});
 
         await user.save();
 
         response.status(201).json({
             message:'User has been planted'
         });
-
-
 
     } catch (e) {
         response.status(500).json({message:'Something went wrong. Try again later'});
@@ -79,8 +77,7 @@ async (request,response)=>{
             config.get('jwtKey'),
             {expiresIn:'1h'}
         )
-
-        response.json({token,userId:user.id});
+        response.json({token,userId:user.id,userName:user.name});
 
     } catch (e) {
         response.status(500).json({message:'Something went wrong. Try again later'});

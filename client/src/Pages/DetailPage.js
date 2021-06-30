@@ -20,7 +20,6 @@ const  DetailPage = () => {
             {
                 Authorization: `Bearer ${token}`
             });
-            console.log(fetched)
             setLink(fetched);
         } catch (e) {
             console.log(e);

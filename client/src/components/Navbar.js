@@ -14,8 +14,10 @@ export const Navbar = () => {
     return (
         <nav>
             <div className='nav-wrapper blue darken-1' style={{padding:'0 2rem'}}>
-                <span className='brand-logo'>Url shortener</span>
+                <span className='brand-logo'>pwnzforever/{auth.userName}</span>
                 <ul id='nav-mobile' className='right hide-on-med-and-down'>
+                    <li><NavLink to='/home'>Home</NavLink></li>
+                    <li><NavLink to='/games'>Games</NavLink></li>
                     <li><NavLink to='/create'>Create</NavLink></li>
                     <li><NavLink to='/links'>Links</NavLink></li>
                     <li><a href='/' onClick={logoutHandler}>Logout</a></li>
