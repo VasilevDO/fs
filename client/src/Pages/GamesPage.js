@@ -53,11 +53,13 @@ const HomePage=()=> {
             <PwnzCard
              cardTitle="Tictactoe"
              cardDescription="Just a classic tictactoe game"
+             buttonHandler={this.handleGamePick}
              buttonText="Play"></PwnzCard>
                 <button onClick={handleGamePick}>Play tictactoe</button>
             <PwnzCard
              cardTitle="Sudoku"
              cardDescription="Fresh sudoku game never dissapoints"
+             buttonHandler={this.handleGamePick}
              buttonText="Play"></PwnzCard>
                 <button onClick={handleGamePick}>Play sudoku</button>
         </div>
