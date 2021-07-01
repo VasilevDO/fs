@@ -9,7 +9,8 @@ class Sudoku extends Component {
       solvedBoard: this.initializeBoard(),
       startingBoard: null,
       alert: null,
-      solutionVisible: false
+      solutionVisible: false,
+      wrongCellsVisible: false
     };
   }
 
@@ -136,9 +137,9 @@ class Sudoku extends Component {
   deleteRandomCell = (matrix) => {
     let x = this.random(0, 8);
     let y = this.random(0, 8);
-    let savedCell = matrix[x][y];
-    matrix[x][y] = null;
-    return [matrix, x, y, savedCell];
+    let savedCell = matrix[y][x];
+    matrix[y][x] = null;
+    return [matrix, y, x, savedCell];
   };
 
   solve = (board) => {
@@ -301,7 +302,7 @@ class Sudoku extends Component {
     let board = this.copyMatrix(this.state.board);
     let row = e.target.getAttribute("a-key").split(",")[0];
     let col = e.target.getAttribute("a-key").split(",")[1];
-    board[row][col] = +e.target.value;
+    board[row][col] = +e.target.value.match(/\d*/g)[0];
     this.setState({
       board: board
     });
@@ -360,6 +361,12 @@ class Sudoku extends Component {
     });
   };
 
+  toggleWrongCells = () => {
+    this.setState({
+      wrongCellsVisible: !this.state.wrongCellsVisible
+    });
+  };
+
   createNewPuzzle = () => {
     this.setState({
       board: this.basicBoard,
@@ -368,6 +375,14 @@ class Sudoku extends Component {
       alert: null,
       solutionVisible: false
     });
+  };
+
+  createBoardDiv = (y, x, board) => {
+    return [
+      [board[y][x], board[y][x + 1], board[y][x + 2]],
+      [board[y + 1][x], board[y + 1][x + 1], board[y + 1][x + 2]],
+      [board[y + 2][x], board[y + 2][x + 1], board[y + 2][x + 2]]
+    ];
   };
 
   render() {
@@ -379,30 +394,37 @@ class Sudoku extends Component {
     const board = this.state.solutionVisible
       ? this.state.solvedBoard
       : this.state.board;
-    let disabled;
+    let disabled, cellY, cellX, cellStyle;
     const alert = this.state.alert;
-    const tableStyle = {
-      border: alert
-        ? alert === "done"
-          ? "5px solid green"
-          : "5px solid red"
-        : null
+    const sudokuBoardStyle = {
+      "background-color": alert ? (alert === "done" ? "green" : "red") : null
     };
     const toggleSolutionButtonText = this.state.solutionVisible
       ? "Hide solution"
       : "Show solution";
+    const toggleWrongCells = this.state.wrongCellsVisible
+      ? "Hide wrong cells"
+      : "Show wrong cells";
 
-    return (
-      <>
-        <div className="sudoku">
-          <div className="sudoku-buttons">
-            <button onClick={this.checkSolution}>Check solution</button>
-            <button onClick={this.toggleSolution}>
-              {toggleSolutionButtonText}
-            </button>
-            <button onClick={this.createNewPuzzle}>Set new puzzle</button>
-          </div>
-          <table style={tableStyle}>
+    const boardDivs = [
+      [
+        this.createBoardDiv(0, 0, board),
+        this.createBoardDiv(0, 3, board),
+        this.createBoardDiv(0, 6, board)
+      ],
+      [
+        this.createBoardDiv(3, 0, board),
+        this.createBoardDiv(3, 3, board),
+        this.createBoardDiv(3, 6, board)
+      ],
+      [
+        this.createBoardDiv(6, 0, board),
+        this.createBoardDiv(6, 3, board),
+        this.createBoardDiv(6, 6, board)
+      ]
+    ];
+
+    /** <table style={tableStyle}>
             <tbody>
               {board.map((row, rowIndex) => {
                 return (
@@ -429,7 +451,63 @@ class Sudoku extends Component {
                 );
               })}
             </tbody>
-          </table>
+          </table> */
+
+    return (
+      <>
+        <div className="sudoku">
+          <div className="sudoku-buttons" style={sudokuBoardStyle}>
+            <button onClick={this.checkSolution}>Check solution</button>
+            <button onClick={this.toggleSolution}>
+              {toggleSolutionButtonText}
+            </button>
+            <button onClick={this.toggleWrongCells}>{toggleWrongCells}</button>
+            <button onClick={this.createNewPuzzle}>Set new puzzle</button>
+          </div>
+          <div className="sudoku-board">
+            {boardDivs.map((squaresRow, squaresRowIndex) => {
+              return (
+                <div className="sudoku-board-squares-row">
+                  {squaresRow.map((square, squareIndex) => {
+                    return (
+                      <div className="sudoku-board-squares-row-square">
+                        {square.map((squareRow, squareRowIndex) => {
+                          return (
+                            <div className="sudoku-board-squares-row-square-row">
+                              {squareRow.map((cell, cellIndex) => {
+                                cellY = squaresRowIndex * 3 + squareRowIndex;
+                                cellX = squareIndex * 3 + cellIndex;
+                                disabled =
+                                  cell && cell === startingBoard[cellY][cellX];
+
+                                cellStyle = this.state.wrongCellsVisible
+                                  ? cell ===
+                                    this.state.solvedBoard[cellY][cellX]
+                                    ? null
+                                    : { color: "red" }
+                                  : null;
+                                return (
+                                  <div className="sudoku-cell">
+                                    <input
+                                      a-key={[cellY, cellX]}
+                                      value={cell ? cell : ""}
+                                      onChange={this.handleCellChange}
+                                      disabled={disabled}
+                                      style={cellStyle}
+                                    ></input>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </>
     );

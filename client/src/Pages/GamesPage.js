@@ -6,16 +6,15 @@ import Tictactoe from '../components/Tictactoe';
 import Sudoku from '../components/Sudoku';
 import PwnzCard from '../components/PwnzCard';
 import './GamesPage.css'
+import TictactoeLogo from '../assets/tictactoe/tictactoeLogo.jpg'
+import SudokuLogo from '../assets/sudoku/SudokuLogo.jpg'
 
 const HomePage=()=> {
     const {loading,request}=useHttp();
     const {token,userName}=useContext(AuthContext);
     const [game,setGame]=useState(null);
 
-    const handleGamePick=(e)=> {
-        console.log(e.target.innerText);
-        let gameName=e.target.innerText.split(' ')[1];
-        gameName=gameName.slice(0,1).toUpperCase()+gameName.slice(1);
+    const handleGamePick=(gameName)=> {
         setGame(gameName);
     }
 
@@ -48,20 +47,21 @@ const HomePage=()=> {
            
             null:
             <>
-        <h1>Games list:</h1>
+        <h1>Games avaible:</h1>
         <div className='games-container'>
             <PwnzCard
              cardTitle="Tictactoe"
              cardDescription="Just a classic tictactoe game"
-             buttonHandler={this.handleGamePick}
+             buttonHandler={handleGamePick}
+             logo={TictactoeLogo}
              buttonText="Play"></PwnzCard>
-                <button onClick={handleGamePick}>Play tictactoe</button>
+             
             <PwnzCard
              cardTitle="Sudoku"
              cardDescription="Fresh sudoku game never dissapoints"
-             buttonHandler={this.handleGamePick}
+             buttonHandler={handleGamePick}
+             logo={SudokuLogo}
              buttonText="Play"></PwnzCard>
-                <button onClick={handleGamePick}>Play sudoku</button>
         </div>
         </>
         } 
@@ -69,8 +69,11 @@ const HomePage=()=> {
              {game==='Tictactoe'?
              <>
              <button onClick={cancelGamePick}>Back</button>
+             <div className='games-game'>
+             
              
              <Tictactoe></Tictactoe>
+             </div>
              </>
              :null}
 
@@ -79,8 +82,11 @@ const HomePage=()=> {
             {game==='Sudoku'?
             <>
             <button onClick={cancelGamePick}>Back</button>
+            <div className='games-game'>
+            
 
             <Sudoku></Sudoku>
+            </div>
             </>
             :null}
                     </>

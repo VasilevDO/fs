@@ -5,11 +5,19 @@ import pwnzCardLogo from "../assets/CardLogo.jpg";
 class PwnzCard extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      title:this.props.cardTitle||'Card title'
+    };
   }
+
+handleButtonClick=()=> {
+  const title=this.state.title;
+this.props.buttonHandler(title);
+}
+
   render() {
     const pwnzCardWidth = this.props.cardWidth || "";
-    const pwnzCardTitle = this.props.cardTitle || "Card title";
+    const pwnzCardTitle = this.state.title;
     const pwnzCardDescription =
       this.props.cardDescription || "Card description";
     const pwnzCardLogoWidth = this.props.logoWidth || "150px";
@@ -25,7 +33,7 @@ class PwnzCard extends Component {
           <div className="pwnz-card-description">
             <p> {pwnzCardDescription} </p>
           </div>
-          <button className="pwnz-card-button">{pwnzCardButtonText}</button>
+          <button className="pwnz-card-button" onClick={this.handleButtonClick}>{pwnzCardButtonText}</button>
         </div>
       </>
     );

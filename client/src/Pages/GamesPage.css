@@ -1,3 +1,15 @@
 .games-container {
     display:flex;
+    
+}
+
+.games-container > div {
+    margin:20px;
+
+}
+
+.games-game {
+    display:flex;
+    justify-content: center;
+    margin:auto;
 }

@@ -37,9 +37,7 @@
   }
   
   .game {
-    height: -moz-calc(100vh - 50px);
-    height: -webkit-calc(100vh - 50px);
-    height: calc(100vh - 50px);
+
     display: flex;
     align-items:center;
     justify-content:center;
