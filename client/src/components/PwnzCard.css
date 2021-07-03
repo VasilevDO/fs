@@ -4,6 +4,7 @@
     flex-direction: column;
     align-items: center;
     border: 1px solid black;
+    padding:10px;
   }
   
   .pwnz-card-body p {
@@ -11,13 +12,12 @@
     padding: 0;
     word-wrap: break-word;
     text-align: center;
-    word-break: break-all;
     white-space: normal;
   }
   
   .pwnz-card-title {
     font-size: 24px;
-    margin: 5px;
+    margin: 0 5px 5px 5px;
   }
   
   .pwnz-card-description {
@@ -26,7 +26,6 @@
   }
   
   .pwnz-card-button {
-    margin-bottom: 5px;
-    cursor: pointer;
+    width:100%;
   }
   

@@ -1,5 +1,6 @@
-import React, { Component,createContext} from 'react';
+import React, {Component} from 'react';
 import './AuthForm.css';
+
 
 class AuthForm extends Component {
     constructor (props) {
@@ -16,6 +17,7 @@ class AuthForm extends Component {
         this.setState({
             login:true
         });
+        window.M.updateTextFields();
     }
 
     handleInputChange=(e)=> {
@@ -40,7 +42,7 @@ class AuthForm extends Component {
         const loginTabClassName='auth-form-tab'+(this.state.login? ' auth-form-tab-active':'');
         const signupTabClassName='auth-form-tab'+(this.state.login?'':' auth-form-tab-active');
         const buttonState=this.state.email&&this.state.password?0:1;
-        
+       
 
             return (
                 <>
@@ -68,7 +70,7 @@ class AuthForm extends Component {
                                 className=''
                                 onChange={this.handleInputChange}
                            />
-                           <label htmlFor='name'>Name</label>
+                           <label className='active' htmlFor='name'>Name</label>
                     </div>
                         ) : null}
                         <div className='input-field'>
@@ -106,7 +108,6 @@ class AuthForm extends Component {
                 </div>
                 </>
             );
-        
     }
 }
 

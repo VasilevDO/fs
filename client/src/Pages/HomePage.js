@@ -1,27 +1,12 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useContext} from 'react';
 import { Loader } from '../components/Loader';
 import { AuthContext } from '../context/AuthContext';
 import { useHttp } from '../hooks/http.hook';
 
 
 const HomePage=()=> {
-    const {loading,request}=useHttp();
-    const {token,userName}=useContext(AuthContext);
-
-    /*const fetchLinks=useCallback(async ()=> {
-        try {
-            const fetched=await request('/api/link','GET',null, {
-                Authorization:`Bearer ${token}`
-            });
-            setLinks(fetched);
-        } catch (e) {
-
-        }
-    },[token,request]);
-
-    useEffect(()=>{
-        fetchLinks()
-    },[fetchLinks]);*/
+    const {loading}=useHttp();//const {loading,request}=useHttp();
+    const {userName}=useContext(AuthContext); //const {token,userName}=useContext(AuthContext);
 
     if (loading) {
         return <Loader/>

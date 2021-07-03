@@ -63,7 +63,6 @@ class Tictactoe extends Component {
     const history=this.state.history.slice(0,this.state.stepNumber+1);
     const current=history[history.length-1];
     const squares=current.squares.slice();
-    console.log(this.state.fp);
     if (calculateWinner(squares)||squares[i]) {
       return;
     }
@@ -79,6 +78,9 @@ class Tictactoe extends Component {
 
   jumpTo(step) {
     this.setState({
+      history:[{
+        squares:Array(9).fill(null),
+      }],
       stepNumber:step,
       xIsNext:(step%2)===0,
     });
@@ -105,11 +107,11 @@ class Tictactoe extends Component {
   }
 
   render() {
-    console.log(this);
     const history=this.state.history;
     const current=history[this.state.stepNumber];
     const winner=calculateWinner(current.squares);
     let opacity='opacity0';
+    let status;
     const moves=history.map((step,move)=>{
       const desc= move ?
       'Go to move #'+move :
@@ -122,18 +124,19 @@ class Tictactoe extends Component {
         </li>
       );
     });
-    if (!moves) {
-      this.state.status='Next player: '+(this.state.players[this.state.xIsNext]);
+
+  if (!moves) {
+      status='Next player: '+(this.state.players[this.state.xIsNext]);
     } else if (winner) {
-      this.state.status='Winner: '+ (winner==='X'? this.state.players[true]:this.state.players[false]);
+      status='Winner: '+ (winner==='X'? this.state.players[true]:this.state.players[false]);
     } else if (checkSquares(this.state.history)){
-      this.state.status='Tie';
+     status='Tie';
       moves.splice(1,moves.length);
     } else {
-      this.state.status='Next player: '+(this.state.players[this.state.xIsNext]);
-    }
+      status='Next player: '+(this.state.players[this.state.xIsNext]);
+    } 
 
-    if (this.state.status.includes('Winner')) opacity='opacity1';
+    if (status&&status.includes('Winner')) opacity='opacity1';
 
     return (
       <div className="game">
@@ -143,12 +146,14 @@ class Tictactoe extends Component {
             className={opacity}
             src={fanfare1}
             width={100}
+            alt=''
             /></div>
-           <h1>{this.state.status}</h1>
+           <h1>{status}</h1>
            <div><img 
             className={opacity}
             src={fanfare2}
             width={100}
+            alt=''
             /></div>
           </div>
         <div className='game-players'>
@@ -203,7 +208,6 @@ return null;
 }
 
 function checkSquares(arr) {
-console.log(arr.concat().pop().squares);
  if (arr.concat().pop().squares.includes(null)) return false;
  return true;
 }

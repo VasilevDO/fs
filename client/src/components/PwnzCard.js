@@ -29,7 +29,7 @@ this.props.buttonHandler(title);
           <div className="pwnz-card-title">
             <p>{pwnzCardTitle}</p>
           </div>
-          <img src={pwnzLogo} style={{ width: pwnzCardLogoWidth }}></img>
+          <img src={pwnzLogo} alt={pwnzCardTitle} style={{ width: pwnzCardLogoWidth }}></img>
           <div className="pwnz-card-description">
             <p> {pwnzCardDescription} </p>
           </div>

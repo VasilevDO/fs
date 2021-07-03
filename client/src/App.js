@@ -8,6 +8,8 @@ import { Loader } from './components/Loader';
 
 import 'materialize-css';
 
+
+
 function App() {
   const {token,login,logout,userId,userName,ready}=useAuth();
   const isAuthenticated=!!token;
@@ -16,6 +18,7 @@ function App() {
   if (!ready) {
     return <Loader/>
   }
+
 
   return (
     <AuthContext.Provider value={{

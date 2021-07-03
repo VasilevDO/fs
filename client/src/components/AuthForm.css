@@ -47,3 +47,7 @@
     color: #888;
 	background: #e5e6e7;
 }
+
+.auth-form-body {
+    margin:20px;
+}

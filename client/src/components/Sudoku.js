@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 import "./Sudoku.css";
 
+
 class Sudoku extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       board: this.basicBoard,
       solvedBoard: this.initializeBoard(),
       startingBoard: null,
       alert: null,
       solutionVisible: false,
-      wrongCellsVisible: false
+      wrongCellsVisible: false,
+      difficulty: "medium"
     };
   }
 
@@ -25,6 +27,12 @@ class Sudoku extends Component {
     [6, 7, 8, 9, 1, 2, 3, 4, 5],
     [9, 1, 2, 3, 4, 5, 6, 7, 8]
   ];
+
+  difficulties = {
+    easy: [15, 30],
+    medium: [30,45],
+    hard: [45, 81]
+  };
 
   emptyBoard = new Array(9).fill(new Array(9).fill(null));
 
@@ -134,23 +142,15 @@ class Sudoku extends Component {
     });
   };
 
-  deleteRandomCell = (matrix) => {
-    let x = this.random(0, 8);
-    let y = this.random(0, 8);
-    let savedCell = matrix[y][x];
-    matrix[y][x] = null;
-    return [matrix, y, x, savedCell];
-  };
-
   solve = (board) => {
+    let solutions = [];
     function solve(board) {
       if (solved(board)) {
-        return board;
-      } else {
-        const possibilities = nextBoards(board);
-        const validBoards = keepOnlyValid(possibilities);
-        return searchForSolution(validBoards);
+        solutions.push(board);
       }
+      const possibilities = nextBoards(board);
+      const validBoards = keepOnlyValid(possibilities);
+      return searchForSolution(validBoards);
     }
 
     function searchForSolution(boards) {
@@ -269,33 +269,13 @@ class Sudoku extends Component {
       }
       return true;
     }
-    return solve(board);
-  };
-
-  setEmptyBoard = () => {
-    let board = this.emptyBoard.concat();
-    this.setState({ board: board });
+    return solve(board) || solutions;
   };
 
   isSolveOnlyOne = (matrix) => {
-    function mirrorMatrix(matrix) {
-      return matrix
-        .concat()
-        .map((row) => row.concat().reverse())
-        .reverse();
-    }
-    let board = matrix.concat();
-    let mirrorBoard = mirrorMatrix(board);
-    let firstSolve = this.solve(board);
-    let secondSolve = this.solve(mirrorBoard);
-    return firstSolve.join("") === mirrorMatrix(secondSolve).join("");
-  };
-
-  solveBoard = () => {
-    let board = this.state.board.concat();
-    this.setState({
-      board: this.solve(board)
-    });
+    let board = this.copyMatrix(matrix);
+    let solutions = this.solve(board);
+    return solutions.length === 1;
   };
 
   handleCellChange = (e) => {
@@ -323,21 +303,38 @@ class Sudoku extends Component {
     return copy;
   };
 
-  prepareBoard = () => {
-    let startingBoard = this.copyMatrix(this.state.solvedBoard);
+  prepareBoard = (difficulty, solvedBoard) => {
+    let startingBoard = this.copyMatrix(solvedBoard);
     let lastStableX, lastStableY, savedCell;
-    while (this.isSolveOnlyOne(startingBoard)) {
-      let res = this.deleteRandomCell(startingBoard);
-      startingBoard = res[0];
-      lastStableX = res[1];
-      lastStableY = res[2];
-      savedCell = res[3];
+    let deletedCells = -1;
+    while (
+      deletedCells < this.difficulties[difficulty.toLowerCase()][1] &&
+      this.isSolveOnlyOne(startingBoard)
+    ) {
+      let x = this.random(0, 8);
+      let y = this.random(0, 8);
+      if (startingBoard[y][x] !== null) {
+        savedCell = startingBoard[y][x];
+        lastStableX = x;
+        lastStableY = y;
+        startingBoard[y][x] = null;
+        deletedCells++;
+      }
     }
-    startingBoard[lastStableX][lastStableY] = savedCell;
+    startingBoard[lastStableY][lastStableX] = savedCell;
+
+    if (
+      deletedCells < this.difficulties[difficulty.toLowerCase()][0] ||
+      deletedCells > this.difficulties[difficulty.toLowerCase()][1]
+    ) {
+      return this.prepareBoard(difficulty, this.initializeBoard());
+    }
     this.setState({
       board: startingBoard,
-      startingBoard: startingBoard
+      startingBoard: startingBoard,
+      solvedBoard: solvedBoard
     });
+    return;
   };
 
   checkSolution = () => {
@@ -385,19 +382,28 @@ class Sudoku extends Component {
     ];
   };
 
+  handleDifficultyChange = (e) => {
+    this.setState({
+      difficulty: e.target.value
+    });
+  };
+
   render() {
+    const difficulty = this.state.difficulty;
+    const solvedBoard = this.copyMatrix(this.state.solvedBoard);
     if (!this.state.startingBoard) {
-      this.prepareBoard();
+      this.prepareBoard(difficulty, solvedBoard);
       return null;
     }
     const startingBoard = this.state.startingBoard;
     const board = this.state.solutionVisible
       ? this.state.solvedBoard
       : this.state.board;
+
     let disabled, cellY, cellX, cellStyle;
     const alert = this.state.alert;
     const sudokuBoardStyle = {
-      "background-color": alert ? (alert === "done" ? "green" : "red") : null
+      backgroundColor: alert ? (alert === "done" ? "green" : "red") : null
     };
     const toggleSolutionButtonText = this.state.solutionVisible
       ? "Hide solution"
@@ -457,13 +463,26 @@ class Sudoku extends Component {
       <>
         <div className="sudoku">
           <div className="sudoku-buttons" style={sudokuBoardStyle}>
+          <div className='sudoku-buttons-row'>
+            <button onClick={this.createNewPuzzle}>Set new puzzle</button>
+            <div>
+            <select value={difficulty} onChange={this.handleDifficultyChange}  className='browser-default'>
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+            </div>
+            </div>
+            <div className='sudoku-buttons-row'>
             <button onClick={this.checkSolution}>Check solution</button>
             <button onClick={this.toggleSolution}>
               {toggleSolutionButtonText}
             </button>
             <button onClick={this.toggleWrongCells}>{toggleWrongCells}</button>
-            <button onClick={this.createNewPuzzle}>Set new puzzle</button>
-          </div>
+            </div>
+            
+            </div>
+     
           <div className="sudoku-board">
             {boardDivs.map((squaresRow, squaresRowIndex) => {
               return (
@@ -513,4 +532,5 @@ class Sudoku extends Component {
     );
   }
 }
+
 export default Sudoku;

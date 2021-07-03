@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect } from 'react';
+import React, {useContext, useEffect } from 'react';
 import {useHttp} from '../hooks/http.hook';
 import {useMessage} from '../hooks/message.hook';
 import {AuthContext} from '../context/AuthContext';
@@ -9,7 +9,7 @@ import './AuthPage.css';
 const AuthPage=()=> {
     const auth=useContext(AuthContext);
     const message=useMessage();
-    const {loading,request,error,clearError} = useHttp();
+    const {request,error,clearError} = useHttp(); //const {loading,request,error,clearError} = useHttp();
 
     useEffect(()=> {
         message(error);
