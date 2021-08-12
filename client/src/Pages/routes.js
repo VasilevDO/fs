@@ -6,6 +6,8 @@ import DetailPage from './DetailPage';
 import AuthPage from './AuthPage';
 import HomePage from './HomePage';
 import GamesPage from './GamesPage';
+import ServicesPage from './ServicesPage';
+import ResetPage from './ResetPage.js'
 
 
 
@@ -18,6 +20,9 @@ const useRoutes = isAuthenticated=> {
                 </Route>
                 <Route path='/links' exact>
                     <LinksPage/>
+                </Route>
+                <Route path='/services' exact>
+                    <ServicesPage/>
                 </Route>
                 <Route path='/games' exact>
                     <GamesPage/>
@@ -35,10 +40,13 @@ const useRoutes = isAuthenticated=> {
 
     return (
         <Switch>
-            <Route path='/' exact>
+            <Route path='/auth' exact>
                 <AuthPage/>
             </Route>
-            <Redirect to ='/'/>
+            <Route path='/reset/:id' exact>
+                <ResetPage />
+            </Route>
+            <Redirect to ='/auth'/>
         </Switch>
     )
 }

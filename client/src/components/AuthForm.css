@@ -12,17 +12,39 @@
 
 .auth-form-tab {
     flex-grow:1;
-    border:1px solid black;
-    cursor:pointer;
+}
+
+.auth-form-tab:first-child {
+    border-right:1px solid black;
 }
 
 .auth-form-tab > p {
     text-align:center;
-    
 }
 
 .auth-form-tab-active {
-    background: #abf583;
+     /*background: #abf583; #1e88e5; #1e88e5a8*/
+    cursor:default;
+}
+
+.auth-form-tab-inactive {
+	background: #1e88e575;
+    cursor: pointer;
+    border-bottom:1px solid black;
+}
+
+.auth-form-message-negative {
+    text-align:center;
+    color:red;
+}
+
+.auth-form-message-positive {
+    text-align:center;
+    color:green;
+}
+
+.auth-form-alert {
+    color:red;
 }
 
 .auth-form-submit-button {
@@ -35,7 +57,7 @@
 	font-weight: 300;
 	text-transform: uppercase;
 	letter-spacing: 2px;
-	background: #abf583;
+	background: #1e88e575;
 	cursor: pointer;
 	-moz-transition: all 0.4s ease-in-out;
 	-o-transition: all 0.4s ease-in-out;
@@ -46,8 +68,34 @@
 .auth-form-submit-button:disabled {
     color: #888;
 	background: #e5e6e7;
+    cursor:default;
 }
 
 .auth-form-body {
-    margin:20px;
+    padding:20px;
+}
+
+
+.auth-form-forgot-password {
+    margin-bottom:0;
+    text-align:right;
+    color: #1e88e5;
+    cursor:pointer;
+}
+
+.auth-form-title {
+    font-size:24px;
+    text-align:center;
+    margin-top:0;
+}
+
+.auth-form-inputToggle {
+    width: 40px;
+    height:100%;
+    right:0;
+    position:absolute;
+    cursor:pointer;
+    display:flex;
+    align-items: center;
+    justify-content: center;
 }

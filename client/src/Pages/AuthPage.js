@@ -1,6 +1,5 @@
-import React, {useContext, useEffect } from 'react';
+import React, {useContext, useEffect, useState } from 'react';
 import {useHttp} from '../hooks/http.hook';
-import {useMessage} from '../hooks/message.hook';
 import {AuthContext} from '../context/AuthContext';
 import AuthForm from '../components/AuthForm';
 import './AuthPage.css';
@@ -8,39 +7,47 @@ import './AuthPage.css';
 
 const AuthPage=()=> {
     const auth=useContext(AuthContext);
-    const message=useMessage();
-    const {request,error,clearError} = useHttp(); //const {loading,request,error,clearError} = useHttp();
+    const [message,setMessage]=useState(null);
+    const {request} = useHttp(); //const {loading,request,error,clearError} = useHttp();
 
-    useEffect(()=> {
-        message(error);
-        clearError();
-    },[error,message,clearError]);
 
     useEffect(()=>{
         window.M.updateTextFields();
     },[])
 
-    const handleAuth=async(data)=> {
+    const handleAuth=async (data)=> {
         try {
+            const type=data.form;
             const form={
                 email:data.email,
                 name:data.name,
                 password:data.password
             };
-            if (data.login) {
+            if (type==='login') {
                 const data=await request('/api/auth/login', 'POST', {...form});
-                auth.login(data.token, data.userId,data.userName);
-            } else if (!data.login) {
+                auth.login(data.token, data.userId,data.userName,data.userRights);
+            } else if (type==='signup') {
                 const data=await request('/api/auth/register', 'POST', {...form});
-                message(data.message);
+                auth.login(data.token, data.userId,data.userName,data.userRights);
+            } else if (type==='recover') {
+                const data=await request('/api/auth/recover', 'POST', {...form});
+                setMessage({
+                    text:data.message,
+                    type:'positive'
+                });
             }
-        } catch (e) {}
+        } catch (e) {
+            setMessage({
+                text:e.message,
+                type:'negative'
+            });
+        }
     }
 
     return (
         <>
         <div className='auth-page valign-wrapper'>
-             <AuthForm handleAuthFormSubmit={handleAuth}></AuthForm>                     
+             <AuthForm handleAuthFormSubmit={handleAuth} message={message}></AuthForm>                     
         </div>
         </>
     )

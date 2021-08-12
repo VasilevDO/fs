@@ -9,7 +9,12 @@ app.use(express.json({extended:true}));
 
 app.use('/api/auth',require('./routes/auth.routes'));
 app.use('/api/link', require('./routes/link.routes'));
+app.use('/api/image', require('./routes/image.routes'));
+app.use('/api/todolist', require('./routes/todolist.routes'));
+app.use('/api/blog', require('./routes/blogPost.routes'));
+app.use('/api/weather', require('./routes/weather.routes'));
 app.use('/t', require('./routes/redirect.routes'));
+
 
 if (process.env.NODE_ENV==='production') {
     app.use('/',express.static(path.join(__dirname,'client','build')));
@@ -27,7 +32,7 @@ async function start() {
             useUnifiedTopology:true,
             useCreateIndex:true
         });
-        app.listen(PORT,()=>console.log(`App has been on port ${PORT}`)); 
+        app.listen(PORT,()=>console.log(`App has been started on port ${PORT}`)); 
     } catch(e) {
         console.log('Server error: ',e.message);
         process.exit(1);

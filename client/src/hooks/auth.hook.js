@@ -1,39 +1,59 @@
-import {useState,useCallback, useEffect} from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
-const storageName='userData';
+const storageName = 'userData';
 
-export const useAuth=()=> {
-    const [token, setToken]=useState(null);
-    const [ready, setReady]=useState(false);
-    const [userId,setUserId] = useState(null); 
-    const [userName,setUserName] = useState(null); 
+export const useAuth = () => {
+    const [token, setToken] = useState(null);
+    const [ready, setReady] = useState(false);
+    const [userId, setUserId] = useState(null);
+    const [userName, setUserName] = useState(null);
+    const [userRights, setUserRights] = useState(null);
 
-const login = useCallback((jwtToken,id,name)=> {
-    setToken(jwtToken);
-    setUserId(id);
-    setUserName(name);
-    localStorage.setItem(storageName,JSON.stringify({
-        userId:id,token:jwtToken,userName:name
-    }));
-},[]);
-
-const logout = useCallback(()=> {
-    setToken(null);
-    setUserId(null);
-    setUserName(null);
-    localStorage.removeItem(storageName);
-},[]);
+    const login = useCallback(async (jwtToken, id, name) => {
+        setUserRights(await getRights(id, jwtToken));
+        setToken(jwtToken);
+        setUserId(id);
+        setUserName(name);
+        localStorage.setItem(storageName, JSON.stringify({
+            userId: id, token: jwtToken, userName: name
+        }));
+        setReady(true);
+    }, []);
 
 
-useEffect(()=> {
-    const data=JSON.parse(localStorage.getItem(storageName));
-    if (data&&data.token) {
-        login(data.token,data.userId,data.userName);
+    const getRights = async (id, token) => {
+        const method = 'POST';
+        const body = JSON.stringify({
+            id: id
+        });
+        const headers = {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+        };
+        const userRights = await fetch('/api/auth/userRights', { method, body, headers })
+            .then(data => data.json());
+        return userRights;
     }
-    setReady(true);
-}, [login]);
+
+    const logout = useCallback(() => {
+        setToken(null);
+        setUserId(null);
+        setUserName(null);
+        setUserRights(null);
+        localStorage.removeItem(storageName);
+    }, []);
 
 
 
-return {login, logout, token, userId, userName, ready}
+    useEffect(() => {
+        const data = JSON.parse(localStorage.getItem(storageName));
+        if (data && data.token) {
+            login(data.token, data.userId, data.userName);
+        }
+        setReady(true);
+    }, [login]);
+
+
+
+    return { login, logout, token, userId, userName, ready, userRights }
 }
