@@ -79,6 +79,10 @@ export default class PwnzBlogPost extends Component {
     this.props.delete(this.props.post._id);
   }
 
+  handlePostLike=()=>{
+    this.props.onLike(this.props.post._id);
+  }
+
   componentDidUpdate(prevProps) {
     if (prevProps.post.dateEdited !== this.props.post.dateEdited) {// Check if it's a new user, you can also use some unique property, like the ID  (this.props.user.id !== prevProps.user.id)
       this.setState({
@@ -156,6 +160,15 @@ export default class PwnzBlogPost extends Component {
             {dateEdited ?
               <span>{`Edited by ${this.props.post.editedBy} ${iso8601ToDateStr(dateEdited)}`}</span>
               : null}
+              <div className='pwnz-f-c'>
+              <div className='pwnz-button pwnz-f-c'>
+                    <span className='pwnz-nowrap' onClick={this.handlePostLike}>Like</span>
+                  </div>
+                  <div className='pwnz-button pwnz-f-c pwnz-ml5'>
+                    <span className='pwnz-nowrap'>Dislike</span>
+                  </div>
+              </div>
+              
           </div>
           <div className="pwnzBlogPost-controls">
             <div className='pwnz-bwdm'>
@@ -201,7 +214,7 @@ export default class PwnzBlogPost extends Component {
                     </>
                     : null}
                   <div className='pwnz-button pwnz-f-c'>
-                    <span className='pwnz-nowrap' onClick={this.deletePost}>Report</span>
+                    <span className='pwnz-nowrap'>Report</span>
                   </div>
                 </div>
               </div>

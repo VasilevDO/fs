@@ -35,21 +35,40 @@ export default class PwnzBlog extends Component {
       });
       const headers = {
         'Content-Type': 'application/json',
-        userId:this.props.user.userId,
+        userId: this.props.user.userId,
         Authorization: `Bearer ${this.props.user.token}`
       }
-      const {post} = await fetch('/api/blog/create', { method, body, headers })
+      const response = await fetch('/api/blog/like', { method, body, headers })
+
+      
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
+
+  handlePostLike = async (postId) => {
+    try {
+      const method = 'POST';
+      const body = JSON.stringify({
+        postId:postId
+      });
+      const headers = {
+        'Content-Type': 'application/json',
+        userId: this.props.user.userId,
+        Authorization: `Bearer ${this.props.user.token}`
+      }
+      const { post } = await fetch('/api/blog/create', { method, body, headers })
         .then(data => data.json());
-        if (!post) {
-          return;//there is should be some error handler
-        } else {
-          this.setState({
-            newPostText: '',
-            newPostTitle: '',
-            posts: this.state.posts.concat(post)
-          })
-          $('.pwnzBlog-newPostForm').hide(500);
-        }
+      if (!post) {
+        return;//there is should be some error handler
+      } else {
+        this.setState({
+          newPostText: '',
+          newPostTitle: '',
+          posts: this.state.posts.concat(post)
+        })
+        $('.pwnzBlog-newPostForm').hide(500);
+      }
     } catch (e) {
       console.log(e.message);
     }
@@ -63,7 +82,7 @@ export default class PwnzBlog extends Component {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${this.props.user.token}`
       };
-      const {posts} = await fetch('/api/blog', { method, body, headers })
+      const { posts } = await fetch('/api/blog', { method, body, headers })
         .then(data => data.json());
       return posts.map(post => {
         if (post.owner === this.props.user.userId) {
@@ -84,7 +103,7 @@ export default class PwnzBlog extends Component {
       });
       const headers = {
         'Content-Type': 'application/json',
-        userId:this.props.user.userId,
+        userId: this.props.user.userId,
         Authorization: `Bearer ${this.props.user.token}`
       };
       const response = await fetch('/api/blog/delete', { method, body, headers })
@@ -108,7 +127,7 @@ export default class PwnzBlog extends Component {
       });
       const headers = {
         'Content-Type': 'application/json',
-        userId:this.props.user.userId,
+        userId: this.props.user.userId,
         Authorization: `Bearer ${this.props.user.token}`
       }
       const post = await fetch('/api/blog/update', { method, body, headers })
@@ -190,9 +209,10 @@ export default class PwnzBlog extends Component {
             console.log(posts);
             return <PwnzBlogPost
               post={post}
-              editable={this.props.user.userRights.canModerateBlog || post.owner===this.props.user.userId}
+              editable={this.props.user.userRights.canModerateBlog || post.owner === this.props.user.userId}
               delete={this.deletePost}
               change={this.updatePost}
+              onLike={this.handlePostLike}
             />;
           })}
         </div>
