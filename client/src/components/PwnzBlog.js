@@ -84,6 +84,7 @@ export default class PwnzBlog extends Component {
       });
       const headers = {
         'Content-Type': 'application/json',
+        userId:this.props.user.userId,
         Authorization: `Bearer ${this.props.user.token}`
       };
       const response = await fetch('/api/blog/delete', { method, body, headers })
@@ -103,11 +104,11 @@ export default class PwnzBlog extends Component {
     try {
       const method = 'POST';
       const body = JSON.stringify({
-        post: updatedPost,
-        editedBy: this.props.user.userId
+        post: updatedPost
       });
       const headers = {
         'Content-Type': 'application/json',
+        userId:this.props.user.userId,
         Authorization: `Bearer ${this.props.user.token}`
       }
       const post = await fetch('/api/blog/update', { method, body, headers })
@@ -186,9 +187,10 @@ export default class PwnzBlog extends Component {
         </>
         <div className="pwnzBlog-container">
           {posts.map((post) => {
+            console.log(posts);
             return <PwnzBlogPost
               post={post}
-              editable={this.props.user.userRights.canModerateBlog || post.canEdit}
+              editable={this.props.user.userRights.canModerateBlog || post.owner===this.props.user.userId}
               delete={this.deletePost}
               change={this.updatePost}
             />;

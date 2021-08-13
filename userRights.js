@@ -1,7 +1,7 @@
 module.exports={
     admin:{
         canModerateBlog:true,
-        canAddBlogPosts:false,
+        canAddBlogPosts:true,
     },
     user:{
         canAddBlogPosts:true

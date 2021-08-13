@@ -201,7 +201,7 @@ export default class PwnzBlogPost extends Component {
                     </>
                     : null}
                   <div className='pwnz-button pwnz-f-c'>
-                    <span className='pwnz-nowrap'>Report</span>
+                    <span className='pwnz-nowrap' onClick={this.deletePost}>Report</span>
                   </div>
                 </div>
               </div>
