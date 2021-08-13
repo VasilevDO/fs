@@ -8,7 +8,7 @@ const schema=new Schema({
     links:[{
         type: Types.ObjectId,ref:'Link'
     }],
-    passwordResetId:{type:String,unique:true}
+    passwordResetId:{type:String}
 })
 
 module.exports=model('User',schema);

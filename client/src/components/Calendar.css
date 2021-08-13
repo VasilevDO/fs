@@ -1,0 +1,71 @@
+.calendar {
+  width: 400px;
+  -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.7);
+  -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.7);
+  box-shadow: 4px 4px 8px 0px rgba(153, 201, 238, 0.7);
+  padding:10px;
+}
+
+.calendar-header {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+.calendar-header-selected {
+  text-align: center;
+}
+
+.calendar-header-selected p {
+  font-size: 24px;
+}
+
+.calendar-header-selector {
+  display: flex;
+  justify-content: space-evenly;
+  align-items:center;
+  margin: 10px 0 10px 0;
+  width: 100%;
+}
+
+.calendar select {
+  font-size: 16px;
+  text-align: center;
+}
+
+.calendar table {
+  text-align: center;
+  width: 100%;
+  border-top: 1px solid gray;
+  padding:5px;
+}
+
+.calendar table td, .calendar table th {
+  padding: 5px;
+  width: 40px;
+  border-radius:10%;
+  text-align:center;
+}
+
+.calendar table td:hover {
+  cursor: pointer;
+  background-color:rgba(218, 246, 255, 0.555);
+}
+
+.calendar-week-day-current {
+  box-shadow: 0 0 5px green;
+  border-radius:10%;
+}
+
+.calendar-week-day-selected {
+  box-shadow: 0 0 5px blue;
+  border-radius:10%;
+}
+
+.calendar-pwnz-selector {
+  width:100px;
+}
+
+.calendar-date-change-button {
+  font-size:16px;
+}

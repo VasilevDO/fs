@@ -59,7 +59,7 @@ router.post('/register',
         const token=jwt.sign(
             {userId:user.id},
             config.get('jwtKey'),
-            {expiresIn:'1m'}
+            {expiresIn:'1h'}
         )
         response.json({token,userId:user.id,userName:user.name,userStatus:user.status});
 

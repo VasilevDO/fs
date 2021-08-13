@@ -1,0 +1,34 @@
+.pwnz-textarea {
+  overflow: auto;
+  font-size: 14px;
+}
+
+.pwnz-textarea > textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  resize: none;
+  overflow: auto;
+  height: 100%;
+  padding: 5px;
+}
+
+.pwnz-textarea > textarea:read-only {
+  cursor: default;
+}
+
+.pwnz-textarea > textarea:read-only:focus {
+  outline: none;
+}
+
+.pwnz-textarea-left > textarea {
+  text-align: left;
+}
+
+.pwnz-textarea-right > textarea {
+  text-align: right;
+}
+
+.pwnz-textarea-center > textarea {
+  text-align: center;
+}

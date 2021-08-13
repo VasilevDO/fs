@@ -1,0 +1,35 @@
+  .pwnz-textContainer {
+    overflow: auto;
+    font-size: 14px;
+  }
+  
+  .pwnz-textContainer > textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    resize: none;
+    overflow: hidden;
+    padding: 5px;
+  }
+  
+  .pwnz-textContainer > textarea:read-only {
+    cursor: default;
+  }
+  
+  .pwnz-textContainer > textarea:read-only:focus {
+    outline: none;
+  }
+  
+  .pwnz-textContainer-left > textarea {
+    text-align: left;
+  }
+  
+  .pwnz-textContainer-right > textarea {
+    text-align: right;
+  }
+  
+  .pwnz-textContainer-center > textarea {
+    text-align: center;
+  }
+  
+  

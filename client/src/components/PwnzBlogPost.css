@@ -1,0 +1,32 @@
+
+.pwnzBlogPost {
+  border: 2px solid #c7c7d1;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: #d7f3fe;
+  position:relative;
+}
+
+.pwnzBlogPost-mini {
+    border: 1px solid black;
+    margin: 10px;
+    height: auto;
+  }
+  
+  .pwnzBlogPost-title {
+    border-bottom: 1px solid lightgray;
+    position: relative;
+  }
+  
+  .pwnzBlogPost-controls {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+   
+  .pwnzBlogPost-footer {
+    font-size:12px;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+  }

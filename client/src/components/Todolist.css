@@ -1,0 +1,69 @@
+.todolist {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-content: flex-start;
+    align-items: flex-start;
+    margin: 20px;
+    flex-wrap: wrap;
+  }
+ 
+  .todolist-item {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid green;
+    margin: 10px;
+    padding: 10px;
+    width: 600px;
+  }
+  
+  .todolist-item-mini {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid green;
+    padding: 10px;
+    width: 100%;
+  }
+  
+  .todolist-item > h1 {
+    text-align: center;
+    border: 1px solid green;
+    padding: 10px;
+  }
+  
+  .todolist-task {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-content: center;
+    width: 100%;
+    border-bottom: 1px solid green;
+    margin: 10px 0 10px 0;
+  }
+  
+  .todolist-task > p {
+    flex-grow: 1;
+    margin: 0 0 5px 0;
+  }
+  
+  .todolist-task > p > div {
+    float: right;
+    margin: 0 5px 0 5px;
+  }
+  
+  .todolist-task > p > button {
+    float: right;
+    margin: 0 5px 0 5px;
+  }
+  
+  .todolist-task-input {
+    display: flex;
+    margin-top: auto;
+    width: 100%;
+  }
+  
+  .todolist-task-input > input {
+    flex-grow: 1;
+    margin:0;
+  }
+  

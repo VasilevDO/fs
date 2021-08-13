@@ -1,0 +1,54 @@
+.pwnzBlog textarea.pwnz-textContainer-editable {
+    background-color: #ebf9fe;
+}
+
+.pwnzBlog-newPostForm {
+  border: 2px solid #c7c7d1;
+  border-radius: 4px;
+  padding:10px;
+  background-color: #d7f3fe;
+}
+
+.pwnzBlog-newPostFormHeader {
+  padding-bottom:5px;
+  border-bottom: 1px solid gray;
+}
+
+.pwnzBlog-newPostForm-controls {
+  display: flex;
+  justify-content: flex-end;
+}
+  
+.pwnzBlog-newPostForm-controls > span {
+  margin: 5px;
+  flex-grow: 1;
+  text-align: left;
+}
+  
+.pwnzBlog-newPostForm-title {
+  border-bottom: 1px solid lightblue;
+  display:flex;
+  flex-direction: column;
+}
+  
+.pwnzBlog-newPostForm-title > span {
+  margin: 5px;
+  float: left;
+}
+  
+.pwnzBlog-newPostForm-title > input {
+  width: 100%;
+  box-sizing: border-box;
+}
+  
+.pwnzBlog-newPostForm-container {
+  display:flex;
+  flex-direction: column;
+  margin-bottom:10px;
+}
+
+.pwnzBlog-newPostForm-container > span {
+  margin: 5px;
+  float: left;
+}
+  

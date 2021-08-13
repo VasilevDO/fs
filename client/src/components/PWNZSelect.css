@@ -1,0 +1,32 @@
+.pwnz-selector {
+  display:inline-block;
+  text-align:center;
+  position:relative;
+}
+
+.pwnz-selector>input {
+  text-align: center;
+  margin:0;
+}
+
+.pwnz-selector-option {
+  cursor:pointer;
+}
+
+
+.pwnz-selector-option:hover {
+  background-color:rgb(238, 238, 238);
+}
+
+.pwnz-selector-div-for-scrollbar {
+  position:absolute;
+  width:100%;
+}
+
+.pwnz-selector-options {
+  position:absolute;
+  background-color:white;
+  width:100%;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  overflow:auto;
+}
