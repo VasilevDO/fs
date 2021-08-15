@@ -12,6 +12,7 @@ export default class PwnzBlogPost extends Component {
       dateEdited: this.props.post.dateEdited,
       editMode: false,
       format: 'mini',//mini or basic
+
     };
   }
 
@@ -79,8 +80,12 @@ export default class PwnzBlogPost extends Component {
     this.props.delete(this.props.post._id);
   }
 
-  handlePostLike=()=>{
+  handlePostLike = () => {
     this.props.onLike(this.props.post._id);
+  }
+
+  handlePostDislike = () => {
+    this.props.onDislike(this.props.post._id);
   }
 
   componentDidUpdate(prevProps) {
@@ -119,6 +124,8 @@ export default class PwnzBlogPost extends Component {
       textHeight.max = 600;
     }
 
+    const isLiked = !!this.props.post.likedBy.find(item => item === this.props.user.userId);
+    const isDisliked = !!this.props.post.dislikedBy.find(item => item === this.props.user.userId);
     return (
       <>
         <div className={"pwnzBlogPost"}>
@@ -156,19 +163,22 @@ export default class PwnzBlogPost extends Component {
             />
           </div>
           <div className='pwnzBlogPost-footer'>
-            <span>{`Posted by ${this.props.post.createdBy} ${iso8601ToDateStr(this.props.post.date)}`}</span>
-            {dateEdited ?
-              <span>{`Edited by ${this.props.post.editedBy} ${iso8601ToDateStr(dateEdited)}`}</span>
-              : null}
-              <div className='pwnz-f-c'>
-              <div className='pwnz-button pwnz-f-c'>
-                    <span className='pwnz-nowrap' onClick={this.handlePostLike}>Like</span>
-                  </div>
-                  <div className='pwnz-button pwnz-f-c pwnz-ml5'>
-                    <span className='pwnz-nowrap'>Dislike</span>
-                  </div>
+            <div className='pwnz-f-c'>
+              <span>{`#${this.props.post.number}`}&nbsp;</span>
+              <span>{`Posted by ${this.props.post.createdBy} ${iso8601ToDateStr(this.props.post.date)}`}</span>
+              {dateEdited ?
+                <span>{` / Edited by ${this.props.post.editedBy} ${iso8601ToDateStr(dateEdited)}`}</span>
+                : null}
+            </div>
+            <div className='pwnz-f-c'>
+              <div className={'pwnz-button pwnz-f-c' + (isLiked ? ' pwnz-checked' : '')} >
+                <span className='pwnz-nowrap' onClick={this.handlePostLike}>{`Like (${this.props.post.likedBy.length})`}</span>
               </div>
-              
+              <div className={'pwnz-button pwnz-f-c pwnz-ml5' + (isDisliked ? ' pwnz-checked' : '')} >
+                <span className='pwnz-nowrap' onClick={this.handlePostDislike}>{`Dislike (${this.props.post.dislikedBy.length})`}</span>
+              </div>
+            </div>
+
           </div>
           <div className="pwnzBlogPost-controls">
             <div className='pwnz-bwdm'>

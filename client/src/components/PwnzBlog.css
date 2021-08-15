@@ -47,6 +47,10 @@
   margin-bottom:10px;
 }
 
+.pwnzBlog-container > div:not(:last-child) {
+ margin-bottom:10px;
+}
+
 .pwnzBlog-newPostForm-container > span {
   margin: 5px;
   float: left;

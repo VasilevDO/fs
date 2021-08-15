@@ -8,8 +8,10 @@ const schema=new Schema({
   createdBy:{type: String},
   editedBy:{type: String},
   owner: {type: Types.ObjectId, ref:'User'},
-  likedBy:{type: String, default:''},
-  dislikedBy:{type: String, default:''}
+  likedBy:{type: Array, default:[]},
+  dislikedBy:{type: Array, default:[]},
+  deleted:{type:Boolean, default:false},
+  number:{type:Number,default:0}
 })
 
 module.exports=model('BlogPost',schema);

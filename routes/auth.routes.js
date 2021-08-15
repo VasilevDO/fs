@@ -209,7 +209,7 @@ router.post('/userRights',async (request, response)=> {
         const user=await User.findOne({_id:id});
 
         if (!user) {
-            return response.status(400).json({message:'Somthing definetely went wrong'});
+            return response.status(400).json({message:'Something definetely went wrong'});
         }
         const userRights={};
         if (user.status==='admin') {

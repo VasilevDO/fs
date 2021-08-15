@@ -15,8 +15,9 @@ router.post('/create', auth, async (request, response) => {
             return;
         }
         const { text, title, createdBy } = request.body;
+        const number = await Post.countDocuments() + 1;
         const post = new Post({
-            text: text, title: title, owner: request.user.userId, createdBy: createdBy
+            text: text, title: title, owner: request.user.userId, createdBy: createdBy, number: number
         })
         await post.save();
         response.status(201).json({ post });
@@ -35,7 +36,8 @@ router.post('/delete', auth, async (request, response) => {
             response.status(403).json({ status: 'red', message: 'Access denied (no rights)' });
             return;
         }
-        await post.delete();
+        post.deleted = true;
+        await post.save();
         response.status(201).json({ message: 'Post was successfuly deleted' })
     } catch (e) {
         response.status(500).json({ message: 'Something went wrong. Try again later' });
@@ -44,12 +46,35 @@ router.post('/delete', auth, async (request, response) => {
 
 router.post('/like', auth, async (request, response) => {
     try {
-        const user = await User.findOne({ _id: request.headers.userid });
+        const userId = request.headers.userid;
         const { postId } = request.body;
         const post = await Post.findOne({ _id: postId });
+        if (post.likedBy.find(item => item == userId)) {
+            post.likedBy = post.likedBy.filter(item => item != userId);
+        } else {
+            post.likedBy.push(userId);
+            post.dislikedBy = post.likedBy.filter(item => item != userId);
+        }
+        await post.save();
+        response.status(201).json({ post })
+    } catch (e) {
+        response.status(500).json({ message: 'Something went wrong. Try again later' });
+    }
+})
 
-        await post.delete();
-        response.status(201).json({ message: 'Post was successfuly deleted' })
+router.post('/dislike', auth, async (request, response) => {
+    try {
+        const userId = request.headers.userid;
+        const { postId } = request.body;
+        const post = await Post.findOne({ _id: postId });
+        if (post.dislikedBy.find(item => item == userId)) {
+            post.dislikedBy = post.likedBy.filter(item => item != userId);
+        } else {
+            post.dislikedBy.push(userId);
+            post.likedBy = post.likedBy.filter(item => item != userId);
+        }
+        await post.save();
+        response.status(201).json({ post })
     } catch (e) {
         response.status(500).json({ message: 'Something went wrong. Try again later' });
     }
@@ -74,14 +99,15 @@ router.post('/update', auth, async (request, response) => {
         await post.save();
         response.status(201).json(post);
     } catch (e) {
-        console.log(e.message);
         response.status(500).json({ message: 'Something went wrong. Try again later' });
     }
 })
 
 router.get('/', auth, async (request, response) => {
     try {
-        const posts = await Post.find();
+        const posts = await Post.find({
+            deleted: false
+        });
         response.status(201).json({ posts });
     } catch (e) {
         response.status(500).json({ message: 'Something went wrong. Try again later' });
