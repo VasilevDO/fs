@@ -89,22 +89,13 @@ export default class PwnzBlogPost extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.post.dateEdited !== this.props.post.dateEdited) {// Check if it's a new user, you can also use some unique property, like the ID  (this.props.user.id !== prevProps.user.id)
+    if (prevProps.post !== this.props.post) {
       this.setState({
+        title: this.props.post.title,
+        text: this.props.post.text,
         dateEdited: this.props.post.dateEdited
       })
-    }
 
-    if (prevProps.post.title !== this.props.post.title) {// Check if it's a new user, you can also use some unique property, like the ID  (this.props.user.id !== prevProps.user.id)
-      this.setState({
-        title: this.props.post.title
-      })
-    }
-
-    if (prevProps.post.text !== this.props.post.text) {// Check if it's a new user, you can also use some unique property, like the ID  (this.props.user.id !== prevProps.user.id)
-      this.setState({
-        title: this.props.post.text
-      })
     }
   }
 

@@ -1,9 +1,19 @@
+
+.pwnz-container {
+    width:100%;
+    height:100%;
+}
+
 .pwnz-p10 {
     padding:10px;
 }
 
 .pwnz-p5 {
     padding:5px;
+}
+
+.pwnz-m0 {
+    margin:0px !important;
 }
 
 .pwnz-m10 {
@@ -45,19 +55,24 @@
     text-align: center;
 }
 
-.pwnz-input {
-    margin:0 !important;
-}
-
 .pwnz-select {
     display:flex;
     align-items:center;
 }
 
+.pwnz-select > span {
+    margin-right:10px !important;
+}
+
 .pwnz-select > select {
     display:block !important;
-    margin-left:10px;
+    width:auto !important;
     cursor: pointer;
+    background-color: rgba(255,255,255,0.9);
+    padding: 5px;
+    border: 1px solid #f2f2f2;
+    border-radius: 2px;
+    height: 3rem;
 }
 
 .pwnz-button {
@@ -150,6 +165,7 @@
 .pwnz-checkbox {
     display:flex;
     justify-content: space-between;
+    align-items: center;;
 }
 
 .pwnz-checkbox > span {

@@ -47,6 +47,10 @@
   margin-bottom:10px;
 }
 
+.pwnzBlog-controls > *:not(:first-child) {
+  margin-left:10px !important;
+}
+
 .pwnzBlog-container > div:not(:last-child) {
  margin-bottom:10px;
 }
