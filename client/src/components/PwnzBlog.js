@@ -19,7 +19,8 @@ export default class PwnzBlog extends Component {
         searchInText: true,
         searchInTitle: true,
         searchInAuthor: true
-      }
+      },
+      reportPost: null
     };
   }
 
@@ -297,16 +298,37 @@ export default class PwnzBlog extends Component {
     })
   }
 
-  render() {
+  handlePostReport = (post) => {
+    this.setState({
+      reportPost: post
+    })
+  }
 
+  handleReportFormCancel = () => {
+    this.setState({
+      reportPost: null
+    })
+  }
+
+  hideReportForm=(e)=>{
+    const target=$(e.target);
+    if (target.hasClass('pwnz-curtain')) {
+      this.setState({
+        reportPost: null
+      })
+    }
+  }
+
+  handleReportFormSubmit=(text)=>{
+    
+  }
+
+  render() {
     const posts = this.state.postsToShow;
     const { searchInNumber, searchInTitle, searchInAuthor, searchInText } = this.state.searchCriteria;
 
     return (
-<>
-      
       <div className="pwnzBlog" >
-      <PwnzReportForm reportTitle={1}/>
         <div className='pwnz-bwtm pwnz-mb10'>
           <div className='pwnz-bwtm-bd pwnz-f pwnzBlog-newPostFormHeader'>
             <div className='pwnz-f-grow1 pwnz-f-vc'><span>Have something new? Let us know!</span></div>
@@ -347,7 +369,7 @@ export default class PwnzBlog extends Component {
           <div className='pwnz-select'>
             <span className='pwnz-nowrap'>Sorted by {this.state.sortBy}</span>
             <select className='pwnz-f-grow1' onChange={this.handleSortChange} value={!!this.state.sortBy} >
-              <option value='' hidden>{this.state.sortBy[0].toUpperCase()+this.state.sortBy.slice(1)}</option>
+              <option value='' hidden>{this.state.sortBy[0].toUpperCase() + this.state.sortBy.slice(1)}</option>
               <option value="date" >Date</option>
               <option value="random">Random</option>
               <option value="likes">Likes</option>
@@ -404,12 +426,25 @@ export default class PwnzBlog extends Component {
               onLike={this.handlePostLike}
               onDislike={this.handlePostDislike}
               user={this.props.user}
+              onReport={this.handlePostReport}
             />;
           }) :
             <p className='pwnz-t-c'>No posts found</p>}
         </div>
+        {this.state.reportPost ?
+          <div className='pwnz-curtain pwnz-f-c' onClick={this.hideReportForm}>
+            <div className='pwnzBlog-reportForm'>
+              <PwnzReportForm
+                post={this.state.reportPost}
+                onSubmit={this.handleReportFormSubmit}
+                onCancel={this.handleReportFormCancel}
+                minHeight={20}
+                maxHeight={170}
+              />
+            </div>
+          </div>
+          : null}
       </div>
-      </>
     );
   }
 }

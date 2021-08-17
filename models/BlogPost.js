@@ -11,7 +11,8 @@ const schema=new Schema({
   likedBy:{type: Array, default:[]},
   dislikedBy:{type: Array, default:[]},
   deleted:{type:Boolean, default:false},
-  number:{type:Number,default:0}
+  number:{type:Number,default:0},
+  reports:{type:Array,default:[]}
 })
 
 module.exports=model('BlogPost',schema);

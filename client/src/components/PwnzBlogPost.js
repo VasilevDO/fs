@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./PwnzBlogPost.css";
 import PwnzTextContainer from "./PwnzTextContainer";
 import { iso8601ToDateStr } from './pwnz';
+import $ from 'jquery';
 
 export default class PwnzBlogPost extends Component {
   constructor(props) {
@@ -35,7 +36,6 @@ export default class PwnzBlogPost extends Component {
   turnEditMode = () => {
     const savedTitle = this.state.title;
     const savedText = this.state.text;
-    console.log('KEKEKS')
     this.setState({
       editMode: true,
       savedTitle: savedTitle,
@@ -88,6 +88,12 @@ export default class PwnzBlogPost extends Component {
     this.props.onDislike(this.props.post._id);
   }
 
+  reportPost=(e)=>{
+    const target=$(e.target);
+    target.closest('.pwnz-bwdm-c').hide(500);
+    this.props.onReport(this.props.post)
+  }
+
   componentDidUpdate(prevProps) {
     if (prevProps.post !== this.props.post) {
       this.setState({
@@ -98,6 +104,7 @@ export default class PwnzBlogPost extends Component {
 
     }
   }
+
 
   render() {
     const { title, text, format, dateEdited } = this.state;
@@ -215,7 +222,7 @@ export default class PwnzBlogPost extends Component {
                     </>
                     : null}
                   <div className='pwnz-button pwnz-f-c'>
-                    <span className='pwnz-nowrap'>Report</span>
+                    <span className='pwnz-nowrap' onClick={this.reportPost}>Report</span>
                   </div>
                 </div>
               </div>

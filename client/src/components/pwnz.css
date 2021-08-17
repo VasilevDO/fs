@@ -13,7 +13,11 @@
 }
 
 .pwnz-m0 {
-    margin:0px !important;
+    margin:0 !important;
+}
+
+.pwnz-mt0 {
+    margin-top:0;
 }
 
 .pwnz-m10 {
@@ -34,6 +38,10 @@
 
 .pwnz-mb10 {
     margin-bottom:10px;
+}
+
+.pwnz-mt10 {
+    margin-top:10px;
 }
 
 .pwnz-f-c {
