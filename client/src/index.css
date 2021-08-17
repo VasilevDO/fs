@@ -123,14 +123,7 @@ input[type="range"] {
 }
 
 
-.pwnz-curtain {
-    position:fixed;
-    width:100vw;
-    height:100vh;
-    top:0;
-    right:0;
-    background-color: rgba(128, 128, 128, 0.7);
-}
+
 
 .animated-360-rotation {
     animation: fullRotation 0.5s;

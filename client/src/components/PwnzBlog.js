@@ -4,18 +4,22 @@ import PwnzBlogPost from "./PwnzBlogPost";
 import PwnzTextContainer from "./PwnzTextContainer";
 import $ from 'jquery';
 import { randomInt } from "./pwnz";
+import PwnzReportForm from "./PwnzReportForm";
 
 export default class PwnzBlog extends Component {
   constructor(props) {
     super(props);
     this.state = {
       posts: [],
+      postsToShow: [],
       loading: true,
       sortBy: 'date',
-      searchInNumber: true,
-      searchInText: true,
-      searchInTitle: true,
-      searchInAuthor: true,
+      searchCriteria: {
+        searchInNumber: true,
+        searchInText: true,
+        searchInTitle: true,
+        searchInAuthor: true
+      }
     };
   }
 
@@ -23,7 +27,8 @@ export default class PwnzBlog extends Component {
     const posts = await this.getPosts();
     if (posts) {
       this.setState({
-        posts: posts,
+        posts: this.sortPosts(posts, this.state.sortBy),
+        postsToShow: this.sortPosts(posts, this.state.sortBy),
         loading: false
       })
     }
@@ -57,15 +62,11 @@ export default class PwnzBlog extends Component {
       const { post } = await fetch('/api/blog/create', { method, body, headers })
         .then(data => data.json());
       if (post) {
-        const criteria = {
-          searchInNumber: this.state.searchInNumber,
-          searchInText: this.state.searchInText,
-          searchInTitle: this.state.searchInTitle
-        }
         $('.pwnzBlog-newPostForm').hide(500);
         $('.pwnzBlog-newPostForm').siblings('.pwnz-bwtm-bd').find('.pwnz-bwtm-b').toggle(1);
         this.setState({
           posts: this.state.posts.concat(post),
+          postsToShow: this.state.postsToShow.concat(post),
           newPostText: '',
           newPostTitle: ''
         })
@@ -95,13 +96,13 @@ export default class PwnzBlog extends Component {
           if (item._id === postId) return post;
           return item;
         })
-        const criteria = {
-          searchInNumber: this.state.searchInNumber,
-          searchInText: this.state.searchInText,
-          searchInTitle: this.state.searchInTitle
-        }
+        const newPostsToShow = this.state.postsToShow.map(item => {
+          if (item._id === postId) return post;
+          return item;
+        })
         this.setState({
-          posts: newPosts
+          posts: newPosts,
+          postsToShow: newPostsToShow
         })
 
       } else {
@@ -130,8 +131,13 @@ export default class PwnzBlog extends Component {
           if (item._id === postId) return post;
           return item;
         })
+        const newPostsToShow = this.state.postsToShow.map(item => {
+          if (item._id === postId) return post;
+          return item;
+        })
         this.setState({
-          posts: newPosts
+          posts: newPosts,
+          postsToShow: newPostsToShow
         })
       } else {
         return;//there is should be some error handler
@@ -215,7 +221,7 @@ export default class PwnzBlog extends Component {
 
 
   sortPosts = (posts, sortBy) => {
-    return posts.sort((a, b) => {
+    const sortedPosts = posts.concat().sort((a, b) => {
       if (sortBy === 'date') {
         return b[sortBy] >= a[sortBy] ? 1 : -1;
       } else if (sortBy === 'random') {
@@ -226,38 +232,40 @@ export default class PwnzBlog extends Component {
         return b.dislikedBy.length >= a.dislikedBy.length ? 1 : -1;
       }
     });
+    return sortedPosts;
   }
 
   handleSortChange = (e) => {
     this.setState({
-      sortBy: e.target.value
+      sortBy: e.target.value,
+      posts: this.sortPosts(this.state.posts, e.target.value),
+      postsToShow: this.sortPosts(this.state.postsToShow, e.target.value)
     })
   }
 
   handleSearchSettingsChange = (e) => {
     const target = $(e.target);
+    const searchCriteria = this.state.searchCriteria;
 
     if (target.attr('for') === 'number') {
-      this.setState({
-        searchInNumber: !this.state.searchInNumber
-      })
+      searchCriteria.searchInNumber = !searchCriteria.searchInNumber
     } else if (target.attr('for') === 'text') {
-      this.setState({
-        searchInText: !this.state.searchInText
-      })
+      searchCriteria.searchInText = !searchCriteria.searchInText
     } else if (target.attr('for') === 'title') {
-      this.setState({
-        searchInTitle: !this.state.searchInTitle
-      })
+      searchCriteria.searchInTitle = !searchCriteria.searchInTitle
     } else if (target.attr('for') === 'author') {
-      this.setState({
-        searchInAuthor: !this.state.searchInAuthor
-      })
+      searchCriteria.searchInAuthor = !searchCriteria.searchInAuthor
     }
+    this.setState({
+      searchCriteria: searchCriteria,
+      postsToShow: this.searchPosts(this.state.posts, this.state.searchInput, searchCriteria)
+    })
+
   }
 
-  filterPosts = (posts, value, criteria) => {
+  searchPosts = (posts, value, criteria) => {
     if (!value) return posts;
+    if (!Object.entries(criteria).filter(item => item[1] !== false).length) return posts;
     const filteredPosts = new Set();
     if (criteria.searchInNumber) {
       posts.forEach(post => {
@@ -284,28 +292,21 @@ export default class PwnzBlog extends Component {
 
   handleSearchInputChange = (e) => {
     this.setState({
-      searchInput: e.target.value
+      searchInput: e.target.value,
+      postsToShow: this.searchPosts(this.state.posts, e.target.value, this.state.searchCriteria)
     })
   }
 
   render() {
 
-    const filterCriteria = {
-      searchInNumber: this.state.searchInNumber,
-      searchInText: this.state.searchInText,
-      searchInTitle: this.state.searchInTitle,
-      searchInAuthor: this.state.searchInAuthor,
-    }
-    console.log(this.filterPosts(this.state.posts,this.state.searchInput,filterCriteria) )
-    const posts = this.sortPosts(
-       (this.state.searchInput !== '' ? 
-          this.filterPosts(this.state.posts,this.state.searchInput,filterCriteria) : 
-          this.state.posts)
-      , this.state.sortBy);
+    const posts = this.state.postsToShow;
+    const { searchInNumber, searchInTitle, searchInAuthor, searchInText } = this.state.searchCriteria;
 
-    console.log(posts);
     return (
+<>
+      
       <div className="pwnzBlog" >
+      <PwnzReportForm reportTitle={1}/>
         <div className='pwnz-bwtm pwnz-mb10'>
           <div className='pwnz-bwtm-bd pwnz-f pwnzBlog-newPostFormHeader'>
             <div className='pwnz-f-grow1 pwnz-f-vc'><span>Have something new? Let us know!</span></div>
@@ -344,9 +345,10 @@ export default class PwnzBlog extends Component {
         </div>
         <div className='pwnzBlog-controls pwnz-f-c pwnz-mb10'>
           <div className='pwnz-select'>
-            <span className='pwnz-nowrap'>Sort by:</span>
-            <select onChange={this.handleSortChange} value={this.state.sort} className='pwnz-f-grow1'>
-              <option value="date">Date</option>
+            <span className='pwnz-nowrap'>Sorted by {this.state.sortBy}</span>
+            <select className='pwnz-f-grow1' onChange={this.handleSortChange} value={!!this.state.sortBy} >
+              <option value='' hidden>{this.state.sortBy[0].toUpperCase()+this.state.sortBy.slice(1)}</option>
+              <option value="date" >Date</option>
               <option value="random">Random</option>
               <option value="likes">Likes</option>
               <option value="dislikes">Dislikes</option>
@@ -365,7 +367,7 @@ export default class PwnzBlog extends Component {
           <div className='pwnz-bwdm'>
             <div className='pwnz-bwdm-bd'>
               <div className='pwnz-button pwnz-bwdm-b' >
-                <span>Options</span>
+                <span className='pwnz-nowrap'>Search options</span>
               </div>
             </div>
             <div className='pwnz-bwdm-c pwnz-bwdm-downLeft pwnz-p10' style={{ display: 'none' }}>
@@ -373,19 +375,19 @@ export default class PwnzBlog extends Component {
                 <span className='pwnz-nowrap pwnz-m0'>Search in</span>
                 <div className='pwnz-checkbox'>
                   <span>#</span>
-                  <input for='number' type='checkbox' checked={this.state.searchInNumber} onChange={this.handleSearchSettingsChange} />
+                  <input for='number' type='checkbox' checked={searchInNumber} onChange={this.handleSearchSettingsChange} />
                 </div>
                 <div className='pwnz-checkbox'>
                   <span>Author</span>
-                  <input for='author' type='checkbox' checked={this.state.searchInAuthor} onChange={this.handleSearchSettingsChange} />
+                  <input for='author' type='checkbox' checked={searchInAuthor} onChange={this.handleSearchSettingsChange} />
                 </div>
                 <div className='pwnz-checkbox'>
                   <span>Title</span>
-                  <input for='title' type='checkbox' checked={this.state.searchInTitle} onChange={this.handleSearchSettingsChange} />
+                  <input for='title' type='checkbox' checked={searchInTitle} onChange={this.handleSearchSettingsChange} />
                 </div>
                 <div className='pwnz-checkbox'>
                   <span>Text</span>
-                  <input for='text' type='checkbox' checked={this.state.searchInText} onChange={this.handleSearchSettingsChange} />
+                  <input for='text' type='checkbox' checked={searchInText} onChange={this.handleSearchSettingsChange} />
                 </div>
 
               </div>
@@ -394,7 +396,6 @@ export default class PwnzBlog extends Component {
         </div>
         <div className="pwnzBlog-container">
           {posts.length ? posts.map((post) => {
-            console.log(posts);
             return <PwnzBlogPost
               post={post}
               editable={this.props.user.userRights.canModerateBlog || post.owner === this.props.user.userId}
@@ -408,6 +409,7 @@ export default class PwnzBlog extends Component {
             <p className='pwnz-t-c'>No posts found</p>}
         </div>
       </div>
+      </>
     );
   }
 }

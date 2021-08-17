@@ -56,6 +56,7 @@ router.post('/like', auth, async (request, response) => {
             post.dislikedBy = post.likedBy.filter(item => item != userId);
         }
         await post.save();
+        console.log(post);
         response.status(201).json({ post })
     } catch (e) {
         response.status(500).json({ message: 'Something went wrong. Try again later' });

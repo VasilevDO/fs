@@ -1,0 +1,10 @@
+.pwnz-reportForm {
+    border: 2px solid #c7c7d1;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: #d7f3fe;
+}
+
+.pwnz-reportForm-buttons {
+    justify-content: space-evenly;
+}
