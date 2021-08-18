@@ -170,10 +170,10 @@ export default class PwnzBlogPost extends Component {
             </div>
             <div className='pwnz-f-c'>
               <div className={'pwnz-button pwnz-f-c' + (isLiked ? ' pwnz-checked' : '')} >
-                <span className='pwnz-nowrap' onClick={this.handlePostLike}>{`Like (${this.props.post.likedBy.length})`}</span>
+                <div className='pwnz-nowrap' onClick={this.handlePostLike}>{`Like (${this.props.post.likedBy.length})`}</div>
               </div>
               <div className={'pwnz-button pwnz-f-c pwnz-ml5' + (isDisliked ? ' pwnz-checked' : '')} >
-                <span className='pwnz-nowrap' onClick={this.handlePostDislike}>{`Dislike (${this.props.post.dislikedBy.length})`}</span>
+                <div className='pwnz-nowrap' onClick={this.handlePostDislike}>{`Dislike (${this.props.post.dislikedBy.length})`}</div>
               </div>
             </div>
 
@@ -190,39 +190,39 @@ export default class PwnzBlogPost extends Component {
                   {this.props.editable ?
                     <>
                       <div className='pwnz-bwtm'>
-                        <div className='pwnz-bwtm-bd'>
-                          <span className='pwnz-button pwnz-bwtm-b' onClick={this.turnEditMode}>Edit</span>
-                          <span style={{ display: 'none' }} className='pwnz-button pwnz-bwtm-b pwnz-disabled pwnz-nowrap'>Save changes?</span>
+                        <div className='pwnz-button pwnz-bwtm-bd'>
+                          <div className='pwnz-bwtm-b' onClick={this.turnEditMode}>Edit</div>
+                          <div style={{ display: 'none' }} className='pwnz-bwtm-b pwnz-disabled pwnz-nowrap'>Save changes?</div>
                         </div>
                         <div className='pwnz-bwtm-c pwnz-f-c' style={{ display: 'none' }}>
 
                           <div className='pwnz-button pwnz-f-grow1' onClick={this.saveChanges}>
-                            <span className='pwnz-nowrap pwnz-nowrap pwnz-bwtm-cb'>Yes</span>
+                            <div className='pwnz-nowrap pwnz-nowrap pwnz-bwtm-cb'>Yes</div>
                           </div>
                           <div className='pwnz-button pwnz-f-grow1'>
-                            <span className='pwnz-nowrap pwnz-bwtm-cb' onClick={this.discardChanges}>No</span>
+                            <div className='pwnz-nowrap pwnz-bwtm-cb' onClick={this.discardChanges}>No</div>
                           </div>
                         </div>
                       </div>
                       <div className='pwnz-bwtm'>
-                        <div className='pwnz-bwtm-bd'>
-                          <span className='pwnz-button pwnz-bwtm-b'>Delete</span>
-                          <span style={{ display: 'none' }} className='pwnz-button pwnz-bwtm-b pwnz-disabled pwnz-nowrap'>Are you sure?</span>
+                        <div className='pwnz-button pwnz-bwtm-bd'>
+                          <div className='pwnz-bwtm-b'>Delete</div>
+                          <div style={{ display: 'none' }} className='pwnz-bwtm-b pwnz-disabled pwnz-nowrap'>Are you sure?</div>
                         </div>
                         <div className='pwnz-bwtm-c pwnz-f-c' style={{ display: 'none' }}>
 
-                          <div className='pwnz-button pwnz-f-grow1' onClick={this.deletePost}>
-                            <span className='pwnz-nowrap'>Yes</span>
+                          <div className='pwnz-button pwnz-f-grow1'>
+                            <div className='pwnz-nowrap' onClick={this.deletePost}>Yes</div>
                           </div>
                           <div className='pwnz-button pwnz-f-grow1'>
-                            <span className='pwnz-nowrap pwnz-bwtm-cb'>No</span>
+                            <div className='pwnz-nowrap pwnz-bwtm-cb'>No</div>
                           </div>
                         </div>
                       </div>
                     </>
                     : null}
-                  <div className='pwnz-button pwnz-f-c'>
-                    <span className='pwnz-nowrap' onClick={this.reportPost}>Report</span>
+                  <div className='pwnz-button'>
+                    <div className='pwnz-nowrap' onClick={this.reportPost}>Report</div>
                   </div>
                 </div>
               </div>

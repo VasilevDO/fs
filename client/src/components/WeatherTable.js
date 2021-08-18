@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./WeatherTable.css";
 import $ from "jquery";
-import {Loader} from './Loader';
+import { Loader } from './Loader';
 
 class HourlyWeather {
   constructor(hourlyObj) {
@@ -166,7 +166,7 @@ const prepareWeatherData = (weatherObj) => {
       return (
         hour.date.split(" ")[1] === getDateToString(new Date()).split(" ")[1] ||
         hour.date.split(" ")[1] ===
-          getDateToString(new Date(Date.now() + 86400000)).split(" ")[1]
+        getDateToString(new Date(Date.now() + 86400000)).split(" ")[1]
       );
     });
 
@@ -204,8 +204,8 @@ export default class WeatherTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading:true,
-      format: this.props.format||'current', //avaible formats: micro, mini, hourly, daily, current
+      loading: true,
+      format: this.props.format || 'current', //avaible formats: micro, mini, hourly, daily, current
       currentTableData: null,
       hourlyTableData: null,
       hourlyTableDay: "today",
@@ -237,9 +237,9 @@ export default class WeatherTable extends Component {
   };
 
   handleCityChange = (e) => {
-    const city=this.state.cities.find(city=>city.name===e.target.value);
+    const city = this.state.cities.find(city => city.name === e.target.value);
     this.setState({
-      city:city
+      city: city
     });
   };
 
@@ -307,8 +307,8 @@ export default class WeatherTable extends Component {
         .join("");
     }
     let sorted = this.state.dailyTableData.concat().sort((day1, day2) => {
-        if (day1[criteria]===day2[criteria]) return 0;
-        return day1[criteria] > day2[criteria] ? 1 : -1;
+      if (day1[criteria] === day2[criteria]) return 0;
+      return day1[criteria] > day2[criteria] ? 1 : -1;
     });
     if (JSON.stringify(sorted) === JSON.stringify(this.state.dailyTableData))
       sorted = sorted.reverse();
@@ -336,7 +336,7 @@ export default class WeatherTable extends Component {
       let val2 = day2[criteria];
       if (val1 === "Expired") val1 = -1;
       if (val2 === "Expired") val2 = -1;
-      if (val1===val2) return 0;
+      if (val1 === val2) return 0;
       return val1 > val2 ? 1 : -1;
     });
     if (
@@ -369,18 +369,18 @@ export default class WeatherTable extends Component {
     });
   };
 
-  getCities=async ()=> {
+  getCities = async () => {
     try {
-      const method='GET';
-      const body=null;      
-      const headers={
-        'Content-Type':'application/json',
-        Authorization:`Bearer ${this.props.user.token}`
+      const method = 'GET';
+      const body = null;
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.props.user.token}`
       };
-      const {cities}=await fetch('/api/weather/cities', {method,body,headers})
-      .then(data=>data.json());  
+      const { cities } = await fetch('/api/weather/cities', { method, body, headers })
+        .then(data => data.json());
       return cities;
-  
+
     } catch (e) {
       console.log(e.message);
     }
@@ -388,60 +388,60 @@ export default class WeatherTable extends Component {
 
   getWeatherData = async (city) => {
     try {
-      const method='POST';
+      const method = 'POST';
       const time = [
         (new Date().getTime() / 1000 - 10).toFixed(0), //today in seconds
         (new Date().getTime() / 1000 - 10).toFixed(0) - 86400 //yesterday in seconds
       ]; //-10 secs to fix 'time in future' error
-      const body=JSON.stringify({
-        city:this.state.city,
-        time:time
+      const body = JSON.stringify({
+        city: this.state.city,
+        time: time
       });
-      
-      const headers={
-        'Content-Type':'application/json',
-        Authorization:`Bearer ${this.props.user.token}`
+
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.props.user.token}`
       };
-  
-      const weatherObj=await fetch('/api/weather', {method,body,headers})
-      .then(data=>data.json());
-  
+
+      const weatherObj = await fetch('/api/weather', { method, body, headers })
+        .then(data => data.json());
+
       return weatherObj;
-  
+
     } catch (e) {
       console.log(e.message);
     }
   };
-  
+
 
   componentDidMount = async () => {
-    const cities=await this.getCities();
+    const cities = await this.getCities();
     const weatherObj = await this.getWeatherData(this.state.city);
     const { current, hourlyObj, daily, mini } = prepareWeatherData(weatherObj);
     this.setState({
-      cities:cities,
-      city:cities[0],
+      cities: cities,
+      city: cities[0],
       currentTableData: current,
       hourlyTableData: hourlyObj,
       dailyTableData: daily,
       miniTableData: mini,
       timeUpdated: getDateToString(new Date(Date.now())).split(" ")[0],
-      loading:false
+      loading: false
     });
   }
 
 
-  
+
 
   render() {
 
     if (this.state.loading) {
-      return <Loader/>
+      return <Loader />
     }
 
     const format = this.state.format;
 
-    const city=this.state.city;
+    const city = this.state.city;
 
     const currentTableData = this.state.currentTableData;
 
@@ -456,27 +456,29 @@ export default class WeatherTable extends Component {
       (hourlyTableDay === "today"
         ? getBeautifulDate(getDateToString(new Date(Date.now())))
         : getBeautifulDate(
-            getDateToString(new Date(Date.now() + 24 * 60 * 60 * 1000))
-          ));
+          getDateToString(new Date(Date.now() + 24 * 60 * 60 * 1000))
+        ));
 
     const dailyTableData = this.state.dailyTableData;
 
     const timeUpdated = this.state.timeUpdated;
 
-    console.log(format)
-
-    if (miniTableData&&format==='micro') {
+    if (miniTableData && format === 'micro') {
       return (
         <div className='pwnz-weatherTable-micro'>
-          <div>
-            <select className='pwnz-select pwnz-t-c' value={city.name} onChange={this.handleCityChange}>
-              {this.state.cities.map(city=>{
-                return (
-                  <option value={city.name}>{city.name}</option>
-                )
-              })}
-            </select>
-            <button onClick={this.updateTable}>🗘</button>
+          <div className='pwnz-p5'>
+            <div className='pwnz-select pwnz-f-grow1'>
+              <select className='pwnz-t-c pwnz-w100 pwnz-mr5' value={city.name} onChange={this.handleCityChange}>
+                {this.state.cities.map(city => {
+                  return (
+                    <option value={city.name}>{city.name}</option>
+                  )
+                })}
+              </select>
+            </div>
+            <div className='pwnz-button pwnz-f-c' >
+              <div onClick={this.updateTable} className='pwnz-fs23'>🗘</div>
+            </div>
           </div>
           <div className='pwnz-p5'>
             {miniTableData.date.split(" ")[0]}{" "}
@@ -487,14 +489,14 @@ export default class WeatherTable extends Component {
               alt="weather icon"
               src={`http://openweathermap.org/img/wn/${miniTableData.currentWeather.icon}.png`}
             />
-            <span>
+            <span className='pwnz-ml5'>
               {miniTableData.currentWeather.main}
-              <br/>
+              <br />
               ({miniTableData.currentWeather.description})
             </span>
-            <span>
+            <span className='pwnz-ml5'>
               {miniTableData.temp.current} °C
-              <br/>
+              <br />
               {miniTableData.windSpeed.current} km/h
             </span>
           </div>
@@ -504,28 +506,30 @@ export default class WeatherTable extends Component {
 
     return (
       <>
-        <div className={"weather-table weather-table-"+format}>
+        <div className={"weather-table weather-table-" + format}>
           <div className="weather-table-controlsDiv">
             <div>
-              <span className='pwnz-nowrap'>City</span>
+              <span className='pwnz-nowrap'>City:</span>
               <select className='pwnz-select' value={city.name} onChange={this.handleCityChange}>
-                {this.state.cities.map(city=>{
+                {this.state.cities.map(city => {
                   return (
                     <option value={city.name}>{city.name}</option>
                   )
                 })}
               </select>
+            </div>
+            <div>
+              <span className='pwnz-nowrap'>Table format:</span>
+              <select className='pwnz-select' value={format} onChange={this.handleFormatChange}>
+                <option value="current">Current</option>
+                <option value="mini">Mini</option>
+                <option value="hourly">Hourly</option>
+                <option value="daily">Daily</option>
+              </select>
+              <span className='pwnz-nowrap'>Last update: {timeUpdated || "none"}</span>
+              <div className='pwnz-button pwnz-f-c' >
+                <div onClick={this.updateTable}>Update</div>
               </div>
-              <div>
-            <span className='pwnz-nowrap'>Table format</span>
-            <select className='pwnz-select' value={format} onChange={this.handleFormatChange}>
-              <option value="current">Current</option>
-              <option value="mini">Mini</option>
-              <option value="hourly">Hourly</option>
-              <option value="daily">Daily</option>
-            </select>
-            <span className='pwnz-nowrap'>Last update: {timeUpdated || "none"}</span>
-            <button onClick={this.updateTable}>Update</button>
             </div>
           </div>
           {miniTableData && format === "mini" ? (
@@ -642,9 +646,15 @@ export default class WeatherTable extends Component {
               <thead>
                 <tr>
                   <th colSpan="6">
-                    <button onClick={this.switchHourlyTableDay}>{"<"}</button>
-                    {hourlyTableTitle}
-                    <button onClick={this.switchHourlyTableDay}>{">"}</button>
+                    <div className='pwnz-f-c'>
+                      <div className='pwnz-button pwnz-f-c' >
+                        <div onClick={this.switchHourlyTableDay} >{"<"}</div>
+                      </div>
+                      <span className='pwnz-m010'>{hourlyTableTitle}</span>
+                      <div className='pwnz-button pwnz-f-c' >
+                        <div onClick={this.switchHourlyTableDay}>{">"}</div>
+                      </div>
+                    </div>
                   </th>
                 </tr>
                 <tr>

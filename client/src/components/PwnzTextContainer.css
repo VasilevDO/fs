@@ -1,10 +1,12 @@
   .pwnz-textContainer {
     overflow: auto;
     font-size: 14px;
+    width:100%;
   }
   
   .pwnz-textContainer > textarea {
     width: 100%;
+    display:block;
     box-sizing: border-box;
     border: none;
     resize: none;
@@ -30,6 +32,10 @@
   
   .pwnz-textContainer-center > textarea {
     text-align: center;
+  }
+
+  .pwnz-textContainer-editable {
+    background-color: #ebf9fe;
   }
   
   

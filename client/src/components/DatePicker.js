@@ -60,14 +60,14 @@ class DatePicker extends Component {
     }
     this.props.datePick(deadline);
     this.setState({
-      buttonText:deadline
+      buttonText: deadline
     })
   };
 
   deleteDeadline = () => {
     this.props.datePick(null);
     this.setState({
-      buttonText:undefined
+      buttonText: undefined
     })
   };
 
@@ -80,22 +80,25 @@ class DatePicker extends Component {
     const selectedText = selectedDate
       ? "Deadline: " + selectedDate
       : "No deadline selected";
-      const isDisabled=this.props.disabled;
-      console.log(this.state);
+    const isDisabled = this.props.disabled;
     return (
       <>
         <div className="date-picker">
-          <div className='pwnz-buttonWdropmenu'>
-            <button className='pwnz-dropmenu-button' disabled={isDisabled}>{buttonText}</button>
-            <div className='pwnz-dropmenu pwnz-dropmenu-down-left' style={{display:'none'}}>
-              <div className="date-picker-calendar-selected">
-                <p>{selectedText}</p>
-                <button onClick={this.deleteDeadline}>Clear</button>
+          <div className='pwnz-bwdm'>
+            <div className='pwnz-button pwnz-bwdm-bd'>
+              <div className='pwnz-bwdm-b'>{buttonText}</div>
+            </div>
+            <div className='pwnz-bwdm-c pwnz-bwdm-downLeft pwnz-p10' style={{ display: 'none' }}>
+              <div className='pwnz-bwdm-c-inner'>
+                <div className="date-picker-calendar-selected">
+                  <p>{selectedText}</p>
+                  <button onClick={this.deleteDeadline}>Clear</button>
+                </div>
+                <Calendar
+                  datePick={this.datePick}
+                  selectedDate={selectedDate}
+                ></Calendar>
               </div>
-              <Calendar
-                datePick={this.datePick}
-                selectedDate={selectedDate}
-              ></Calendar>
             </div>
           </div>
         </div>

@@ -9,8 +9,9 @@ class PwnzReportForm extends Component {
         super(props);
         this.state = {
             reportTitle: this.props.reportTitle,
-            minHeight:this.props.minHeight,
-            maxHeight:this.props.maxHeight
+            minHeight: this.props.minHeight,
+            maxHeight: this.props.maxHeight,
+            alert: null
         }
     }
 
@@ -21,6 +22,15 @@ class PwnzReportForm extends Component {
     }
 
     handleSubmit = () => {
+        if (!this.state.reportText) {
+            this.setState({
+                alert: {
+                    text: 'Report ticket cannot be empty',
+                    status: 'red'
+                }
+            })
+            return;
+        }
         this.props.onSubmit(this.state.reportText);
     }
 
@@ -32,24 +42,37 @@ class PwnzReportForm extends Component {
         console.log(this.props.post);
         return (
             <div className='pwnz-reportForm'>
-                <p className='pwnz-t-c pwnz-mt0 pwnz-mb10'>{`Report post #${this.props.post.number} by ${this.props.post.createdBy}`}</p>
-                <PwnzTextContainer
-                    value={this.state.reportText}
-                    minHeight={this.state.minHeight}
-                    maxHeight={this.state.maxHeight}
-                    placeholder={"Whats wrong?"}
-                    editable={true}
-                    textAlign={"left"}
-                    onChange={this.handleReportTextChange}
-                />
-                <div className='pwnz-reportForm-buttons pwnz-f-c pwnz-mt10'>
-                    <div className='pwnz-button pwnz-f-c' >
-                        <span onClick={this.handleSubmit}>Submit report</span>
-                    </div>
-                    <div className='pwnz-button pwnz-f-c' >
-                        <span onClick={this.handleCancel}>Cancel</span>
-                    </div>
-                </div>
+                {this.props.message ?
+                    <>
+                        <p className='pwnz-t-c pwnz-mt0 pwnz-mb10'>{this.props.message}</p>
+                        <div className='pwnz-reportForm-buttons pwnz-f-c pwnz-mt10'>
+                            <div className='pwnz-button pwnz-f-c' >
+                                <div onClick={this.handleCancel}>Ok</div>
+                            </div>
+                        </div>
+                    </>
+                    :
+                    <>
+                        <p className='pwnz-t-c pwnz-mt0 pwnz-mb10'>{`Report post #${this.props.post.number} by ${this.props.post.createdBy}`}</p>
+                        {this.state.alert ? <p className={'pwnz-t-c pwnz-mt0 pwnz-mb10' + (this.state.alert.status === 'red' ? ' pwnz-alert-red' : ' pwnz-alert-green')}>{this.state.alert.text}</p> : null}
+                        <PwnzTextContainer
+                            value={this.state.reportText}
+                            minHeight={this.state.minHeight}
+                            maxHeight={this.state.maxHeight}
+                            placeholder={"Whats wrong?"}
+                            editable={true}
+                            textAlign={"left"}
+                            onChange={this.handleReportTextChange}
+                        />
+                        <div className='pwnz-reportForm-buttons pwnz-f-c pwnz-mt10'>
+                            <div className='pwnz-button pwnz-f-c' >
+                                <div onClick={this.handleSubmit}>Submit report</div>
+                            </div>
+                            <div className='pwnz-button pwnz-f-c' >
+                                <div onClick={this.handleCancel}>Cancel</div>
+                            </div>
+                        </div>
+                    </>}
             </div>
         )
     }

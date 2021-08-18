@@ -81,7 +81,7 @@ $(document).ready(()=>{
         })
       }
     }
-    if (target.closest('.pwnz-bwdm').length<1) {
+    if (target.closest('.pwnz-bwdm').length<1||target.hasClass('pwnz-bwdm-cb')) {
       $('.pwnz-bwdm-c').hide(Timing);
     }
 

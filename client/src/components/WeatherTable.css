@@ -1,41 +1,48 @@
+.pwnz-weatherTable-micro {
+  background-color: #cee5f2;
+  border: 2px solid #c7c7d1;
+  border-radius: 4px;
+}
 
 .pwnz-weatherTable-micro > div{
     display:flex;
     justify-content: space-evenly;
-    padding:5px;
-    box-shadow: 
-    1px 0 0 0 #888, 
-    0 1px 0 0 #888, 
-    1px 1px 0 0 #888,   /* Just to fix the corner */
-    1px 0 0 0 #888 inset, 
-    0 1px 0 0 #888 inset;
 }
 
 .pwnz-weatherTable-micro > div > span{
     text-align: center;
 }
 
-
+.pwnz-weatherTable-micro select {
+  background-color: #ebf9fe;
+}
 
 .weather-table {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    background-color: #cee5f2;
+    border: 2px solid #c7c7d1;
+    border-radius: 4px;
   }
 
   .weather-table-mini {
     width:500px;
   }
   
+  .weather-table select {
+    background-color: #ebf9fe;
+  }
+
   .weather-table table {
-    border: 1px solid black;
+    border: 1px solid #accbe1;
     margin-left: auto;
     margin-right: auto;
     border-collapse: collapse;
   }
   
 .weather-table td {
-    border: 1px solid black;
+    border: 1px solid #accbe1;
     text-align: center; 
     vertical-align: middle;
     padding:0 5px 0 5px;
@@ -57,7 +64,7 @@
     font-size:16px;
     text-align: center; 
     vertical-align: middle;
-    border: 1px solid black;
+    border: 1px solid #accbe1;
     border-collapse: collapse;
   }
 

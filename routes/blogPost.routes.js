@@ -81,6 +81,32 @@ router.post('/dislike', auth, async (request, response) => {
     }
 })
 
+router.post('/report', auth, async (request, response) => {
+    try {
+        const { postId, reportText } = request.body;
+        if (reportText.length === 0) {
+            response.status(500).json({ message: 'No report reason provided' });
+            return;
+        }
+        const userId = request.headers.userid;
+        const post = await Post.findOne({ _id: postId });
+        console.log(post);
+        if (post.reports.find(item=>item.reporter===userId)) {
+            response.status(500).json({ message: 'Post already has been reported' });
+            return;
+        }
+        post.reports.push({
+            reporter: userId,
+            report: reportText
+        });
+        await post.save();
+        response.status(201).json({ message: 'Report has succesfully submitted' })
+
+    } catch (e) {
+        response.status(500).json({ message: 'Something went wrong. Try again later' });
+    }
+})
+
 router.post('/update', auth, async (request, response) => {
     try {
         const user = await User.findOne({ _id: request.headers.userid });

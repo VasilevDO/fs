@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import "./Todolist.css";
 import $ from "jquery";
 import DatePicker from "./DatePicker.js";
-import {Loader} from './Loader';
+import { Loader } from './Loader';
+import PwnzTextContainer from './PwnzTextContainer';
 
 class Task extends Component {
   constructor(props) {
@@ -43,7 +44,7 @@ class Task extends Component {
     updatedTask.deadline = deadline;
     this.props.taskChange(updatedTask);
     this.setState({
-      task:updatedTask
+      task: updatedTask
     })
   };
 
@@ -53,8 +54,8 @@ class Task extends Component {
       updatedTask.status === "active"
         ? "done"
         : updatedTask.status === "done"
-        ? "archived"
-        : "active";
+          ? "archived"
+          : "active";
     if (updatedTask.status === "active") {
       updatedTask.doneDate = null;
     }
@@ -74,7 +75,7 @@ class Task extends Component {
     this.props.taskChange(updatedTask);
   };
 
-  deleteTask=()=> {
+  deleteTask = () => {
     this.props.deleteTask(this.props.task._id);
   }
 
@@ -87,37 +88,54 @@ class Task extends Component {
   };
 
   render() {
- 
+
     const format = this.state.format;
     const task = this.state.task;
     const text = task.text;
     const className = "todolist-task";
     const datePickerText = task.doneDate || task.deadline;
     const statusButtonText = this.getStatusButtonText(task.status);
-    
+
     if (format === "mini") {
       return (
-        <div className={className}>
-          <p>
-            <div className='pwnz-buttonWithToggleMenu'>
-                <button className='pwnz-buttonWithToggleMenu-button'>{this.deleteButton[format]}</button>
-                <div className='pwnz-toggleMenu' style={{display:'none'}}>
-                  <span>Are you sure?</span>
-                  <button onClick={this.deleteTask}>Yes</button>
-                  <button className='pwnz-buttonWithToggledDiv-closeButton'>No</button>
+        <div className="todolist-task pwnz-f-c">
+
+          <PwnzTextContainer
+            value={text}
+            editable={false}
+            minHeight={25}
+            maxHeight={90}
+            textAlign={"left"}
+          />
+
+          <DatePicker
+            format={format}
+            selectedDate={datePickerText}
+            datePick={this.handleDatePick}
+            disabled={this.state.task.doneDate}
+          />
+
+          <div className='pwnz-button pwnz-f-c pwnz-ml5' >
+            <div onClick={this.handleStatusChange}>{statusButtonText}</div>
+          </div>
+
+          <div className='pwnz-bwdm pwnz-ml5'>
+            <div className='pwnz-button pwnz-bwdm-bd'>
+              <div className='pwnz-bwdm-b'>Delete</div>
+            </div>
+            <div className='pwnz-bwdm-c pwnz-bwdm-downLeft pwnz-p10' style={{ display: 'none' }}>
+              <p className='pwnz-nowrap pwnz-mt0'>Are you sure?</p>
+              <div className='pwnz-f-c'>
+                <div className='pwnz-button pwnz-f-grow1'>
+                  <div className='pwnz-nowrap' onClick={this.deletePost}>Yes</div>
+                </div>
+                <div className='pwnz-button pwnz-f-grow1 pwnz-ml10'>
+                  <div className='pwnz-nowrap pwnz-bwdm-cb'>No</div>
                 </div>
               </div>
-            <button onClick={this.handleStatusChange}>
-              {statusButtonText}
-            </button>
-            <DatePicker
-              format={format}
-              selectedDate={datePickerText}
-              datePick={this.handleDatePick}
-              disabled={this.state.task.doneDate}
-            ></DatePicker>
-            {text}
-          </p>
+
+            </div>
+          </div>
         </div>
       );
     } else if (format === "basic") {
@@ -126,7 +144,7 @@ class Task extends Component {
           <p>
             <div className='pwnz-buttonWithToggleMenu'>
               <button className='pwnz-buttonWithToggleMenu-button'>{this.deleteButton[format]}</button>
-              <div className='pwnz-toggleMenu' style={{display:'none'}}>
+              <div className='pwnz-toggleMenu' style={{ display: 'none' }}>
                 <span>Are you sure?</span>
                 <button onClick={this.deleteTask}>Yes</button>
                 <button className='pwnz-buttonWithToggledDiv-closeButton'>No</button>
@@ -158,15 +176,15 @@ class TaskInput extends Component {
     };
   }
 
-  changeInput = (e) => {
-    this.setState({ input: e.target.value });
+  changeInput = (val) => {
+    this.setState({ input: val });
   };
 
   addTask = () => {
     let { input } = this.state;
-    if (input==='') return;
-      this.props.addTask(input);
-      this.setState({ input: "" });
+    if (input === '') return;
+    this.props.addTask(input);
+    this.setState({ input: "" });
   };
 
   buttonText = {
@@ -176,11 +194,19 @@ class TaskInput extends Component {
 
   render() {
     return (
-      <div className="todolist-task-input">
-        <input onChange={this.changeInput} value={this.state.input}></input>
-        <button onClick={this.addTask} className='pwnz-nowrap'>
-          {this.buttonText[this.state.format]}
-        </button>
+      <div className="pwnz-f-c-stretch">
+        <PwnzTextContainer
+          onChange={this.changeInput}
+          value={this.state.input}
+          minHeight={25}
+          maxHeight={170}
+          placeholder={"Whats next?"}
+          editable={true}
+          textAlign={"left"}
+        />
+        <div className='pwnz-button pwnz-ml5' >
+          <div onClick={this.addTask} className='pwnz-nowrap'>{this.buttonText[this.state.format]}</div>
+        </div>
       </div>
     );
   }
@@ -191,7 +217,7 @@ class Todolist extends Component {
     super(props);
     this.state = {
       format: this.props.format || "basic", //format can be mini and basic
-      loading:true,
+      loading: true,
       tasks: this.props.tasks || [
         {
           id: 0,
@@ -208,24 +234,24 @@ class Todolist extends Component {
     };
   }
 
-  createTask=async(newTaskText)=> {
+  createTask = async (newTaskText) => {
     try {
-      const method='POST';
+      const method = 'POST';
       const body = JSON.stringify({
-        task:{
-          text:newTaskText,
-          status:'active'
+        task: {
+          text: newTaskText,
+          status: 'active'
         }
       });
-      const headers={
-       'Content-Type':'application/json',
-       Authorization:`Bearer ${this.props.user.token}`
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.props.user.token}`
       }
-      const task=await fetch('/api/todolist/create', {method,body,headers})
-      .then(data=>data.json());
+      const task = await fetch('/api/todolist/create', { method, body, headers })
+        .then(data => data.json());
       if (task) {
         this.setState({
-          tasks:this.state.tasks.concat(task)
+          tasks: this.state.tasks.concat(task)
         })
       }
     } catch (e) {
@@ -233,19 +259,19 @@ class Todolist extends Component {
     }
   }
 
-  updateTask=async(updatedTask)=> {
+  updateTask = async (updatedTask) => {
     try {
-      const method='POST';
+      const method = 'POST';
       const body = JSON.stringify({
-        task:updatedTask
+        task: updatedTask
       });
-      const headers={
-       'Content-Type':'application/json',
-       Authorization:`Bearer ${this.props.user.token}`
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.props.user.token}`
       }
-      const response=await fetch('/api/todolist/update', {method,body,headers})
-      
-      if (response.status===201) {
+      const response = await fetch('/api/todolist/update', { method, body, headers })
+
+      if (response.status === 201) {
         const updatedTasks = this.state.tasks.map((task) => {
           if (task._id !== updatedTask._id) return task;
           return updatedTask;
@@ -259,21 +285,21 @@ class Todolist extends Component {
     }
   }
 
-  getTasks=async () => {
+  getTasks = async () => {
     try {
-      const method='GET';
-      const body=null;
-      const headers={
-        'Content-Type':'application/json',
-        Authorization:`Bearer ${this.props.user.token}`
+      const method = 'GET';
+      const body = null;
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.props.user.token}`
       };
-      const tasks=await fetch('/api/todolist', {method,body,headers})
-      .then(data=>data.json());
+      const tasks = await fetch('/api/todolist', { method, body, headers })
+        .then(data => data.json());
       return tasks;
     } catch (e) {
-    console.log(e.message);
+      console.log(e.message);
     }
-}
+  }
 
 
 
@@ -289,33 +315,33 @@ class Todolist extends Component {
     }
   };
 
-  deleteTask=async(id)=> {
+  deleteTask = async (id) => {
     try {
-      const method='POST';
-      const body=JSON.stringify({
-        id:id
+      const method = 'POST';
+      const body = JSON.stringify({
+        id: id
       });
-      const headers={
-        'Content-Type':'application/json',
-        Authorization:`Bearer ${this.props.user.token}`
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.props.user.token}`
       };
-      const response=await fetch('/api/todolist/delete', {method,body,headers})
-      if (response.status===201) {
+      const response = await fetch('/api/todolist/delete', { method, body, headers })
+      if (response.status === 201) {
         this.setState({
-          tasks:this.state.tasks.filter(task=>task._id!==id)
+          tasks: this.state.tasks.filter(task => task._id !== id)
         })
       }
     } catch (e) {
-    console.log(e.message);
+      console.log(e.message);
     }
   }
 
-  componentDidMount=async()=>{
-    const tasks=await this.getTasks();
+  componentDidMount = async () => {
+    const tasks = await this.getTasks();
     if (tasks) {
       this.setState({
-        tasks:tasks,
-        loading:false
+        tasks: tasks,
+        loading: false
       })
     }
   }
@@ -323,7 +349,7 @@ class Todolist extends Component {
   render() {
 
     if (this.state.loading) {
-      return <Loader/>
+      return <Loader />
     }
 
     const format = this.state.format;
@@ -331,19 +357,19 @@ class Todolist extends Component {
     const activeTasks = tasks.filter((task) => task.status === "active");
     const doneTasks = tasks.filter((task) => task.status === "done");
     const archivedTasks = tasks.filter((task) => task.status === "archived");
-  
+
 
     if (format === "mini") {
       return (
         <div className="todolist-item-mini">
-          {activeTasks.length ? null : <span>No active tasks found</span>}
+          {activeTasks.length ? null : <span className='pwnz-mb10'>No active tasks found</span>}
           {activeTasks.map((task) => (
             <Task
-            format={format}
-            task={task}
-            key={task.id}
-            taskChange={this.updateTask}
-            deleteTask={this.deleteTask}
+              format={format}
+              task={task}
+              key={task.id}
+              taskChange={this.updateTask}
+              deleteTask={this.deleteTask}
             ></Task>
           ))}
           <TaskInput
@@ -358,7 +384,7 @@ class Todolist extends Component {
         <>
           <div className="todolist">
             <div className="todolist-item">
-              <span className="pwnz-title">Active: {activeTasks.length}</span>
+              <span className="pwnz-title pwnz-mb10">Active: {activeTasks.length}</span>
               {activeTasks.map((task) => (
                 <Task
                   format={format}
@@ -375,10 +401,13 @@ class Todolist extends Component {
               ></TaskInput>
             </div>
             <div className="todolist-item">
-              <span className="pwnz-title">Done: {doneTasks.length}</span>
-              <div className='pwnz-buttonWithToggleMenu'>
-                <button className='pwnz-buttonWithToggleMenu-button pwnz-button-show-hide'>Show</button>
-                <div className='pwnz-toggleMenu' style={{display:'none'}}>
+              <span className="pwnz-title pwnz-mb10">Done: {doneTasks.length}</span>
+              <div className='pwnz-bwtm'>
+                <div className='pwnz-button pwnz-bwtm-bd'>
+                  <div className='pwnz-bwtm-b'>Show</div>
+                  <div style={{ display: 'none' }} className='pwnz-bwtm-b'>Hide</div>
+                </div>
+                <div className='pwnz-bwtm-c' style={{ display: 'none' }}>
                   <div className="done-tasks">
                     {doneTasks.map((task) => (
                       <Task
@@ -389,15 +418,18 @@ class Todolist extends Component {
                         deleteTask={this.deleteTask}
                       ></Task>
                     ))}
+                  </div>
                 </div>
-                </div>
-              </div>  
+              </div>
             </div>
             <div className="todolist-item">
-              <span className="pwnz-title">Archived: {archivedTasks.length}</span>
-              <div className='pwnz-buttonWithToggleMenu'>
-                <button className='pwnz-buttonWithToggleMenu-button pwnz-button-show-hide'>Show</button>
-                <div className='pwnz-toggleMenu' style={{display:'none'}}>
+              <span className="pwnz-title pwnz-mb10">Archived: {archivedTasks.length}</span>
+              <div className='pwnz-bwtm'>
+                <div className='pwnz-button pwnz-bwtm-bd'>
+                  <div className='pwnz-bwtm-b'>Show</div>
+                  <div style={{ display: 'none' }} className='pwnz-bwtm-b'>Hide</div>
+                </div>
+                <div className='pwnz-bwtm-c' style={{ display: 'none' }}>
                   <div className="archived-tasks">
                     {archivedTasks.map((task) => (
                       <Task
@@ -408,9 +440,9 @@ class Todolist extends Component {
                         deleteTask={this.deleteTask}
                       ></Task>
                     ))}
+                  </div>
                 </div>
-                </div>
-              </div>              
+              </div>
             </div>
           </div>
         </>

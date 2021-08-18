@@ -306,21 +306,42 @@ export default class PwnzBlog extends Component {
 
   handleReportFormCancel = () => {
     this.setState({
-      reportPost: null
+      reportPost: null,
+      reportFormMessage: null
     })
   }
 
-  hideReportForm=(e)=>{
-    const target=$(e.target);
+  hideReportForm = (e) => {
+    const target = $(e.target);
     if (target.hasClass('pwnz-curtain')) {
       this.setState({
-        reportPost: null
+        reportPost: null,
+        reportFormMessage: null
       })
     }
   }
 
-  handleReportFormSubmit=(text)=>{
-    
+  handleReportFormSubmit = async (text) => {
+    try {
+      const method = 'POST';
+      const body = JSON.stringify({
+        postId: this.state.reportPost._id,
+        reportText: text
+      });
+      const headers = {
+        'Content-Type': 'application/json',
+        userId: this.props.user.userId,
+        Authorization: `Bearer ${this.props.user.token}`
+      }
+      const response = await fetch('/api/blog/report', { method, body, headers })
+        .then(data => data.json());
+      this.setState({
+        reportFormMessage: response.message
+      })
+
+    } catch (e) {
+      console.log(e.message);
+    }
   }
 
   render() {
@@ -333,8 +354,10 @@ export default class PwnzBlog extends Component {
           <div className='pwnz-bwtm-bd pwnz-f pwnzBlog-newPostFormHeader'>
             <div className='pwnz-f-grow1 pwnz-f-vc'><span>Have something new? Let us know!</span></div>
             <div className='pwnz-f-shrink1'>
-              <span className='pwnz-button pwnz-bwtm-b'>Write new post</span>
-              <span style={{ display: 'none' }} className='pwnz-button pwnz-bwtm-b'>Hide form</span>
+              <div className='pwnz-button pwnz-f-c' >
+                <div className='pwnz-bwtm-b pwnz-nowrap'>Write new post</div>
+                <div style={{ display: 'none' }} className='pwnz-bwtm-b pwnz-nowrap'>Hide form</div>
+              </div>
             </div>
           </div>
           <div className='pwnz-bwtm-c pwnzBlog-newPostForm' style={{ display: 'none' }}>
@@ -361,14 +384,14 @@ export default class PwnzBlog extends Component {
               />
             </div>
             <div className='pwnz-button pwnz-f-c' >
-              <span onClick={this.createPost}>Submit new post</span>
+              <div onClick={this.createPost}>Submit new post</div>
             </div>
           </div>
         </div>
-        <div className='pwnzBlog-controls pwnz-f-c pwnz-mb10'>
+        <div className='pwnzBlog-controls pwnz-f-c-stretch pwnz-mb10'>
           <div className='pwnz-select'>
             <span className='pwnz-nowrap'>Sorted by {this.state.sortBy}</span>
-            <select className='pwnz-f-grow1' onChange={this.handleSortChange} value={!!this.state.sortBy} >
+            <select className='pwnz-f-grow1 pwnz-wa' onChange={this.handleSortChange} value={!!this.state.sortBy} >
               <option value='' hidden>{this.state.sortBy[0].toUpperCase() + this.state.sortBy.slice(1)}</option>
               <option value="date" >Date</option>
               <option value="random">Random</option>
@@ -387,9 +410,11 @@ export default class PwnzBlog extends Component {
             className='pwnz-m0'
           ></input>
           <div className='pwnz-bwdm'>
-            <div className='pwnz-bwdm-bd'>
-              <div className='pwnz-button pwnz-bwdm-b' >
-                <span className='pwnz-nowrap'>Search options</span>
+            <div className='pwnz-bwdm-bd pwnz-h100'>
+              <div className='pwnz-button pwnz-h100' >
+                <div className='pwnz-bwdm-b pwnz-nowrap' >
+                  Search options
+                </div>
               </div>
             </div>
             <div className='pwnz-bwdm-c pwnz-bwdm-downLeft pwnz-p10' style={{ display: 'none' }}>
@@ -436,6 +461,7 @@ export default class PwnzBlog extends Component {
             <div className='pwnzBlog-reportForm'>
               <PwnzReportForm
                 post={this.state.reportPost}
+                message={this.state.reportFormMessage}
                 onSubmit={this.handleReportFormSubmit}
                 onCancel={this.handleReportFormCancel}
                 minHeight={20}
