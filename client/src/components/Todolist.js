@@ -87,6 +87,15 @@ class Task extends Component {
       return this.statusChangeButton[this.state.format][2];
   };
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.task !== this.props.task) {
+      this.setState({
+        task:this.props.task
+      })
+
+    }
+  }
+
   render() {
 
     const format = this.state.format;
@@ -121,13 +130,13 @@ class Task extends Component {
 
           <div className='pwnz-bwdm pwnz-ml5'>
             <div className='pwnz-button pwnz-bwdm-bd'>
-              <div className='pwnz-bwdm-b'>Delete</div>
+              <div className='pwnz-bwdm-b'>{this.deleteButton[format]}</div>
             </div>
             <div className='pwnz-bwdm-c pwnz-bwdm-downLeft pwnz-p10' style={{ display: 'none' }}>
               <p className='pwnz-nowrap pwnz-mt0'>Are you sure?</p>
               <div className='pwnz-f-c'>
                 <div className='pwnz-button pwnz-f-grow1'>
-                  <div className='pwnz-nowrap' onClick={this.deletePost}>Yes</div>
+                  <div className='pwnz-nowrap' onClick={this.deleteTask}>Yes</div>
                 </div>
                 <div className='pwnz-button pwnz-f-grow1 pwnz-ml10'>
                   <div className='pwnz-nowrap pwnz-bwdm-cb'>No</div>
@@ -142,17 +151,25 @@ class Task extends Component {
       return (
         <div className={className}>
           <p>
-            <div className='pwnz-buttonWithToggleMenu'>
-              <button className='pwnz-buttonWithToggleMenu-button'>{this.deleteButton[format]}</button>
-              <div className='pwnz-toggleMenu' style={{ display: 'none' }}>
-                <span>Are you sure?</span>
-                <button onClick={this.deleteTask}>Yes</button>
-                <button className='pwnz-buttonWithToggledDiv-closeButton'>No</button>
+            <div className='pwnz-bwdm pwnz-ml5'>
+              <div className='pwnz-button pwnz-bwdm-bd'>
+                <div className='pwnz-bwdm-b'>{this.deleteButton[format]}</div>
+              </div>
+              <div className='pwnz-bwdm-c pwnz-bwdm-downLeft pwnz-p10' style={{ display: 'none' }}>
+                <p className='pwnz-nowrap pwnz-mt0'>Are you sure?</p>
+                <div className='pwnz-f-c'>
+                  <div className='pwnz-button pwnz-f-grow1'>
+                    <div className='pwnz-nowrap' onClick={this.deleteTask}>Yes</div>
+                  </div>
+                  <div className='pwnz-button pwnz-f-grow1 pwnz-ml10'>
+                    <div className='pwnz-nowrap pwnz-bwdm-cb'>No</div>
+                  </div>
+                </div>
               </div>
             </div>
-            <button onClick={this.handleStatusChange}>
-              {statusButtonText}
-            </button>
+            <div className='pwnz-button pwnz-f-c pwnz-ml5' >
+            <div onClick={this.handleStatusChange}>{statusButtonText}</div>
+          </div>
             <DatePicker
               format={format}
               selectedDate={datePickerText}

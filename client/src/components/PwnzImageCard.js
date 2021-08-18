@@ -55,14 +55,14 @@ class PwnzImageCard extends Component {
         const src=this.props.image.url;
         const description=this.props.isDescriptionVisible?this.props.image.description:null;
         const tags=this.props.isTagsVisible?this.props.image.tags?this.props.image.tags.split(' ').map(tag=>'#'+tag):null:null;
-        const imgHeight=format==='mini'?this.props.height:800;
-        const imgWidth=format==='mini'?this.props.width:800;
+        const imgHeight=format==='mini'?this.props.height:700;
+        const imgWidth=format==='mini'?this.props.width:1200;
         return (
             <div className='pwnzImageCard'>
                 <div className='pwnzImageCard-imageDiv'>
                     <img 
                     src={src} 
-                    style={{height:imgHeight+'px', width:imgWidth+'px'}} 
+                    style={{maxHeight:imgHeight+'px', maxWidth:imgWidth+'px'}} 
                     onClick={this.handleImageClick}
                     />
                     {isControls?<div className='pwnzImageCard-controls'>

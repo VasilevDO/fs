@@ -86,13 +86,15 @@ class DatePicker extends Component {
         <div className="date-picker">
           <div className='pwnz-bwdm'>
             <div className='pwnz-button pwnz-bwdm-bd'>
-              <div className='pwnz-bwdm-b'>{buttonText}</div>
+              <div className='pwnz-bwdm-b pwnz-nowrap'>{buttonText}</div>
             </div>
-            <div className='pwnz-bwdm-c pwnz-bwdm-downLeft pwnz-p10' style={{ display: 'none' }}>
+            <div className='pwnz-bwdm-c pwnz-bwdm-downLeft' style={{ display: 'none' }}>
               <div className='pwnz-bwdm-c-inner'>
                 <div className="date-picker-calendar-selected">
-                  <p>{selectedText}</p>
-                  <button onClick={this.deleteDeadline}>Clear</button>
+                  <p className='pwnz-nowrap'>{selectedText}</p>
+                  <div className='pwnz-button'>
+                    <div onClick={this.deleteDeadline}>Clear</div>
+                  </div>
                 </div>
                 <Calendar
                   datePick={this.datePick}

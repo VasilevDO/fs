@@ -217,13 +217,10 @@ class Calendar extends Component {
                 selectTime={this.handleSelectTime}
                 time={selectedTime || currentTime}
               ></Timer>
-              <div>
-                <button
-                  className="calendar-date-change-button"
-                  onClick={() => this.handlePrevMonthClick(date)}
-                >
-                  {"<"}
-                </button>
+              <div className='pwnz-f-c'>
+                <div className='pwnz-button' >
+                  <div onClick={() => this.handlePrevMonthClick(date)}>{"<"}</div>
+                </div>
                 <PWNZSelect
                   className="calendar-pwnz-selector"
                   name={"months"}
@@ -235,20 +232,14 @@ class Calendar extends Component {
                   fontSize={16}
                   maxOptionsHeight={300}
                 ></PWNZSelect>
-                <button
-                  className="calendar-date-change-button"
-                  onClick={() => this.handleNextMonthClick(date)}
-                >
-                  {">"}
-                </button>
+                <div className='pwnz-button' >
+                  <div onClick={() => this.handleNextMonthClick(date)}>{">"}</div>
+                </div>
               </div>
-              <div>
-                <button
-                  className="calendar-date-change-button"
-                  onClick={() => this.handlePrevYearClick(date)}
-                >
-                  {"<"}
-                </button>
+              <div className='pwnz-f-c'>
+                <div className='pwnz-button' >
+                  <div onClick={() => this.handlePrevYearClick(date)}>{"<"}</div>
+                </div>
                 <PWNZSelect
                   className="calendar-pwnz-selector"
                   name={"years"}
@@ -260,12 +251,9 @@ class Calendar extends Component {
                   fontSize={16}
                   maxOptionsHeight={300}
                 ></PWNZSelect>
-                <button
-                  className="calendar-date-change-button"
-                  onClick={() => this.handleNextYearClick(date)}
-                >
-                  {">"}
-                </button>
+                <div className='pwnz-button' >
+                  <div onClick={() => this.handleNextYearClick(date)}>{">"}</div>
+                </div>
               </div>
             </div>
           </header>

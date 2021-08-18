@@ -322,7 +322,7 @@ class PwnzGallery extends Component {
                             </div>
                             <div className='pwnz-buttonWdropmenu pwnz-m5'>
                                 <img className='pwnz-button-40x40 pwnz-dropmenu-button pwnz-animated' alt='search' rotate='180' src={searchPNG} />
-                                <div className='pwnz-dropmenu pwnz-dropmenu-down-left pwnz-p10' style={{ display: 'none' }}>
+                                <div className='pwnz-dropmenu pwnz-dropmenu-down-left pwnz-p10 pwnz-w400' style={{ display: 'none' }}>
                                     <div className='pwnz-dropmenu-inner'>
                                         <div className='pwnz-dropmenu-checkbox'>
                                             <span>Search in tags</span>
@@ -350,7 +350,7 @@ class PwnzGallery extends Component {
                             </div>
                             <div className='pwnz-buttonWdropmenu pwnz-m5'>
                                 <img className='pwnz-button-40x40 pwnz-dropmenu-button pwnz-animated' alt='add image' rotate='405' src={plusPNG} />
-                                <div className='pwnz-dropmenu pwnz-dropmenu-down-left pwnz-p10' style={{ display: 'none' }}>
+                                <div className='pwnz-dropmenu pwnz-dropmenu-down-left pwnz-p10 pwnz-w400' style={{ display: 'none' }}>
                                     <div className='pwnz-dropmenu-inner'>
                                         <input
                                             placeholder='Enter url'
@@ -382,7 +382,7 @@ class PwnzGallery extends Component {
                             </div>
                             <div className='pwnz-buttonWdropmenu pwnz-m5'>
                                 <img className='pwnz-button-40x40 pwnz-dropmenu-button pwnz-animated' alt='settings' rotate='360' src={gearPNG} />
-                                <div className='pwnz-dropmenu pwnz-dropmenu-down-left pwnz-p10' style={{ display: 'none' }}>
+                                <div className='pwnz-dropmenu pwnz-dropmenu-down-left pwnz-p10 pwnz-w400' style={{ display: 'none' }}>
                                     <div className='pwnz-dropmenu-inner'>
                                         <div className="pwnzGallery-rangeSliderDiv">
                                             <span>Images height:</span>
