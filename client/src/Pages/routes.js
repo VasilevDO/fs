@@ -8,6 +8,7 @@ import HomePage from './HomePage';
 import GamesPage from './GamesPage';
 import ServicesPage from './ServicesPage';
 import ResetPage from './ResetPage.js'
+import BioPage from './BioPage';
 
 
 
@@ -27,11 +28,8 @@ const useRoutes = isAuthenticated=> {
                 <Route path='/games' exact>
                     <GamesPage/>
                 </Route>
-                <Route path='/create' exact>
-                    <CreatePage/>
-                </Route>
-                <Route path='/detail/:id'>
-                    <DetailPage/>
+                <Route path='/bio' exact>
+                    <BioPage/>
                 </Route>
                 <Redirect to='/home'/>
             </Switch>

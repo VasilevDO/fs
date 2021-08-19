@@ -57,10 +57,12 @@ class PwnzImageCard extends Component {
         const tags=this.props.isTagsVisible?this.props.image.tags?this.props.image.tags.split(' ').map(tag=>'#'+tag):null:null;
         const imgHeight=format==='mini'?this.props.height:700;
         const imgWidth=format==='mini'?this.props.width:1200;
+
         return (
             <div className='pwnzImageCard'>
                 <div className='pwnzImageCard-imageDiv'>
                     <img 
+                    className={''+format==='mini'?'pwnz-clickable':''}
                     src={src} 
                     style={{maxHeight:imgHeight+'px', maxWidth:imgWidth+'px'}} 
                     onClick={this.handleImageClick}
@@ -72,7 +74,7 @@ class PwnzImageCard extends Component {
                         <div className='pwnzImageCard-controls-menu'>
                             <div className='pwnz-buttonWdropmenu'>
                                 <img className='pwnz-button-40x40 pwnz-dropmenu-button pwnz-animated' alt='menu' rotate='360' src={gearPNG}/>
-                                <div className='pwnz-dropmenu pwnz-dropmenu-up-left pwnz-p10' style={{display:'none'}}>
+                                <div className='pwnz-dropmenu pwnz-dropmenu-up-left pwnz-p10 pwnz-w400' style={{display:'none'}}>
                                     <div className='pwnz-dropmenu-inner'>
                                         <span>Edit description</span>
                                         <input 

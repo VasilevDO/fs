@@ -22,8 +22,61 @@ export function iso8601ToDateStr(isoStr) {
   return hourStr + ':' + minuteStr + ':' + secondsStr + ' ' + dayStr + '.' + monthStr + '.' + yearStr;
 }
 
+export function getAge (birthDate) {
+  const fullYears=new Date().getFullYear()-birthDate.getFullYear();
+  return fullYears;
+}
 
+export function dateToString(date) {
+  //date in ms
+  let dateStr = `${("0" + date.getHours()).slice(-2)}:${(
+    "0" + date.getMinutes()
+  ).slice(-2)} ${("0" + date.getDate()).slice(-2)}.${(
+    "0" +
+    (date.getMonth() + 1)
+  ).slice(-2)}.${date.getFullYear()}`;
+  return dateStr;
+}
 
+export function getBeautifulDate(dateStr) {
+  let [day, month, year] = dateStr.split(" ")[1].split(".");
+  month--;
+  let date = new Date(year, month, day);
+  return `${getWeekdayName(date.getDay())}, ${day} ${getMonthName(
+    month
+  )} ${year}`;
+}
+
+export function getWeekdayName(weekdayNumber) {
+  const weekdayNames = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
+  return weekdayNames[weekdayNumber];
+}
+
+export function getMonthName(monthNumber) {
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+  return monthNames[monthNumber];
+}
 
 /**
  Button with toggle menu

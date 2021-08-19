@@ -20,8 +20,7 @@ export const Navbar = () => {
                     <li><NavLink to='/home'>Home</NavLink></li>
                     <li><NavLink to='/services'>Services</NavLink></li>
                     <li><NavLink to='/games'>Games</NavLink></li>
-                    <li><NavLink to='/create'>Create</NavLink></li>
-                    <li><NavLink to='/links'>Links</NavLink></li>
+                    <li><NavLink to='/bio'>Bio</NavLink></li> 
                     <li><a href='/' onClick={logoutHandler}>Logout</a></li>
                 </ul>
             </div>

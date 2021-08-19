@@ -30,7 +30,7 @@ class Sudoku extends Component {
 
   difficulties = {
     easy: [15, 30],
-    medium: [30,45],
+    medium: [30, 45],
     hard: [45, 81]
   };
 
@@ -463,26 +463,32 @@ class Sudoku extends Component {
       <>
         <div className="sudoku">
           <div className="sudoku-buttons" style={sudokuBoardStyle}>
-          <div className='sudoku-buttons-row'>
-            <button onClick={this.createNewPuzzle}>Set new puzzle</button>
-            <div>
-            <select value={difficulty} onChange={this.handleDifficultyChange}  className='browser-default'>
-              <option value="easy">Easy</option>
-              <option value="medium">Medium</option>
-              <option value="hard">Hard</option>
-            </select>
-            </div>
+            <div className='sudoku-buttons-row'>
+              <div className='pwnz-button' >
+                <div onClick={this.createNewPuzzle}>Set new puzzle</div>
+              </div>
+              <div>
+                <select value={difficulty} onChange={this.handleDifficultyChange} className='browser-default'>
+                  <option value="easy">Easy</option>
+                  <option value="medium">Medium</option>
+                  <option value="hard">Hard</option>
+                </select>
+              </div>
             </div>
             <div className='sudoku-buttons-row'>
-            <button onClick={this.checkSolution}>Check solution</button>
-            <button onClick={this.toggleSolution}>
-              {toggleSolutionButtonText}
-            </button>
-            <button onClick={this.toggleWrongCells}>{toggleWrongCells}</button>
+              <div className='pwnz-button' >
+                <div onClick={this.checkSolution}>Check solution</div>
+              </div>
+              <div className='pwnz-button' >
+                <div onClick={this.toggleSolution}>{toggleSolutionButtonText}</div>
+              </div>
+              <div className='pwnz-button' >
+                <div onClick={this.toggleWrongCells}>{toggleWrongCells}</div>
+              </div>
             </div>
-            
-            </div>
-     
+
+          </div>
+
           <div className="sudoku-board">
             {boardDivs.map((squaresRow, squaresRowIndex) => {
               return (

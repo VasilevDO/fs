@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Sudoku.css";
+import { Loader } from './Loader';
 
 
 class SudokuApi extends Component {
@@ -12,7 +13,8 @@ class SudokuApi extends Component {
       alert: null,
       solutionVisible: false,
       wrongCellsVisible: false,
-      difficulty: "medium"
+      difficulty: "medium",
+      loading: true
     };
   }
 
@@ -226,58 +228,83 @@ class SudokuApi extends Component {
     });
   };
 
-  swap0toNull=(board)=> {
-    return board.map(arr=>{
-          return arr.map(val=>{
-            return val===0?null:val;
-          }) 
+  swap0toNull = (board) => {
+    return board.map(arr => {
+      return arr.map(val => {
+        return val === 0 ? null : val;
       })
+    })
   }
 
-    encodeBoard = (board) => board.reduce((result, row, i) => result + `%5B${encodeURIComponent(row)}%5D${i === board.length -1 ? '' : '%2C'}`, '')
+  encodeBoard = (board) => board.reduce((result, row, i) => result + `%5B${encodeURIComponent(row)}%5D${i === board.length - 1 ? '' : '%2C'}`, '')
 
-    encodeParams = (params) => 
+  encodeParams = (params) =>
     Object.keys(params)
-    .map(key => key + '=' + `%5B${this.encodeBoard(params[key])}%5D`)
-    .join('&');
+      .map(key => key + '=' + `%5B${this.encodeBoard(params[key])}%5D`)
+      .join('&');
 
 
-  getNewBoard=async()=> {
-      try {
-          let startingBoard=await fetch(`https://sugoku.herokuapp.com/board?difficulty=${this.state.difficulty}`)
-          .then(response=>response.json())
-          .then(data=>data.board);
-            const data = {board:startingBoard};
-            let solvedBoard=await fetch('https://sugoku.herokuapp.com/solve', {
-            method: 'POST',
-            body: this.encodeParams(data),
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-            })
-            .then(response => response.json())
-            .then(solvedBoard => solvedBoard.solution);    
-             startingBoard=this.swap0toNull(startingBoard);
-
-             this.setState({
-                 startingBoard:startingBoard,
-                 solvedBoard:solvedBoard,
-                 board:startingBoard
-             })
-        
-      } catch (e) {
-
+  getBoard = async () => {
+    try {
+      let startingBoard = await fetch(`https://sugoku.herokuapp.com/board?difficulty=${this.state.difficulty}`)
+        .then(response => response.json())
+        .then(data => data.board);
+      const data = { board: startingBoard };
+      let solvedBoard = await fetch('https://sugoku.herokuapp.com/solve', {
+        method: 'POST',
+        body: this.encodeParams(data),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      })
+        .then(response => response.json())
+        .then(solvedBoard => solvedBoard.solution);
+      startingBoard = this.swap0toNull(startingBoard);
+      return {
+        startingBoard: startingBoard,
+        solvedBoard: solvedBoard,
+        board: startingBoard
       }
+    } catch (e) {
+
+    }
 
   }
+
+  getNewBoard = async () => {
+    this.setState({
+      loading: true
+    })
+    const { startingBoard, solvedBoard, board } = await this.getBoard();
+    this.setState({
+      startingBoard: startingBoard,
+      solvedBoard: solvedBoard,
+      board: startingBoard,
+      loading: false
+    });
+  }
+
+
+
+  componentDidMount = async () => {
+    const { startingBoard, solvedBoard, board } = await this.getBoard();
+    this.setState({
+      startingBoard: startingBoard,
+      solvedBoard: solvedBoard,
+      board: startingBoard,
+      loading: false
+    });
+  }
+
 
 
   render() {
-    const difficulty = this.state.difficulty;
-    if (!this.state.startingBoard) {
-        this.getNewBoard();
-        return null;
-    }
-    const solvedBoard = this.state.solvedBoard;
 
+
+    if (this.state.loading) {
+      return <Loader />
+    }
+
+    const difficulty = this.state.difficulty;
+    const solvedBoard = this.state.solvedBoard;
     const startingBoard = this.state.startingBoard;
     const board = this.state.solutionVisible
       ? this.state.solvedBoard
@@ -317,26 +344,30 @@ class SudokuApi extends Component {
       <>
         <div className="sudoku">
           <div className="sudoku-buttons" style={sudokuBoardStyle}>
-          <div className='sudoku-buttons-row'>
-            <button onClick={this.getNewBoard}>Set new puzzle</button>
-            <div>
-            <select value={difficulty} onChange={this.handleDifficultyChange}  className='browser-default'>
-              <option value="easy">Easy</option>
-              <option value="medium">Medium</option>
-              <option value="hard">Hard</option>
-            </select>
-            </div>
+            <div className='sudoku-buttons-row'>
+              <div className='pwnz-button' >
+                <div onClick={this.getNewBoard}>Set new puzzle</div>
+              </div>
+              <div>
+                <select value={difficulty} onChange={this.handleDifficultyChange} className='browser-default'>
+                  <option value="easy">Easy</option>
+                  <option value="medium">Medium</option>
+                  <option value="hard">Hard</option>
+                </select>
+              </div>
             </div>
             <div className='sudoku-buttons-row'>
-            <button onClick={this.checkSolution}>Check solution</button>
-            <button onClick={this.toggleSolution}>
-              {toggleSolutionButtonText}
-            </button>
-            <button onClick={this.toggleWrongCells}>{toggleWrongCells}</button>
+              <div className='pwnz-button' >
+                <div onClick={this.checkSolution}>Check solution</div>
+              </div>
+              <div className='pwnz-button' >
+                <div onClick={this.toggleSolution}>{toggleSolutionButtonText}</div>
+              </div>
+              <div className='pwnz-button' >
+                <div onClick={this.toggleWrongCells}>{toggleWrongCells}</div>
+              </div>
             </div>
-            
-            </div>
-     
+          </div>
           <div className="sudoku-board">
             {boardDivs.map((squaresRow, squaresRowIndex) => {
               return (
@@ -360,7 +391,7 @@ class SudokuApi extends Component {
                                     : { color: "red" }
                                   : null;
                                 return (
-                                  <div className="sudoku-cell" key={cellY+cellX}>
+                                  <div className="sudoku-cell" key={cellY + cellX}>
                                     <input
                                       a-key={[cellY, cellX]}
                                       value={cell ? cell : ""}

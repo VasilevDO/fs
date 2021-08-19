@@ -4,6 +4,10 @@
     height:100%;
 }
 
+.pwnz-container select {
+    cursor: pointer;
+}
+
 .pwnz-p510 {
     padding:5px 10px;
 }
@@ -233,6 +237,7 @@
     -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
     box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
     z-index: 1;
+    
 }
 
 .pwnz-bwdm-upLeft {
@@ -270,6 +275,10 @@
     font-size: 23px;
 }
 
+.pwnz-fs25 {
+    font-size: 25px;
+}
+
 .pwnz-wa {
     width:auto;
 }
@@ -284,4 +293,15 @@
 
 .pwnz-h100 {
     height:100%;
+}
+
+.pwnz-mainTheme {
+    border: 2px solid #c7c7d1;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: #d7f3fe;
+}
+
+.pwnz-clickable {
+    cursor: pointer;
 }

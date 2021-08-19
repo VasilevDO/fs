@@ -6,14 +6,14 @@ class PwnzCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title:this.props.cardTitle||'Card title'
+      title: this.props.cardTitle || 'Card title'
     };
   }
 
-handleButtonClick=()=> {
-  const title=this.state.title;
-this.props.buttonHandler(title);
-}
+  handleButtonClick = () => {
+    const title = this.state.title;
+    this.props.buttonHandler(title);
+  }
 
   render() {
     const pwnzCardWidth = this.props.cardWidth || "";
@@ -25,7 +25,7 @@ this.props.buttonHandler(title);
     const pwnzCardButtonText = this.props.buttonText || "Select";
     return (
       <>
-        <div className="pwnz-card-body" style={{ height: pwnzCardWidth }}>
+        <div className="pwnz-card-body pwnz-mainTheme" style={{ height: pwnzCardWidth }}>
           <div className="pwnz-card-title">
             <p>{pwnzCardTitle}</p>
           </div>
@@ -33,7 +33,9 @@ this.props.buttonHandler(title);
           <div className="pwnz-card-description">
             <p> {pwnzCardDescription} </p>
           </div>
-          <button className="pwnz-card-button" onClick={this.handleButtonClick}>{pwnzCardButtonText}</button>
+          <div className='pwnz-button pwnz-w100' >
+            <div onClick={this.handleButtonClick}>{pwnzCardButtonText}</div>
+          </div>
         </div>
       </>
     );

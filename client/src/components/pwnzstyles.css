@@ -1,0 +1,43 @@
+.pwnz-button {
+  background-color: #d0ffd6;
+  display: table;
+  vertical-align: middle;
+  cursor: pointer;
+  outline: none;
+  -webkit-box-shadow: 1px 1px 1px 1px rgba(34, 60, 80, 0.2);
+  box-shadow: 1px 1px 1px 1px rgba(34, 60, 80, 0.2);
+  border-radius: 2px;
+}
+
+.pwnz-button div {
+  display: table-cell;
+  height: 100%;
+  vertical-align: middle;
+  text-align: center;
+  padding: 5px;
+}
+
+.pwnz-button:hover {
+  background-color: #8eb8e5;
+}
+
+.biopage-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.biopage-container .aboutMe {
+  font-size: 24px;
+}
+/*# sourceMappingURL=pwnzstyles.css.map */
