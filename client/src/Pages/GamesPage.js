@@ -30,7 +30,7 @@ const GamesPage = () => {
 
 
                     <div className='pwnz-button pwnz-m10 pwnz-fs25' >
-                        <div onClick={cancelGamePick}>Back to the services list</div>
+                        <div onClick={cancelGamePick}>Back to the games list</div>
                     </div>
 
                     <div className='games-game'>

@@ -9,12 +9,7 @@ import PwnzGallery from '../components/PwnzGallery';
 import PwnzBlog from '../components/PwnzBlog';
 
 const HomePage = () => {
-    const { loading } = useHttp();//const {loading,request}=useHttp();
     const auth = useContext(AuthContext); //const {token,userName}=useContext(AuthContext);
-
-    if (loading) {
-        return <Loader />
-    }
 
     return (
         <>
@@ -27,7 +22,6 @@ const HomePage = () => {
                     <Todolist user={auth} format='mini' />
                 </div>
             </div>
-
         </>
     )
 }

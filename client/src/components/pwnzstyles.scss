@@ -1,6 +1,17 @@
 @import './pwnzstylesVariables';
 @import './pwnzstylesFunctions';
 
+.page-container {
+    background-color: $mainBackgroundColor;
+    select {
+        background-color: $lighterFormColor;
+    }
+    input {
+        background-color: $lighterFormColor;
+    }
+}
+
+
 .pwnz-button {
     background-color: $mainButtonColor;
     display: table;
@@ -31,4 +42,52 @@
     .aboutMe {
         font-size: 24px;
     }
+}
+
+.pwnz-footbar {
+    width: 100%;
+    padding: 10px;
+
+}
+
+.page-container {
+    min-height:100vh;
+    @include flex(column,space-between)
+}
+
+.pwnz-ul-hor {
+    margin:0;
+    @include flex(row,center);
+    li {
+        display:inline;
+        margin: 0 10px;
+    }
+   
+}
+
+.pwnz-footbar-button {
+    height:30px;
+    cursor:pointer;
+    padding:0 5px;
+    border:2px solid black;
+    border-radius: 4px;
+    &:hover {
+        background-color: lightgray;
+    }
+}
+
+.pwnz-grayout {
+    @include screenCover();
+    @include flexCenter(row);
+}
+
+
+.pwnz-feedbackForm {
+    @include mainForm();
+    padding:10px;
+    width:800px;
+}
+
+.pwnz-textContainer-editable {
+        @include lightForm();
 }

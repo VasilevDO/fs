@@ -4,3 +4,32 @@
     align-items: center;
     flex-direction: $direction ;
 }
+
+@mixin flex ($direction,$justify) {
+    display:flex;
+    justify-content: $justify;
+    align-items: center;
+    flex-direction: $direction ;
+}
+
+@mixin mainForm () {
+    background-color: $mainFormColor;
+    border: 2px solid $mainBorderColor;
+    border-radius: $mainBorderRadius;
+}
+
+@mixin lightForm () {
+    background-color: $lighterFormColor;
+    border: 2px solid $mainBorderColor;
+    border-radius: $mainBorderRadius;
+}
+
+@mixin screenCover () {
+    position: fixed;
+    width:100vw;
+    height:100vh;
+    top:0;
+    left:0;
+    background-color: $mainScreenCoverColor;
+}
+

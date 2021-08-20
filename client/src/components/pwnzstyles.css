@@ -1,3 +1,15 @@
+.page-container {
+  background-color: #E8E5DA;
+}
+
+.page-container select {
+  background-color: #ebf9fe;
+}
+
+.page-container input {
+  background-color: #ebf9fe;
+}
+
 .pwnz-button {
   background-color: #d0ffd6;
   display: table;
@@ -39,5 +51,97 @@
 
 .biopage-container .aboutMe {
   font-size: 24px;
+}
+
+.pwnz-footbar {
+  width: 100%;
+  padding: 10px;
+}
+
+.page-container {
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.pwnz-ul-hor {
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.pwnz-ul-hor li {
+  display: inline;
+  margin: 0 10px;
+}
+
+.pwnz-footbar-button {
+  height: 30px;
+  cursor: pointer;
+  padding: 0 5px;
+  border: 2px solid black;
+  border-radius: 4px;
+}
+
+.pwnz-footbar-button:hover {
+  background-color: lightgray;
+}
+
+.pwnz-grayout {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: rgba(211, 211, 211, 0.6);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.pwnz-feedbackForm {
+  background-color: #d7f3fe;
+  border: 2px solid #c7c7d1;
+  border-radius: 4px;
+  padding: 10px;
+  width: 800px;
+}
+
+.pwnz-textContainer-editable {
+  background-color: #ebf9fe;
+  border: 2px solid #c7c7d1;
+  border-radius: 4px;
 }
 /*# sourceMappingURL=pwnzstyles.css.map */

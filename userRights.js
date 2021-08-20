@@ -2,9 +2,11 @@ module.exports={
     admin:{
         canModerateBlog:true,
         canAddBlogPosts:true,
+        canSendFeedback:true
     },
     user:{
-        canAddBlogPosts:true
+        canAddBlogPosts:true,
+        canSendFeedback:true
     },
     banned:{
         canAddBlogPosts:false
