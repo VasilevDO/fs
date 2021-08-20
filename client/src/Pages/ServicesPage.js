@@ -1,13 +1,12 @@
 import React, { useState, useContext} from 'react';
+import {useLocation} from 'react-router-dom';
 import PwnzCard from '../components/PwnzCard';
 import Calculator from '../components/Calculator';
 import PwnzGallery from '../components/PwnzGallery';
 import WeatherTable from '../components/WeatherTable';
 import Todolist from '../components/Todolist';
-
 import { AuthContext } from '../context/AuthContext';
 import { useHttp } from '../hooks/http.hook';
-
 import './ServicesPage.css'
 
 
@@ -20,22 +19,13 @@ import todolistPNG from '../assets/todolist.png';
 const ServicesPage = (props) => {
     const auth = useContext(AuthContext);
     const location=useLocation();
-    console.log(location.state);
-    const [service, setService] = useState(props.service||null);
-    
-
+    const [service, setService] = useState(location.service||null);
     const handlePick = async (serviceName) => {
         setService(serviceName);
     }
-
     const cancelPick = () => {
         setService(null);
     }
-
-    console.log(props.location);
-    console.log(service);
-
-
     return (
         <>
             {service ?

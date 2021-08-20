@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useLocation } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 import Tictactoe from '../components/Tictactoe';
 import Sudoku from '../components/Sudoku';
 import SudokuApi from '../components/SudokuApi';
@@ -9,16 +11,16 @@ import SudokuLogo from '../assets/sudoku/SudokuLogo.jpg'
 
 
 const GamesPage = () => {
-    const [game, setGame] = useState(null);
+    const auth = useContext(AuthContext);
+    const location = useLocation();
+    const [game, setGame] = useState(location.game||null);
 
     const handleGamePick = (gameName) => {
         setGame(gameName);
     }
-
     const cancelGamePick = () => {
         setGame(null);
     }
-
 
     return (
         <>
