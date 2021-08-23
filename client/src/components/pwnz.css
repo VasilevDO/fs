@@ -96,19 +96,7 @@
     align-items:center;
 }
 
-.pwnz-select > span {
-    margin-right:10px !important;
-}
 
-.pwnz-select > select {
-    display:block !important;
-    cursor: pointer;
-    background-color: rgba(255,255,255,0.9);
-    padding: 5px;
-    border: 1px solid #f2f2f2;
-    border-radius: 2px;
-    height: 3rem;
-}
 
 .pwnz-button {
     display: table;

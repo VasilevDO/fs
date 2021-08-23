@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Sudoku.css";
+import { Loader } from "./Loader";
 
 
 class Sudoku extends Component {
@@ -12,7 +13,8 @@ class Sudoku extends Component {
       alert: null,
       solutionVisible: false,
       wrongCellsVisible: false,
-      difficulty: "medium"
+      difficulty: "medium",
+      loading: true
     };
   }
 
@@ -332,7 +334,8 @@ class Sudoku extends Component {
     this.setState({
       board: startingBoard,
       startingBoard: startingBoard,
-      solvedBoard: solvedBoard
+      solvedBoard: solvedBoard,
+      loading: false
     });
     return;
   };
@@ -365,13 +368,9 @@ class Sudoku extends Component {
   };
 
   createNewPuzzle = () => {
-    this.setState({
-      board: this.basicBoard,
-      solvedBoard: this.initializeBoard(),
-      startingBoard: null,
-      alert: null,
-      solutionVisible: false
-    });
+    const difficulty = this.state.difficulty;
+    const solvedBoard = this.copyMatrix(this.state.solvedBoard);
+    this.prepareBoard(difficulty, solvedBoard);
   };
 
   createBoardDiv = (y, x, board) => {
@@ -388,13 +387,19 @@ class Sudoku extends Component {
     });
   };
 
-  render() {
+  componentDidMount = () => {
     const difficulty = this.state.difficulty;
     const solvedBoard = this.copyMatrix(this.state.solvedBoard);
-    if (!this.state.startingBoard) {
-      this.prepareBoard(difficulty, solvedBoard);
-      return null;
+    this.prepareBoard(difficulty, solvedBoard);
+  }
+
+  render() {
+
+    if (this.state.loading) {
+      return <Loader />
     }
+
+    const difficulty = this.state.difficulty;
     const startingBoard = this.state.startingBoard;
     const board = this.state.solutionVisible
       ? this.state.solvedBoard
@@ -429,35 +434,6 @@ class Sudoku extends Component {
         this.createBoardDiv(6, 6, board)
       ]
     ];
-
-    /** <table style={tableStyle}>
-            <tbody>
-              {board.map((row, rowIndex) => {
-                return (
-                  <tr className="sudoku-row">
-                    {row.map((col, colIndex) => {
-                      return (
-                        <td className="sudoku-item">
-                          {
-                            (disabled =
-                              board[rowIndex][colIndex] &&
-                              board[rowIndex][colIndex] ===
-                                startingBoard[rowIndex][colIndex])
-                          }
-                          <input
-                            a-key={[rowIndex, colIndex]}
-                            value={col ? col : ""}
-                            onChange={this.handleCellChange}
-                            disabled={disabled}
-                          ></input>
-                        </td>
-                      );
-                    })}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table> */
 
     return (
       <>

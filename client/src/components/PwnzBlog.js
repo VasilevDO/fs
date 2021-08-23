@@ -383,7 +383,7 @@ export default class PwnzBlog extends Component {
                 onChange={this.handleNewPostTextChange}
               />
             </div>
-            <div className='pwnz-button pwnz-f-c' >
+            <div className='pwnz-button pwnz-f-c pwnz-w100' >
               <div onClick={this.createPost}>Submit new post</div>
             </div>
           </div>

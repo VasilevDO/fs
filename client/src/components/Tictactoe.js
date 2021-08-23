@@ -139,7 +139,7 @@ class Tictactoe extends Component {
     if (status&&status.includes('Winner')) opacity='opacity1';
 
     return (
-      <div className="game">
+      <div className="game tictactoe">
         <div>
          <div className='game-announcer'>
            <div><img 
@@ -148,7 +148,7 @@ class Tictactoe extends Component {
             width={100}
             alt=''
             /></div>
-           <h1>{status}</h1>
+           <p className='pwnz-fs25'>{status}</p>
            <div><img 
             className={opacity}
             src={fanfare2}

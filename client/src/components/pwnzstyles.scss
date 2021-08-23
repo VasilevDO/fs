@@ -5,9 +5,17 @@
     background-color: $mainBackgroundColor;
     select {
         background-color: $lighterFormColor;
+        padding: 5px;
+        border: $mainBorder;
+        border-radius: $mainBorderRadius;
+        height: 3rem;
     }
     input {
         background-color: $lighterFormColor;
+    }
+    textarea {
+        border: $mainBorder;
+        border-radius: $mainBorderRadius;
     }
 }
 
@@ -90,4 +98,54 @@
 
 .pwnz-textContainer-editable {
         @include lightForm();
+}
+
+.pwnz-loader {
+    position: fixed;
+    height:100vh;
+    width:100vw;
+    margin:0 !important;
+    top:0;
+    left:0;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    z-index:998;
+    background-color: $mainBackgroundColor;
+}
+
+.pwnz-select > span {
+    margin-right:10px !important;
+}
+
+.pwnz-select > select {
+    display:block !important;
+    cursor: pointer;
+}
+
+.pwnz-checked {
+    background-color: $checkedButtonColor;
+}
+
+.auth-form {
+    background-color: $mainFormColor;
+}
+
+.calc-body {
+    background-color: $mainFormColor;
+}
+
+.pwnzGallery {
+    margin:0 20px;
+    @include mainForm();
+}
+
+.tictactoe {
+    margin:0 20px;
+    @include mainForm();
+}
+
+.sudoku {
+    @include mainForm();
+    padding:10px;
 }

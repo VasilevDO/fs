@@ -297,7 +297,7 @@ class AuthForm extends Component {
                         ):null} 
                         <div className="card-action center-align">
                             <button 
-                            className='auth-form-submit-button'
+                            className={'auth-form-submit-button'+(buttonState?' pwnz-disabled':'')}
                             onClick={this.handleAuthFormSubmit}
                             disabled={buttonState}
                             >{form==='login'?'Login':form==='signup'?'Signup':'Recover password'}
