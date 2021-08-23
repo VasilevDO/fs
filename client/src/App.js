@@ -10,9 +10,6 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 
 import 'materialize-css';
 
-
-
-
 function App() {
   const { token, login, logout, userId, userName, userRights, ready } = useAuth();
   const isAuthenticated = !!token;
@@ -33,9 +30,7 @@ function App() {
           {isAuthenticated && <Navbar />}
           <div className='pwnz-container'>{routes}</div>
           {isAuthenticated &&  <Footbar />}
-         
         </Router>
-
       </AuthContext.Provider>
       </div>
     </ErrorBoundary >

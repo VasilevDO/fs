@@ -5,6 +5,7 @@ import Calculator from '../components/Calculator';
 import PwnzGallery from '../components/PwnzGallery';
 import WeatherTable from '../components/WeatherTable';
 import Todolist from '../components/Todolist';
+import ReduxSample from '../components/ReduxSample'
 import { AuthContext } from '../context/AuthContext';
 import { useHttp } from '../hooks/http.hook';
 import './ServicesPage.css'
@@ -46,6 +47,9 @@ const ServicesPage = (props) => {
                             : null}
                         {service === 'Todolist' ?
                             <Todolist user={auth} />
+                            : null}
+                        {service === 'Redux' ?
+                            <ReduxSample user={auth} />
                             : null}
                     </div>
                 </>)
@@ -91,6 +95,14 @@ const ServicesPage = (props) => {
                                 buttonHandler={handlePick}
                                 logo={calculatorPNG}
                                 buttonText="Open calculator"></PwnzCard>
+                        </div>
+                        <div className='pwnz-m10'>
+                            <PwnzCard
+                                cardTitle="Redux"
+                                cardDescription="My redux sample"
+                                buttonHandler={handlePick}
+                                logo={''}
+                                buttonText="Open redux sample"></PwnzCard>
                         </div>
                     </div>
                 </>)}

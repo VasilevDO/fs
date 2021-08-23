@@ -7,7 +7,7 @@ export class ErrorBoundary extends Component {
     }
   
     componentDidCatch(error) {
-      localStorage.removeItem('userData');
+      // localStorage.removeItem('userData');
       this.setState({ hasError: true });
     }
     

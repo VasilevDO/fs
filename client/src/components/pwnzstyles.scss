@@ -149,3 +149,8 @@
     @include mainForm();
     padding:10px;
 }
+
+.pwnz-col {
+    display:flex;
+    flex-direction: column;
+}
