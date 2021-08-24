@@ -13,6 +13,7 @@ app.use('/api/image', require('./routes/image.routes'));
 app.use('/api/todolist', require('./routes/todolist.routes'));
 app.use('/api/blog', require('./routes/blogPost.routes'));
 app.use('/api/weather', require('./routes/weather.routes'));
+app.use('/api/currency', require('./routes/currency.routes'));
 app.use('/api/feedback', require('./routes/feedback.routes'));
 app.use('/t', require('./routes/redirect.routes'));
 

@@ -6,6 +6,7 @@ import PwnzGallery from '../components/PwnzGallery';
 import WeatherTable from '../components/WeatherTable';
 import Todolist from '../components/Todolist';
 import ReduxSample from '../components/ReduxSample'
+import Currency from '../components/Currency';
 import { AuthContext } from '../context/AuthContext';
 import { useHttp } from '../hooks/http.hook';
 import './ServicesPage.css'
@@ -50,6 +51,9 @@ const ServicesPage = () => {
                             : null}
                         {service === 'Redux' ?
                             <ReduxSample user={auth} />
+                            : null}
+                        {service === 'Currency' ?
+                            <Currency user={auth}/>
                             : null}
                     </div>
                 </>)
@@ -103,6 +107,14 @@ const ServicesPage = () => {
                                 buttonHandler={handlePick}
                                 logo={''}
                                 buttonText="Open redux sample"></PwnzCard>
+                        </div>
+                        <div className='pwnz-m10'>
+                            <PwnzCard
+                                cardTitle="Currency"
+                                cardDescription="Currency table"
+                                buttonHandler={handlePick}
+                                logo={''}
+                                buttonText="Open currency table"></PwnzCard>
                         </div>
                     </div>
                 </>)}

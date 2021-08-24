@@ -13,7 +13,6 @@ export function createAsyncString(string) {
         await new Promise(resolve=>setTimeout(resolve,3000));//async operations should be there
         dispatch({type:CREATE_ASYNC_STRING,payload:string})
         dispatch(hideLoader());
-
     }
 }
 
@@ -28,3 +27,4 @@ export function hideLoader() {
         type:HIDE_LOADER
     }
 }
+

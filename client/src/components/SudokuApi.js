@@ -266,7 +266,6 @@ class SudokuApi extends Component {
     } catch (e) {
 
     }
-
   }
 
   getNewBoard = async () => {
