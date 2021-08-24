@@ -1,24 +1,32 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import React, { useState, useRef } from 'react';
+import { createString, createAsyncString } from '../redux/actions';
+import { Loader } from './Loader';
 
-const ReduxSample = () => {
+const ReduxSample = ({ state,loading, createString, createAsyncString }) => {
     const inputRef = useRef();
-    const [strings, setStrings] = useState([]);
-    const handleStringAdd = () => {
-        setStrings(strings.concat(inputRef.current.value))
-    }
 
+    if (loading) {
+        return (
+            <Loader/>
+        )
+    }
 
     return (
         <>
-
             <div className='pwnz-col'>
                 <div>
                     <input ref={inputRef} placeholder='Enter text'></input>
-                    <button onClick={handleStringAdd}>Add string</button>
+                    <button onClick={() => createString(inputRef.current.value)}>Add string</button>
+                    <button onClick={() => createAsyncString(inputRef.current.value)}>Add async string</button>
                 </div>
-                {console.log(strings)}
-                {strings.map(string => (
+                {console.log(state.strings)}
+                {state.strings.map(string => (
+                    <div className='pwnz-col'>
+                        <p>{string}</p>
+                    </div>
+                ))}
+                {state.asyncStrings.map(string => (
                     <div className='pwnz-col'>
                         <p>{string}</p>
                     </div>
@@ -28,8 +36,17 @@ const ReduxSample = () => {
     )
 }
 
-const mapStateToProps=state=>{
-    return state;
+const mapStateToProps = state => {
+    console.log(state);
+    return {
+        state: state.reduxSample,
+        loading:state.app.loading
+    }
 }
 
-export default connect(null,null)(ReduxSample);
+const mapDispatchToProps = {
+    createString,
+    createAsyncString
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReduxSample);

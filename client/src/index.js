@@ -1,15 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { applyMiddleware, compose, createStore } from 'redux';
+import thunk from 'redux-thunk';
+import $ from 'jquery';
+import reportWebVitals from './reportWebVitals';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
-import $ from 'jquery';
-import { compose, createStore } from 'redux';
-import { Provider } from 'react-redux';
 import { rootReducer } from './redux/rootReducer';
 
 const Timing = 500;
 const store = createStore(rootReducer, compose(
+  applyMiddleware(
+    thunk
+  ),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 ));
 

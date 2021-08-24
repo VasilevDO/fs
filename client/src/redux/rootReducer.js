@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
-import { stringsReducer } from "./stringsReducer";
+import { appReducer } from "./appReducer";
+import { reduxSampleReducer } from "./reduxSampleReducer";
 
 export const rootReducer=combineReducers({
-    strings:stringsReducer
+    reduxSample:reduxSampleReducer,
+    app:appReducer
 })

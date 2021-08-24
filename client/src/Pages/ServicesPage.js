@@ -17,7 +17,7 @@ import weatherPNG from '../assets/weather.png';
 import todolistPNG from '../assets/todolist.png';
 
 
-const ServicesPage = (props) => {
+const ServicesPage = () => {
     const auth = useContext(AuthContext);
     const location=useLocation();
     const [service, setService] = useState(location.service||null);
