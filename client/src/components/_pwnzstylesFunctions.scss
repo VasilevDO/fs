@@ -33,3 +33,14 @@
     background-color: $mainScreenCoverColor;
 }
 
+@mixin mainTable () {
+    background-color: $mainFormColor;
+    border: 2px solid $mainBorderColor;
+    border-radius: $mainBorderRadius;
+    td,th {
+        border: 1px solid $mainBorderColor;
+        border-collapse: collapse;
+        text-align: center;
+        padding:5px;
+    }
+}

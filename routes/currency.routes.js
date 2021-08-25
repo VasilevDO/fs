@@ -10,10 +10,9 @@ const url=`http://data.fixer.io/api/latest?access_key=${apiKey}`;
 router.get('/', auth,async (request, response)=> {
     try {
         console.log('currency request')
-        const currency = await axios.get(url);
-        console.log(currency)
+        const currency = await axios.get(url)
         response.status(201).json({
-            currency
+            currency:currency.data
         })
 
     } catch (e) {

@@ -156,3 +156,9 @@
 }
 
 
+.currency {
+    table {
+        @include mainTable();
+    }
+   
+}

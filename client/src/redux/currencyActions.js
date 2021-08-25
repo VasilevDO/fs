@@ -1,4 +1,4 @@
-import { SHOW_LOADER,HIDE_LOADER, CURRENCY_GET_CURRENCY } from "./types";
+import { SHOW_LOADER,HIDE_LOADER, CURRENCY_GET_CURRENCY, CURRENCY_CHANGE_BASE_CURRENCY } from "./types";
 
 export function getCurrency(token) {
     return async dispatch=>{
@@ -9,10 +9,16 @@ export function getCurrency(token) {
             'Content-Type': 'application/json',
              Authorization: `Bearer ${token}`
           };
-        const currency = await fetch('/api/currency', { method, body, headers })
+        const {currency} = await fetch('/api/currency', { method, body, headers })
         .then(data => data.json());
         dispatch({type:CURRENCY_GET_CURRENCY,payload:currency})
         dispatch(hideLoader());
+    }
+}
+
+export function changeBaseCurrency(value) {
+    return dispatch=>{
+        dispatch({type:CURRENCY_CHANGE_BASE_CURRENCY,payload:value})
     }
 }
 

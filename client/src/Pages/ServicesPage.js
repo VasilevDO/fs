@@ -1,5 +1,5 @@
 import React, { useState, useContext} from 'react';
-import {useLocation} from 'react-router-dom';
+import {useHistory, useLocation, useParams} from 'react-router-dom';
 import PwnzCard from '../components/PwnzCard';
 import Calculator from '../components/Calculator';
 import PwnzGallery from '../components/PwnzGallery';
@@ -20,39 +20,42 @@ import todolistPNG from '../assets/todolist.png';
 
 const ServicesPage = () => {
     const auth = useContext(AuthContext);
-    const location=useLocation();
-    const [service, setService] = useState(location.service||null);
+    const {service}=useParams();
+    const history=useHistory();
+    console.log(service);
+
     const handlePick = async (serviceName) => {
-        setService(serviceName);
+        history.push(`/services/${serviceName.toLowerCase()}`)
     }
     const cancelPick = () => {
-        setService(null);
+        history.push(`/services`)
     }
+
     return (
         <>
             {service ?
                 (<>
                     <div className='pwnz-button pwnz-m10 pwnz-fs25' >
-                        <div onClick={cancelPick}>Back to the services list</div>
+                        { <div onClick={cancelPick}>Back to the services list</div> }
                     </div>
 
                     <div className='services-container'>
-                        {service === 'Calculator' ?
+                        {service === 'calculator' ?
                             <Calculator></Calculator>
                             : null}
-                        {service === 'Gallery' ?
+                        {service === 'gallery' ?
                             <PwnzGallery user={auth}></PwnzGallery> : null
                         }
-                        {service === 'Weather' ?
+                        {service === 'weather' ?
                             <WeatherTable user={auth} />
                             : null}
-                        {service === 'Todolist' ?
+                        {service === 'todolist' ?
                             <Todolist user={auth} />
                             : null}
-                        {service === 'Redux' ?
+                        {service === 'redux' ?
                             <ReduxSample user={auth} />
                             : null}
-                        {service === 'Currency' ?
+                        {service === 'currency' ?
                             <Currency user={auth}/>
                             : null}
                     </div>

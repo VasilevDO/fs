@@ -225,4 +225,17 @@
       -ms-flex-direction: column;
           flex-direction: column;
 }
+
+.currency table {
+  background-color: #d7f3fe;
+  border: 2px solid lightgray;
+  border-radius: 4px;
+}
+
+.currency table td, .currency table th {
+  border: 1px solid lightgray;
+  border-collapse: collapse;
+  text-align: center;
+  padding: 5px;
+}
 /*# sourceMappingURL=pwnzstyles.css.map */

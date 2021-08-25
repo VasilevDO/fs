@@ -13,6 +13,7 @@ import BioPage from './BioPage';
 
 
 const useRoutes = isAuthenticated=> {
+    console.log(isAuthenticated);
     if (isAuthenticated) {
         return (
             <Switch>
@@ -25,6 +26,9 @@ const useRoutes = isAuthenticated=> {
                 <Route path='/services' exact>
                     <ServicesPage/>
                 </Route>
+                <Route path='/services/:service' exact>
+                    <ServicesPage/>
+                </Route>
                 <Route path='/games' exact>
                     <GamesPage/>
                 </Route>
@@ -34,19 +38,19 @@ const useRoutes = isAuthenticated=> {
                 <Redirect to='/home'/>
             </Switch>
         )
+    } else {
+        return (
+            <Switch>
+                <Route path='/auth' exact>
+                    <AuthPage/>
+                </Route>
+                <Route path='/reset/:id' exact>
+                    <ResetPage />
+                </Route>
+                <Redirect to ='/auth'/>
+            </Switch>
+        )
     }
-
-    return (
-        <Switch>
-            <Route path='/auth' exact>
-                <AuthPage/>
-            </Route>
-            <Route path='/reset/:id' exact>
-                <ResetPage />
-            </Route>
-            <Redirect to ='/auth'/>
-        </Switch>
-    )
 }
 
 

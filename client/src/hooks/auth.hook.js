@@ -45,10 +45,10 @@ export const useAuth = () => {
 
 
 
-    useEffect(() => {
+    useEffect(async () => {
         const data = JSON.parse(localStorage.getItem(storageName));
         if (data && data.token) {
-            login(data.token, data.userId, data.userName);
+            await login(data.token, data.userId, data.userName);
         }
         setReady(true);
     }, [login]);

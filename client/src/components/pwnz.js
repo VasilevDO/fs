@@ -47,6 +47,21 @@ export function getBeautifulDate(dateStr) {
   )} ${year}`;
 }
 
+export function unixToBeautifulDateWithTime (unixTimestamp) {
+  const date=new Date(unixTimestamp*1000);
+  const year=date.getFullYear();
+  const month=date.getMonth();
+  const day=('0'+date.getDate()).slice(-2);
+  const hour=('0'+date.getHours()).slice(-2);
+  const minute=('0'+date.getMinutes()).slice(-2);
+  const weekday=getWeekdayName(date.getDay());
+  return `${hour}:${minute} ${weekday}, ${day} ${getMonthName(month)} ${year}`
+}
+
+export function unixToDate(unixTimestamp) {
+  return new Date(unixTimestamp*1000);
+}
+
 export function getWeekdayName(weekdayNumber) {
   const weekdayNames = [
     "Sunday",
