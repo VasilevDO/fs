@@ -32,6 +32,9 @@ const useRoutes = isAuthenticated=> {
                 <Route path='/games' exact>
                     <GamesPage/>
                 </Route>
+                <Route path='/games/:game' exact>
+                    <GamesPage/>
+                </Route>
                 <Route path='/bio' exact>
                     <BioPage/>
                 </Route>

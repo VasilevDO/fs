@@ -1,5 +1,5 @@
-import React, { useState, useContext} from 'react';
-import {useHistory, useLocation, useParams} from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import PwnzCard from '../components/PwnzCard';
 import Calculator from '../components/Calculator';
 import PwnzGallery from '../components/PwnzGallery';
@@ -16,12 +16,14 @@ import galleryPNG from '../assets/gallery.png';
 import calculatorPNG from '../assets/calculator.png';
 import weatherPNG from '../assets/weather.png';
 import todolistPNG from '../assets/todolist.png';
+import reduxPng from '../assets/redux.png';
+import currencyPng from '../assets/currency.png'
 
 
 const ServicesPage = () => {
     const auth = useContext(AuthContext);
-    const {service}=useParams();
-    const history=useHistory();
+    const { service } = useParams();
+    const history = useHistory();
     console.log(service);
 
     const handlePick = async (serviceName) => {
@@ -36,35 +38,32 @@ const ServicesPage = () => {
             {service ?
                 (<>
                     <div className='pwnz-button pwnz-m10 pwnz-fs25' >
-                        { <div onClick={cancelPick}>Back to the services list</div> }
+                        {<div onClick={cancelPick}>Back to the services list</div>}
                     </div>
 
                     <div className='services-container'>
                         {service === 'calculator' ?
                             <Calculator></Calculator>
-                            : null}
-                        {service === 'gallery' ?
-                            <PwnzGallery user={auth}></PwnzGallery> : null
-                        }
-                        {service === 'weather' ?
-                            <WeatherTable user={auth} />
-                            : null}
-                        {service === 'todolist' ?
-                            <Todolist user={auth} />
-                            : null}
-                        {service === 'redux' ?
-                            <ReduxSample user={auth} />
-                            : null}
-                        {service === 'currency' ?
-                            <Currency user={auth}/>
-                            : null}
+                            : service === 'gallery' ?
+                                <PwnzGallery user={auth}></PwnzGallery>
+                                : service === 'weather' ?
+                                    <WeatherTable user={auth} />
+                                    : service === 'todolist' ?
+                                        <Todolist user={auth} />
+                                        : service === 'redux' ?
+                                            <ReduxSample user={auth} />
+                                            : service === 'currency' ?
+                                                <Currency user={auth} />
+                                                :
+                                                <p className='pwnz-fs25'>No service found</p>}
+
                     </div>
                 </>)
                 :
                 (<>
 
                     <div className='services-header'>
-                        <p className='pwnz-fs25 pwnz-t-c'>Services avaible</p>
+                        <p className='pwnz-fs25 pwnz-t-c'>Services available</p>
                     </div>
 
                     <div className='services-container'>
@@ -106,17 +105,17 @@ const ServicesPage = () => {
                         <div className='pwnz-m10'>
                             <PwnzCard
                                 cardTitle="Redux"
-                                cardDescription="My redux sample"
+                                cardDescription="My first meeting with Redux state container"
                                 buttonHandler={handlePick}
-                                logo={''}
+                                logo={reduxPng}
                                 buttonText="Open redux sample"></PwnzCard>
                         </div>
                         <div className='pwnz-m10'>
                             <PwnzCard
                                 cardTitle="Currency"
-                                cardDescription="Currency table"
+                                cardDescription="Currency table build with Redux state container"
                                 buttonHandler={handlePick}
-                                logo={''}
+                                logo={currencyPng}
                                 buttonText="Open currency table"></PwnzCard>
                         </div>
                     </div>

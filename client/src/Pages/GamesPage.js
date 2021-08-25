@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import Tictactoe from '../components/Tictactoe';
 import Sudoku from '../components/Sudoku';
@@ -12,14 +12,14 @@ import SudokuLogo from '../assets/sudoku/SudokuLogo.jpg'
 
 const GamesPage = () => {
     const auth = useContext(AuthContext);
-    const location = useLocation();
-    const [game, setGame] = useState(location.game||null);
+    const { game } = useParams();
+    const history = useHistory();
 
     const handleGamePick = (gameName) => {
-        setGame(gameName);
+        history.push(`/games/${gameName.toLowerCase()}`);
     }
     const cancelGamePick = () => {
-        setGame(null);
+        history.push(`/games`)
     }
 
     return (
@@ -34,15 +34,14 @@ const GamesPage = () => {
                     </div>
 
                     <div className='games-game'>
-                        {game === 'Tictactoe' ?
+                        {game === 'tictactoe' ?
                             <Tictactoe></Tictactoe>
-                            : null}
-                        {game === 'Sudoku' ?
-                            <Sudoku></Sudoku>
-                            : null}
-                        {game === 'SudokuApi' ?
-                            <SudokuApi></SudokuApi>
-                            : null}
+                            : game === 'sudoku' ?
+                                <Sudoku></Sudoku>
+                                : game === 'sudokuapi' ?
+                                    <SudokuApi></SudokuApi>
+                                    :
+                                    <p className='pwnz-fs25'>No game found</p>}
                     </div>
                 </>)
                 :

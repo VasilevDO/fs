@@ -3,6 +3,8 @@ import React, { useState, useRef } from 'react';
 import { getCurrency, changeBaseCurrency } from '../redux/currencyActions';
 import { Loader } from './Loader';
 import { unixToBeautifulDateWithTime } from './pwnz';
+
+
 const Currency = ({ state, user, loading, getCurrency, changeBaseCurrency }) => {
 
     if (loading) {
