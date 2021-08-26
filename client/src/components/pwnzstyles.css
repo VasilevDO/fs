@@ -238,4 +238,10 @@
   text-align: center;
   padding: 5px;
 }
+
+.mainForm {
+  background-color: #d7f3fe;
+  border: 2px solid lightgray;
+  border-radius: 4px;
+}
 /*# sourceMappingURL=pwnzstyles.css.map */

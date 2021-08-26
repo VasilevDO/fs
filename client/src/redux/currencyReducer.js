@@ -2,7 +2,7 @@ import { CURRENCY_GET_CURRENCY,CURRENCY_CHANGE_BASE_CURRENCY } from "./types"
 
 const initialState={
     currency:{},
-    visibleCurrencies:['EUR','RUB','BTC','USD'],
+    visibleCurrencies:['EUR','RUB','BTC','USD','GBP','UAH','CHF'],
     baseCurrency:'RUB'
 }
 

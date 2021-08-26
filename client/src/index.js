@@ -8,11 +8,14 @@ import reportWebVitals from './reportWebVitals';
 import './index.css';
 import App from './App';
 import { rootReducer } from './redux/rootReducer';
+import { checkForBannedWords, checkInputNotEmpty } from './redux/middleware';
 
 const Timing = 500;
 const store = createStore(rootReducer, compose(
   applyMiddleware(
-    thunk
+    thunk,
+    checkForBannedWords,
+    checkInputNotEmpty
   ),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 ));

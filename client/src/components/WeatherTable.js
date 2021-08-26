@@ -468,10 +468,13 @@ export default class WeatherTable extends Component {
         <div className='pwnz-weatherTable-micro'>
           <div className='pwnz-p5'>
             <div className='pwnz-select pwnz-f-grow1'>
-              <select className='pwnz-t-c pwnz-w100 pwnz-mr5' value={city.name} onChange={this.handleCityChange}>
-                {this.state.cities.map(city => {
+              <select className='pwnz-t-c pwnz-w100 pwnz-mr5' onChange={this.handleCityChange}>
+                {this.state.cities.map(item => {
+                  if (item.name===city.name) {
+                    return <option value={item.name} hidden selected>{item.name}</option>
+                  }
                   return (
-                    <option value={city.name}>{city.name}</option>
+                    <option value={item.name}>{item.name}</option>
                   )
                 })}
               </select>

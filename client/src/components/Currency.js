@@ -22,7 +22,7 @@ const Currency = ({ state, user, loading, getCurrency, changeBaseCurrency }) => 
                 <table>
                     <thead>
                         <tr>
-                            <th colSpan='3'>
+                            <th colSpan={Object.keys(rates).length}>
                                 {dateUpdated ?
                                     <div className='pwnz-f-c'>
                                         <span> {unixToBeautifulDateWithTime(dateUpdated)}</span>
@@ -30,11 +30,11 @@ const Currency = ({ state, user, loading, getCurrency, changeBaseCurrency }) => 
                                             <div className='pwnz-fs23' onClick={() => getCurrency(user.token)}>🗘</div>
                                         </div>
                                     </div>
-                                    : 'Currency rates table'}
+                                    : 'Want to know currency rates?'}
                             </th>
                         </tr>
                         <tr>
-                            <th colSpan='3'>
+                            <th colSpan={Object.keys(rates).length}>
                                 <div className='pwnz-select pwnz-f-grow1'>
                                     {dateUpdated ?
                                         <select className='pwnz-t-c pwnz-w100 pwnz-mr5' onChange={(e) => changeBaseCurrency(e.target.value)}>
