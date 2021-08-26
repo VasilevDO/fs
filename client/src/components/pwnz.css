@@ -324,3 +324,7 @@
 .pwnz-bt-lightgray {
     border-top:1px solid lightgray;
 }
+
+.pwnz-bb-lightgray {
+    border-bottom:1px solid lightgray;
+}

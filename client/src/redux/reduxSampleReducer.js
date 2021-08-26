@@ -1,18 +1,18 @@
-import { CREATE_ASYNC_STRING, CREATE_STRING, SHOW_ALERT, HIDE_ALERT, STORE_STRING } from "./types"
+import { CREATE_ASYNC_STRING, CREATE_STRING, SHOW_ALERT, HIDE_ALERT, RETURN_STRING } from "./types"
 
 const initialState={
     strings:[],
     asyncStrings:[],
-    storedString:''
+    inputValue:''
 }
 
 
 export const reduxSampleReducer=(state=initialState,action)=> {
     switch (action.type) {
 
-        case STORE_STRING:
+        case RETURN_STRING:
             return {
-                ...state,storedString:action.payload
+                ...state,inputValue:action.payload
             }
         case CREATE_STRING:
             return {

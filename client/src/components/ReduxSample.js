@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { createString, createAsyncString } from '../redux/actions';
 import { Loader } from './Loader';
 
@@ -8,28 +8,25 @@ const ReduxSample = ({ state, loading, createString, createAsyncString }) => {
 
     const alert = state.alert;
 
-    if (loading) {
-        return (
-            <Loader />
-        )
-    }
-
+    // if (loading) {
+    //     return (
+    //         <Loader />
+    //     )
+    // }
+    
     const addString=()=>{
         const string=inputRef.current.value;
-        inputRef.current.value='';
         createString(string)    
     }
 
     const addAsyncString=()=>{
         const string=inputRef.current.value;
-        inputRef.current.value='';
         createAsyncString(string)    
     }
 
-    const storedString=state.storedString;
-
     return (
-        <>
+        <>  
+        {loading?<Loader/>:null}
             <div className='pwnz-col mainForm pwnz-p10 pwnz-w600'>
                 <div>
                     {alert ?
@@ -40,11 +37,14 @@ const ReduxSample = ({ state, loading, createString, createAsyncString }) => {
                     maxLength='32' 
                     ></input>
                 </div>
-                <div className='pwnz-f-es pwnz-bt-lightgray'>
+                <div className='pwnz-f-es'>
                     <div className='pwnz-f-cc pwnz-f-grow1'>
-                    <div className='pwnz-button' >
+                    <div className='pwnz-button'>
                             <div onClick={addString}>Add string</div>
                         </div>
+                        {state.strings.length||state.asyncStrings.length?
+                        <div className='pwnz-mt10 pwnz-bb-lightgray pwnz-w100'>
+                        </div>:null}
                         {state.strings.map(string => (
                                 <p className='pwnz-mb0'>{string}</p>
                         ))}
@@ -53,6 +53,9 @@ const ReduxSample = ({ state, loading, createString, createAsyncString }) => {
                     <div className='pwnz-button pwnz-ml10' >
                             <div onClick={addAsyncString}>Add async string (1 second delay)</div>
                         </div>
+                        {state.asyncStrings.length||state.strings.length?
+                        <div className='pwnz-mt10 pwnz-bb-lightgray pwnz-w100 '>
+                        </div>:null}
                          {state.asyncStrings.map(string => (
                             <p className='pwnz-mb0'>{string}</p>
                     ))}
