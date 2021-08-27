@@ -13,8 +13,8 @@ export const Navbar = () => {
     }
 
     return (
-        <nav>
-            <div className='nav-wrapper blue darken-1 pwnz-navbar' style={{padding:'0 2rem'}}>
+        <nav className='pwnz-nav'>
+            <div className='nav-wrapper blue darken-1 pwnz-nav-wrapper'>
                 <span className='brand-logo'>pwnzforever/{auth.userName}</span>
                 <ul id='nav-mobile' className='right hide-on-med-and-down'>
                     <li><NavLink to='/home'>Home</NavLink></li>

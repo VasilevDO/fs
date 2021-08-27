@@ -67,7 +67,7 @@ const GamesPage = () => {
 
                         <PwnzCard
                             cardTitle="SudokuApi"
-                            cardDescription="Sudoku with 3rd party generator (api)"
+                            cardDescription="Sudoku with 3rd party generator, powered by SuGoku (github.com /bertoort/sugoku)"
                             buttonHandler={handleGamePick}
                             logo={SudokuLogo}
                             buttonText="Play"></PwnzCard>

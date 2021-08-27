@@ -126,13 +126,15 @@ class ResetForm extends Component {
             return (
                 <>
                 <div className='inner'>                
-                    <div className='reset-form'>
+                    <div className='reset-form mainForm'>
                      <div className='reset-form-body'>
                      {message?
                         <p className={messageClassName}>{messageText}</p>:null
                         } 
                         <div className='input-field'>
-                            <div className='reset-form-inputToggle' onClick={this.togglePasswordVisibility}><img src={passwordImg} className='pwnz-button-30x30'/></div>
+                        <label htmlFor='password' className='active' style={{color:passwordAlert?passwordAlert.color:null}}>{passwordAlert?passwordAlert.text:'New password'}</label>
+
+                            <div className='pwnz-input'>
                             <input 
                                   placeholder='Enter new password'
                                   value={this.state.password}
@@ -143,10 +145,12 @@ class ResetForm extends Component {
                                   onChange={this.handleInputChange}
                                   onKeyPress={this.handleKeyPress}
                             />
-                            <label htmlFor='password' className='active' style={{color:passwordAlert?passwordAlert.color:null}}>{passwordAlert?passwordAlert.text:'New password'}</label>
+                            <div className='reset-form-inputToggle' onClick={this.togglePasswordVisibility}><img src={passwordImg} className='pwnz-button-30x30'/></div>
+                        </div>
                          </div>
                         <div className='input-field'>
-                            <div className='reset-form-inputToggle' onClick={this.togglePasswordConfirmVisibility}><img src={passwordConfirmImg} className='pwnz-button-30x30'/></div>
+                            <label htmlFor='password' className='active' style={{color:passwordConfirmAlert?passwordConfirmAlert.color:null}}>{passwordConfirmAlert?passwordConfirmAlert.text:'Confirm new password'}</label>
+                            <div className='pwnz-input'>
                             <input 
                                   placeholder='Confirm new password'
                                   value={this.state.passwordConfirm}
@@ -157,7 +161,8 @@ class ResetForm extends Component {
                                   onChange={this.handleInputChange}
                                   onKeyPress={this.handleKeyPress}
                              />
-                             <label htmlFor='password' className='active' style={{color:passwordConfirmAlert?passwordConfirmAlert.color:null}}>{passwordConfirmAlert?passwordConfirmAlert.text:'Confirm new password'}</label>
+                            <div className='reset-form-inputToggle' onClick={this.togglePasswordConfirmVisibility}><img src={passwordConfirmImg} className='pwnz-button-30x30'/></div>
+                        </div>
                          </div>
                         <div className="card-action center-align">
                             <button 

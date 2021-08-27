@@ -10,11 +10,6 @@ const AuthPage=()=> {
     const [message,setMessage]=useState(null);
     const {request} = useHttp(); //const {loading,request,error,clearError} = useHttp();
 
-
-    useEffect(()=>{
-        window.M.updateTextFields();
-    },[])
-
     const handleAuth=async (data)=> {
         try {
             const type=data.form;
@@ -46,7 +41,7 @@ const AuthPage=()=> {
 
     return (
         <>
-        <div className='auth-page valign-wrapper'>
+        <div className='auth-page pwnz-f-c'>
              <AuthForm handleAuthFormSubmit={handleAuth} message={message}></AuthForm>                     
         </div>
         </>

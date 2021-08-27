@@ -1,17 +1,10 @@
 import { connect } from 'react-redux';
 import React, { useState, useRef } from 'react';
 import { getCurrency, changeBaseCurrency } from '../redux/currencyActions';
-import { Loader } from './Loader';
 import { unixToBeautifulDateWithTime } from './pwnz';
 
 
-const Currency = ({ state, user, loading, getCurrency, changeBaseCurrency }) => {
-
-    if (loading) {
-        return (
-            <Loader/>
-        )
-    }
+const Currency = ({ state, user, getCurrency, changeBaseCurrency }) => {
 
     const dateUpdated = state.currency.timestamp;
     const rates = state.currency.rates || {};
@@ -25,9 +18,9 @@ const Currency = ({ state, user, loading, getCurrency, changeBaseCurrency }) => 
                             <th colSpan={Object.keys(rates).length}>
                                 {dateUpdated ?
                                     <div className='pwnz-f-c'>
-                                        <span> {unixToBeautifulDateWithTime(dateUpdated)}</span>
+                                        <span className='pwnz-f-grow1'> {unixToBeautifulDateWithTime(dateUpdated)}</span>
                                         <div className='pwnz-button pwnz-ml10' >
-                                            <div className='pwnz-fs23' onClick={() => getCurrency(user.token)}>🗘</div>
+                                            <div className='pwnz-fs23 pwnz-fwn' onClick={() => getCurrency(user.token)}>🗘</div>
                                         </div>
                                     </div>
                                     : 'Want to know currency rates?'}
@@ -96,8 +89,7 @@ const Currency = ({ state, user, loading, getCurrency, changeBaseCurrency }) => 
 const mapStateToProps = (state, props) => {
     return {
         user: props.user,
-        state: state.currency,
-        loading: state.app.loading
+        state: state.currency
     }
 }
 

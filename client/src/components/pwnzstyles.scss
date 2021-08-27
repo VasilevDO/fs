@@ -1,6 +1,143 @@
 @import './pwnzstylesVariables';
 @import './pwnzstylesFunctions';
 
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+html {
+    font-family: $mainFont;
+    font-weight: normal;
+    font-size:$mainFontSize;
+    -webkit-text-size-adjust: 100%;
+    line-height: $mainLineHeight;
+}
+
+body {
+    min-width: 1366px;
+   
+    margin:0px;
+    box-sizing: border-box;
+}
+
+ul:not(.default) {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.input-field {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    label {
+        font-size: $mainFontSize*0.9;
+        color:$lightTextColor;
+    }
+}
+
+.pwnz-input {
+    position: relative;
+}
+
+input:not(.default) {
+    &[type="password"] {
+        -webkit-text-security: disc !important;
+    }
+    &:not(.default) {
+        background-color: $lighterFormColor;
+        border: none;
+        border-bottom: 1px solid #9e9e9e;
+        border-radius: 0;
+        outline: none;
+        height: 3rem;
+        width: 100%;
+        font-size: 16px;
+        margin: 0;
+        padding: 0 5px;
+        box-shadow: none;
+        transition: box-shadow .3s, border .3s;
+        position: relative;
+        line-height:$subLineHeight;
+    }  
+}
+
+select {
+    font-family: $mainFont;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+    width:100%;
+}
+
+textarea {
+    background-color: transparent;
+    font-family: $mainFont;
+    font-size:$textareaFontSize;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+}
+
+table {
+    width: 100%;
+    display: table;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+
+
+.pwnz-nav {
+    min-width: 1366px !important;
+    width:100%;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+    -moz-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+    .pwnz-nav-wrapper {
+        position: relative;
+        padding: 0 2rem;
+        background-color: $navColor;
+        height:64px;
+        line-height: 64px;
+    }
+    span {
+        position: absolute;
+        color:$navTextColor;
+        display: inline-block;
+        font-size:2.1rem;
+        padding:0;
+    }
+    ul {
+        display:block;
+        float:right;
+        margin:0;
+        list-style-type:none;
+        li {
+            transition: background-color .3s;
+            float: left;
+            padding: 0;
+            a {
+                transition: background-color .3s;
+                font-size: 1rem;
+                color: #fff;
+                display: block;
+                padding: 0 15px;
+                cursor: pointer;
+                text-decoration: none;
+                -webkit-tap-highlight-color: transparent;
+                &:hover {
+                    background-color: rgba(0,0,0,0.1);
+                }
+            }
+        }
+    }
+}
+
+.pwnz-footbar {
+    width: 100%;
+    padding: 10px;
+}
+
 .page-container {
     background-color: $mainBackgroundColor;
     select {
@@ -52,11 +189,7 @@
     }
 }
 
-.pwnz-footbar {
-    width: 100%;
-    padding: 10px;
 
-}
 
 .page-container {
     min-height:100vh;
@@ -100,7 +233,7 @@
         @include lightForm();
 }
 
-.pwnz-loader {
+.pwnz-loader-wrapper {
     position: fixed;
     height:100vh;
     width:100vw;

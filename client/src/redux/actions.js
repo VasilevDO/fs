@@ -1,15 +1,9 @@
-import { CREATE_ASYNC_STRING, CREATE_STRING, SHOW_LOADER, HIDE_ALERT, HIDE_LOADER, SHOW_ALERT, RETURN_STRING } from "./types";
+import { CREATE_ASYNC_STRING, CREATE_STRING, SHOW_LOADER, HIDE_ALERT, HIDE_LOADER, SHOW_ALERT } from "./types";
 
 export function createString(string) {
     return dispatch => {
         dispatch(hideAlert());
         dispatch({ type: CREATE_STRING, payload: string })
-    }
-}
-
-export function returnString(string) {
-    return dispatch => {
-        dispatch({type:RETURN_STRING, payload:string})
     }
 }
 

@@ -66,8 +66,8 @@ export default class PwnzBlog extends Component {
         $('.pwnzBlog-newPostForm').hide(500);
         $('.pwnzBlog-newPostForm').siblings('.pwnz-bwtm-bd').find('.pwnz-bwtm-b').toggle(1);
         this.setState({
-          posts: this.state.posts.concat(post),
-          postsToShow: this.state.postsToShow.concat(post),
+          posts: [post,...this.state.posts],
+          postsToShow: [post,...this.state.postsToShow],
           newPostText: '',
           newPostTitle: ''
         })

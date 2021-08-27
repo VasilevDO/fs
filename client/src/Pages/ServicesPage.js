@@ -56,20 +56,16 @@ const ServicesPage = () => {
                                                 <Currency user={auth} />
                                                 :
                                                 <p className='pwnz-fs25'>No service found</p>}
-
                     </div>
                 </>)
                 :
                 (<>
-
                     <div className='services-header'>
                         <p className='pwnz-fs25 pwnz-t-c'>Services available</p>
                     </div>
 
                     <div className='services-container'>
                         <div className='pwnz-m10'>
-
-
                             <PwnzCard
                                 cardTitle="Todolist"
                                 cardDescription="To-do list helps you to know whats next"
@@ -105,7 +101,7 @@ const ServicesPage = () => {
                         <div className='pwnz-m10'>
                             <PwnzCard
                                 cardTitle="Redux"
-                                cardDescription="My first meeting with Redux state container"
+                                cardDescription="My first meeting with Redux state container (react-redux connect). There you can add some strings and nothing more"
                                 buttonHandler={handlePick}
                                 logo={reduxPng}
                                 buttonText="Open redux sample"></PwnzCard>
@@ -113,7 +109,7 @@ const ServicesPage = () => {
                         <div className='pwnz-m10'>
                             <PwnzCard
                                 cardTitle="Currency"
-                                cardDescription="Currency table build with Redux state container"
+                                cardDescription="Currency table build with Redux state container (react-redux connect), powered by Fixer.io"
                                 buttonHandler={handlePick}
                                 logo={currencyPng}
                                 buttonText="Open currency table"></PwnzCard>

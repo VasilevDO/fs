@@ -20,7 +20,6 @@ export const useAuth = () => {
         setReady(true);
     }, []);
 
-
     const getRights = async (id, token) => {
         const method = 'POST';
         const body = JSON.stringify({
@@ -43,17 +42,16 @@ export const useAuth = () => {
         localStorage.removeItem(storageName);
     }, []);
 
-
-
-    useEffect(async () => {
-        const data = JSON.parse(localStorage.getItem(storageName));
-        if (data && data.token) {
-            await login(data.token, data.userId, data.userName);
+    useEffect(() => {
+        const storageLogin= async()=>{
+            const data = JSON.parse(localStorage.getItem(storageName));
+            if (data && data.token) {
+                await login(data.token, data.userId, data.userName);
+            }
+            setReady(true);
         }
-        setReady(true);
+        storageLogin();
     }, [login]);
-
-
 
     return { login, logout, token, userId, userName, ready, userRights }
 }

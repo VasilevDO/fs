@@ -44,7 +44,7 @@ const ResetPage = () => {
 
     return (
         <>
-           <div className='reset-page valign-wrapper'>
+           <div className='reset-page valign-wrapper pwnz-f-c'>
                 <ResetForm handleResetFormSubmit={handleReset} message={message}></ResetForm>
             </div>
         </>

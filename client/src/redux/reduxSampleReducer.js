@@ -1,4 +1,4 @@
-import { CREATE_ASYNC_STRING, CREATE_STRING, SHOW_ALERT, HIDE_ALERT, RETURN_STRING } from "./types"
+import { CREATE_ASYNC_STRING, CREATE_STRING, SHOW_ALERT, HIDE_ALERT, RETURN_STRING, SUCCESS } from "./types"
 
 const initialState={
     strings:[],
@@ -9,11 +9,6 @@ const initialState={
 
 export const reduxSampleReducer=(state=initialState,action)=> {
     switch (action.type) {
-
-        case RETURN_STRING:
-            return {
-                ...state,inputValue:action.payload
-            }
         case CREATE_STRING:
             return {
                 ...state,strings:state.strings.concat(action.payload)
