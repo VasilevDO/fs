@@ -69,6 +69,5 @@
 }
 
 .sudoku-board-squares-row-square {
-  outline: 2px solid black;
-  outline-offset: -2px;
+  border:1px solid black;
 }

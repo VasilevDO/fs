@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import './AuthForm.css';
 import $ from 'jquery';
 import showPNG from '../assets/buttons/show.png';
@@ -19,6 +19,8 @@ class AuthForm extends Component {
             passwordAlert: null,
             nameAlert: null
         }
+        this.passwordRef=createRef();
+        this.confirmPasswordRef=createRef();
     }
 
     handleLoginTabClick = () => {
@@ -29,7 +31,7 @@ class AuthForm extends Component {
     }
 
     validatePassword = (target) => {
-        const password = target.val();
+        const password = this.passwordRef.current.value;
         let alert;
         if (password === '') {
             alert = null;
@@ -53,12 +55,12 @@ class AuthForm extends Component {
     }
 
     validatePasswordConfirm = (target) => {
-        const password = target.val();
-        const mainInputValue = target.parent().siblings('.input-field').find('input[name="password"]').val();
+        const password = this.passwordRef.current.value;
+        const confirmPassword = this.confirmPasswordRef.current.value;
         let alert;
-        if (password === '') {
+        if (confirmPassword === '') {
             alert = null;
-        } else if (password !== mainInputValue) {
+        } else if (confirmPassword !== password) {
             alert = {
                 status: 'error',
                 color: 'red',
@@ -72,7 +74,7 @@ class AuthForm extends Component {
             }
         }
         this.setState({
-            [target.attr('name')]: password,
+            [target.attr('name')]: confirmPassword,
             [target.attr('name') + 'Alert']: alert
         })
     }
@@ -127,13 +129,13 @@ class AuthForm extends Component {
 
     handleInputChange = (e) => {
         if (e.target.name === 'password') {
-            this.validatePassword($(e.target));
-            const confirmInput = $(e.target).parent().siblings('.input-field').find('input[name="passwordConfirm"]');
-            if (confirmInput.length === 1) {
-                this.validatePasswordConfirm(confirmInput);
+            this.validatePassword($(this.passwordRef.current));
+            console.log($(this.confirmPasswordRef.current).is(':visible'));
+            if ($(this.confirmPasswordRef.current).is(':visible')) {
+                this.validatePasswordConfirm($(this.confirmPasswordRef.current));
             }
         } else if (e.target.name === 'passwordConfirm') {
-            this.validatePasswordConfirm($(e.target));
+            this.validatePasswordConfirm($(this.confirmPasswordRef.current));
         } else if (e.target.name === 'name') {
             this.validateName($(e.target))
         } else if (e.target.name === 'email') {
@@ -143,7 +145,7 @@ class AuthForm extends Component {
 
     handleKeyPress = (e) => {
         if (e.key !== 'Enter') return;
-        let next = $(e.target).parent().siblings('.input-field').find('input:not(.input-passed)');
+        let next = $(e.target).parent().siblings('.pwnz-input').find('input:not(.input-passed)');
         if (!next.length) {
             this.handleAuthFormSubmit();
         } else {
@@ -276,6 +278,7 @@ class AuthForm extends Component {
                                             className={'pwnz-input ' + passwordClassName}
                                             onChange={this.handleInputChange}
                                             onKeyPress={this.handleKeyPress}
+                                            ref={this.passwordRef}
                                         />
                                         <div className='auth-form-inputToggle' onClick={this.togglePasswordVisibility}><img src={passwordImg} className='pwnz-button-30x30' /></div>
                                     </div>
@@ -296,6 +299,7 @@ class AuthForm extends Component {
                                             className={'pwnz-input ' + passwordConfirmClassName}
                                             onChange={this.handleInputChange}
                                             onKeyPress={this.handleKeyPress}
+                                            ref={this.confirmPasswordRef}
                                         />
                                         <div className='auth-form-inputToggle' onClick={this.togglePasswordConfirmVisibility}><img src={passwordConfirmImg} className='pwnz-button-30x30' /></div>
                                     </div>

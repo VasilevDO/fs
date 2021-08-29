@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, createRef} from 'react';
 import './ResetForm.css';
 import $ from 'jquery';
 import showPNG from '../assets/buttons/show.png';
@@ -16,10 +16,12 @@ class ResetForm extends Component {
             passwordConfirmAlert:null,
             passwordConfirmVisible:false
         }
+        this.passwordRef=createRef();
+        this.confirmPasswordRef=createRef();
     }
 
     validatePassword=(target)=> {
-        const password=target.val();
+        const password=this.passwordRef.current.value;
         let alert;
         if (password==='') {
             alert=null;
@@ -43,12 +45,12 @@ class ResetForm extends Component {
     }
 
     validatePasswordConfirm=(target)=> {
-        const password=target.val();
-        const mainInputValue=target.parent().siblings('.input-field').find('input[name="password"]').val();
+        const password=this.passwordRef.current.value;
+        const  confirmPassword=this.confirmPasswordRef.current.value;
         let alert;
-        if (password==='') {
+        if (confirmPassword==='') {
             alert = null;
-        } else if (password!==mainInputValue) {
+        } else if (confirmPassword!==password) {
             alert = {
                 status:'error',
                 color:'red',
@@ -62,7 +64,7 @@ class ResetForm extends Component {
             }
         }
         this.setState({
-            [target.attr('name')]:password,
+            [target.attr('name')]:confirmPassword,
             [target.attr('name')+'Alert']:alert
         })
     }
@@ -71,11 +73,10 @@ class ResetForm extends Component {
 
     handleInputChange=(e)=> {
         if (e.target.name==='password') {
-            this.validatePassword($(e.target)); 
-            const confirmInput=$(e.target).parent().siblings('.input-field').find('input[name="passwordConfirm"]');
-            this.validatePasswordConfirm(confirmInput);
+            this.validatePassword($(this.passwordRef.current)); 
+            this.validatePasswordConfirm($(this.confirmPasswordRef.current));
         } else if (e.target.name==='passwordConfirm') {
-            this.validatePasswordConfirm($(e.target));
+            this.validatePasswordConfirm($(this.confirmPasswordRef.current));
         }
     }
 
@@ -144,6 +145,7 @@ class ResetForm extends Component {
                                   className={'pwnz-input '+passwordClassName}
                                   onChange={this.handleInputChange}
                                   onKeyPress={this.handleKeyPress}
+                                  ref={this.passwordRef}
                             />
                             <div className='reset-form-inputToggle' onClick={this.togglePasswordVisibility}><img src={passwordImg} className='pwnz-button-30x30'/></div>
                         </div>
@@ -160,6 +162,7 @@ class ResetForm extends Component {
                                   className={'pwnz-input '+passwordConfirmClassName}
                                   onChange={this.handleInputChange}
                                   onKeyPress={this.handleKeyPress}
+                                  ref={this.confirmPasswordRef}
                              />
                             <div className='reset-form-inputToggle' onClick={this.togglePasswordConfirmVisibility}><img src={passwordConfirmImg} className='pwnz-button-30x30'/></div>
                         </div>

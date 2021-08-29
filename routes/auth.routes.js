@@ -144,7 +144,7 @@ async (request,response)=>{
         const passwordResetId=generatePasswordResetId(12);
 
         let mailOptions = {
-            from: 'pwnzoforever@gmail.com',
+            from: 'pwnzforever.ru',
             to: user.email,
             subject:'Password recovery',
             text:`Hello, ${user.name}! There is your link to reset password:${config.get('baseUrl')}/reset/${passwordResetId}`
@@ -152,9 +152,9 @@ async (request,response)=>{
 
         transporter.sendMail(mailOptions, function (error, data) {
             if (error) {
-                console.log('mailer crashed');
+                console.log('Mailer crashed');
             } else {
-                console.log('email succesfully sent');
+                console.log('Email succesfully sent');
             }
         })
 
@@ -192,7 +192,7 @@ async (request,response)=>{
 
         const hashedPassword=await bcrypt.hash(password,12);
         user.password=hashedPassword;
-        user.passwordResetId='';
+        delete user.passwordResetId;
         await user.save();
         response.json({message:'Password succesfully changed'});
     } catch (e) {
