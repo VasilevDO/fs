@@ -141,7 +141,14 @@ async (request,response)=>{
             }
         });
 
-        const passwordResetId=generatePasswordResetId(12);
+        let passwordResetId=generatePasswordResetId(12);
+
+        let userWithResetId=await User.findOne({passwordResetId:passwordResetId});
+
+        while (userWithResetId) {
+            passwordResetId=generatePasswordResetId(12);
+            userWithResetId=await User.findOne({passwordResetId:passwordResetId});
+        }
 
         let mailOptions = {
             from: 'pwnzforever.ru',
