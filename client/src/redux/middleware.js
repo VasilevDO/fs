@@ -1,4 +1,4 @@
-import { hideLoader, returnString, showAlert } from "./actions";
+import {showAlert } from "./actions";
 import { CREATE_ASYNC_STRING, CREATE_STRING } from "./types";
 
 

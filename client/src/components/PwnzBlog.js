@@ -66,8 +66,8 @@ export default class PwnzBlog extends Component {
         $('.pwnzBlog-newPostForm').hide(500);
         $('.pwnzBlog-newPostForm').siblings('.pwnz-bwtm-bd').find('.pwnz-bwtm-b').toggle(1);
         this.setState({
-          posts: [post,...this.state.posts],
-          postsToShow: [post,...this.state.postsToShow],
+          posts: [post, ...this.state.posts],
+          postsToShow: [post, ...this.state.postsToShow],
           newPostText: '',
           newPostTitle: ''
         })
@@ -220,7 +220,6 @@ export default class PwnzBlog extends Component {
     }
   }
 
-
   sortPosts = (posts, sortBy) => {
     const sortedPosts = posts.concat().sort((a, b) => {
       if (sortBy === 'date') {
@@ -231,6 +230,8 @@ export default class PwnzBlog extends Component {
         return b.likedBy.length >= a.likedBy.length ? 1 : -1;
       } else if (sortBy === 'dislikes') {
         return b.dislikedBy.length >= a.dislikedBy.length ? 1 : -1;
+      } else {
+        return 0;
       }
     });
     return sortedPosts;

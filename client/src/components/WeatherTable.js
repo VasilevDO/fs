@@ -51,7 +51,7 @@ class DayWeather {
     this.pressure = dayObj.pressure;
     this.id = dayObj.weather[0].id;
     this.weather =
-      dayObj.weather[0].main + " " + "(" + dayObj.weather[0].description + ")";
+      dayObj.weather[0].main + " (" + dayObj.weather[0].description + ")";
     this.icon = dayObj.weather[0].icon;
     this.pop = dayObj.pop;
     this.sunrise = getDateFromUTC(dayObj.sunrise).split(" ")[0];

@@ -1,5 +1,5 @@
 import React, { useContext, useState, useCallback } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import './Navbar.css';
 import vkPng from '../assets/buttons/VK.png';
@@ -9,36 +9,36 @@ import { useHttp } from '../hooks/http.hook';
 
 export const Footbar = () => {
     const auth = useContext(AuthContext);
-    const {loading,request}=useHttp();
+    const { request } = useHttp();
     const [feedbackForm, setFeedbackForm] = useState(false);
-    const [feedbackFormMessage,setFeedbackFormMessage]=useState('');
+    const [feedbackFormMessage, setFeedbackFormMessage] = useState('');
 
     const showFeedbackForm = () => {
         setFeedbackForm(true);
     }
 
-    const hideFeedbackForm=(e)=> {
-        const target=$(e.target);
+    const hideFeedbackForm = (e) => {
+        const target = $(e.target);
         if (target.hasClass('pwnz-grayout')) {
             setFeedbackForm(false)
         }
     }
 
-    const sendFeedback=useCallback(async (name,text)=> {
+    const sendFeedback = useCallback(async (name, text) => {
         try {
-            const response=await request('/api/feedback/create','POST',{
-                senderName:name,
-                feedbackText:text
+            const response = await request('/api/feedback/create', 'POST', {
+                senderName: name,
+                feedbackText: text
             }, {
-                Authorization:`Bearer ${auth.token}`,
+                Authorization: `Bearer ${auth.token}`,
                 userId: auth.userId,
             });
             setFeedbackFormMessage(response.message);
         } catch (e) {
         }
-    },[]);
+    }, [auth.token,auth.userId,request]);
 
-    const clearFeedbackForm=()=>{
+    const clearFeedbackForm = () => {
         setFeedbackForm(false)
         setFeedbackFormMessage(false);
     }
@@ -53,8 +53,8 @@ export const Footbar = () => {
             <p className='pwnz-t-c pwnz-m0'>pwnzforever 2021 - {new Date().getFullYear()}</p>
             {feedbackForm ? (
                 <div className='pwnz-grayout' onClick={hideFeedbackForm}>
-                    <PwnzSendTextForm 
-                        user={auth} 
+                    <PwnzSendTextForm
+                        user={auth}
                         message={feedbackFormMessage}
                         onCancel={() => setFeedbackForm(false)}
                         onSubmit={sendFeedback}

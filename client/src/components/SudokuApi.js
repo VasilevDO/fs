@@ -240,7 +240,7 @@ class SudokuApi extends Component {
 
   encodeParams = (params) =>
     Object.keys(params)
-      .map(key => key + '=' + `%5B${this.encodeBoard(params[key])}%5D`)
+      .map(key => key + `=%5B${this.encodeBoard(params[key])}%5D`)
       .join('&');
 
 
@@ -272,7 +272,7 @@ class SudokuApi extends Component {
     this.setState({
       loading: true
     })
-    const { startingBoard, solvedBoard, board } = await this.getBoard();
+    const { startingBoard, solvedBoard} = await this.getBoard();
     this.setState({
       startingBoard: startingBoard,
       solvedBoard: solvedBoard,
@@ -284,7 +284,7 @@ class SudokuApi extends Component {
 
 
   componentDidMount = async () => {
-    const { startingBoard, solvedBoard, board } = await this.getBoard();
+    const { startingBoard, solvedBoard} = await this.getBoard();
     this.setState({
       startingBoard: startingBoard,
       solvedBoard: solvedBoard,
@@ -303,7 +303,6 @@ class SudokuApi extends Component {
     }
 
     const difficulty = this.state.difficulty;
-    const solvedBoard = this.state.solvedBoard;
     const startingBoard = this.state.startingBoard;
     const board = this.state.solutionVisible
       ? this.state.solvedBoard

@@ -349,7 +349,7 @@ class PwnzGallery extends Component {
                                 </div>
                             </div>
                             <div className='pwnz-buttonWdropmenu pwnz-m5'>
-                                <img className='pwnz-button-40x40 pwnz-dropmenu-button pwnz-animated' alt='add image' rotate='405' src={plusPNG} />
+                                <img className='pwnz-button-40x40 pwnz-dropmenu-button pwnz-animated' alt='add' rotate='405' src={plusPNG} />
                                 <div className='pwnz-dropmenu pwnz-dropmenu-down-left pwnz-p10 pwnz-w400' style={{ display: 'none' }}>
                                     <div className='pwnz-dropmenu-inner'>
                                         <input
@@ -422,7 +422,7 @@ class PwnzGallery extends Component {
                             <div className='pwnzGallery-focusedImage-container' onClick={this.cancelFocusedImage}>
                                 <div className='pwnzGallery-focusedImage'>
                                     <div className='pwnzGallery-focusedImage-arrowLeft' onClick={this.focusPreviousImage}>
-                                        <img src={arrowLeftPNG} ></img>
+                                        <img alt='' src={arrowLeftPNG} ></img>
                                     </div>
                                     <PwnzImageCard
                                         image={focusedImage}
@@ -436,7 +436,7 @@ class PwnzGallery extends Component {
                                         imageEdit={this.editImage}
                                     />
                                     <div className='pwnzGallery-focusedImage-arrowRight' onClick={this.focusNextImage}>
-                                        <img src={arrowRightPNG} ></img>
+                                        <img alt='' src={arrowRightPNG} ></img>
                                     </div>
                                 </div>
                             </div>

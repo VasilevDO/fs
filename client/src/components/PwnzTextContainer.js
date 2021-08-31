@@ -33,7 +33,7 @@ export default class PwnzTextarea extends Component {
   render() {
 
     const className =
-      "pwnz-textContainer  " + "pwnz-textContainer-" + (this.props.textAlign?this.props.textAlign:'left');
+      "pwnz-textContainer pwnz-textContainer-" + (this.props.textAlign?this.props.textAlign:'left');
     const placeholder = this.props.placeholder || "Enter your text";
     const editable = this.props.editable || false;
     const textContainerClassName = editable ? "pwnz-textContainer-editable" : "";

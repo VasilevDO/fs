@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './PwnzImageCard.css';
 import cancelPNG from '../assets/buttons/pwnzCancel.png';
 import gearPNG from '../assets/buttons/gear.png';
-import $ from 'jquery';
 
 class PwnzImageCard extends Component {
     constructor (props) {
@@ -61,7 +60,8 @@ class PwnzImageCard extends Component {
         return (
             <div className='pwnzImageCard'>
                 <div className='pwnzImageCard-imageDiv'>
-                    <img 
+                    <img
+                    alt='' 
                     className={''+format==='mini'?'pwnz-clickable':''}
                     src={src} 
                     style={{maxHeight:imgHeight+'px', maxWidth:imgWidth+'px'}} 
@@ -69,7 +69,7 @@ class PwnzImageCard extends Component {
                     />
                     {isControls?<div className='pwnzImageCard-controls'>
                         <div className='pwnzImageCard-controls-close'>
-                            <img src={cancelPNG} className='pwnz-button-40x40' onClick={this.closeImage}/>
+                            <img alt='' src={cancelPNG} className='pwnz-button-40x40' onClick={this.closeImage}/>
                         </div>
                         <div className='pwnzImageCard-controls-menu'>
                             <div className='pwnz-buttonWdropmenu'>

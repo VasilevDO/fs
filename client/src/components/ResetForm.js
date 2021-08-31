@@ -4,7 +4,6 @@ import $ from 'jquery';
 import showPNG from '../assets/buttons/show.png';
 import closePNG from '../assets/buttons/hide.png';
 
-
 class ResetForm extends Component {
     constructor (props) {
         super(props);
@@ -108,7 +107,6 @@ class ResetForm extends Component {
         });
      }
 
-
     render() {
         const passwordAlert=this.state.passwordAlert;
         const passwordClassName=(passwordAlert?'input-'+passwordAlert.status:'');
@@ -147,7 +145,7 @@ class ResetForm extends Component {
                                   onKeyPress={this.handleKeyPress}
                                   ref={this.passwordRef}
                             />
-                            <div className='reset-form-inputToggle' onClick={this.togglePasswordVisibility}><img src={passwordImg} className='pwnz-button-30x30'/></div>
+                            <div className='reset-form-inputToggle' onClick={this.togglePasswordVisibility}><img alt='' src={passwordImg} className='pwnz-button-30x30'/></div>
                         </div>
                          </div>
                         <div className='input-field'>
@@ -164,7 +162,7 @@ class ResetForm extends Component {
                                   onKeyPress={this.handleKeyPress}
                                   ref={this.confirmPasswordRef}
                              />
-                            <div className='reset-form-inputToggle' onClick={this.togglePasswordConfirmVisibility}><img src={passwordConfirmImg} className='pwnz-button-30x30'/></div>
+                            <div className='reset-form-inputToggle' onClick={this.togglePasswordConfirmVisibility}><img alt='' src={passwordConfirmImg} className='pwnz-button-30x30'/></div>
                         </div>
                          </div>
                         <div className="card-action center-align">

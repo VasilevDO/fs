@@ -4,7 +4,6 @@ const path=require('path');
 const mongoose = require('mongoose');
 
 const app=express();
-
 app.use(express.json({extended:true}));
 
 app.use('/api/auth',require('./routes/auth.routes'));
@@ -17,16 +16,14 @@ app.use('/api/currency', require('./routes/currency.routes'));
 app.use('/api/feedback', require('./routes/feedback.routes'));
 app.use('/t', require('./routes/redirect.routes'));
 
-
 if (process.env.NODE_ENV==='production') {
-    app.use('/',express.static(path.join(__dirname,'client','build')));
+    app.use('/',express.static(path.join(__dirname,'client','dist')));
     app.get('*', (request,response)=>{
-        response.sendFile(path.resolve(__dirname,'client','build','index.html'))
+        response.sendFile(path.resolve(__dirname,'client','dist','index.html'))
     });
 }
 
 const PORT=config.get('port') || 5000;
-
 async function start() {
     try {
         await mongoose.connect(config.get('mongoUri'),{

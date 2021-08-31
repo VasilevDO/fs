@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import PwnzCard from '../components/PwnzCard';
 import Calculator from '../components/Calculator';
 import PwnzGallery from '../components/PwnzGallery';
@@ -8,9 +8,7 @@ import Todolist from '../components/Todolist';
 import ReduxSample from '../components/ReduxSample'
 import Currency from '../components/Currency';
 import { AuthContext } from '../context/AuthContext';
-import { useHttp } from '../hooks/http.hook';
 import './ServicesPage.css'
-
 
 import galleryPNG from '../assets/gallery.png';
 import calculatorPNG from '../assets/calculator.png';
@@ -18,7 +16,6 @@ import weatherPNG from '../assets/weather.png';
 import todolistPNG from '../assets/todolist.png';
 import reduxPng from '../assets/redux.png';
 import currencyPng from '../assets/currency.png'
-
 
 const ServicesPage = () => {
     const auth = useContext(AuthContext);

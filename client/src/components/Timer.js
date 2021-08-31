@@ -1,5 +1,4 @@
 import { Component } from "react";
-import { StrictMode } from "react";
 import "./Timer.css";
 import PWNZSelect from "./PWNZSelect.js";
 

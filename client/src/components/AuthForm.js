@@ -280,7 +280,7 @@ class AuthForm extends Component {
                                             onKeyPress={this.handleKeyPress}
                                             ref={this.passwordRef}
                                         />
-                                        <div className='auth-form-inputToggle' onClick={this.togglePasswordVisibility}><img src={passwordImg} className='pwnz-button-30x30' /></div>
+                                        <div className='auth-form-inputToggle' onClick={this.togglePasswordVisibility}><img alt='' src={passwordImg} className='pwnz-button-30x30' /></div>
                                     </div>
 
 
@@ -301,7 +301,7 @@ class AuthForm extends Component {
                                             onKeyPress={this.handleKeyPress}
                                             ref={this.confirmPasswordRef}
                                         />
-                                        <div className='auth-form-inputToggle' onClick={this.togglePasswordConfirmVisibility}><img src={passwordConfirmImg} className='pwnz-button-30x30' /></div>
+                                        <div className='auth-form-inputToggle' onClick={this.togglePasswordConfirmVisibility}><img alt='' src={passwordConfirmImg} className='pwnz-button-30x30' /></div>
                                     </div>
                                 </div>
                             ) : null}

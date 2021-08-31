@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import { getCurrency, changeBaseCurrency } from '../redux/currencyActions';
 import { unixToBeautifulDateWithTime } from './pwnz';
 

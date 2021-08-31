@@ -1,19 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useHttp } from '../hooks/http.hook';
-import { AuthContext } from '../context/AuthContext';
 import ResetForm from '../components/ResetForm';
 import './ResetPage.css';
 import {useLocation,useHistory } from 'react-router-dom';
 
-
-
-
-
-
 const ResetPage = () => {
-    const auth = useContext(AuthContext);
     const [message, setMessage] = useState(null);
-    const { request, error, clearError } = useHttp(); //const {loading,request,error,clearError} = useHttp();
+    const { request } = useHttp(); //const {loading,request,error,clearError} = useHttp();
     const location = useLocation();
     const history=useHistory();
 

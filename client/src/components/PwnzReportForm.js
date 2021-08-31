@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import './PwnzReportForm.css';
-import $ from 'jquery';
 import PwnzTextContainer from './PwnzTextContainer'
-
 
 class PwnzReportForm extends Component {
     constructor(props) {
@@ -77,6 +75,5 @@ class PwnzReportForm extends Component {
         )
     }
 }
-
 
 export default PwnzReportForm;

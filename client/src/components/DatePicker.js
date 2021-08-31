@@ -1,5 +1,4 @@
 import { Component } from "react";
-import { StrictMode } from "react";
 import "./DatePicker.css";
 import Calendar from "./Calendar.js";
 
@@ -80,7 +79,6 @@ class DatePicker extends Component {
     const selectedText = selectedDate
       ? "Deadline: " + selectedDate
       : "No deadline selected";
-    const isDisabled = this.props.disabled;
     return (
       <>
         <div className="date-picker">

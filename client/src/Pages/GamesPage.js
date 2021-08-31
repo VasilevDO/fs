@@ -1,6 +1,5 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
 import Tictactoe from '../components/Tictactoe';
 import Sudoku from '../components/Sudoku';
 import SudokuApi from '../components/SudokuApi';
@@ -11,7 +10,6 @@ import SudokuLogo from '../assets/sudoku/SudokuLogo.jpg'
 
 
 const GamesPage = () => {
-    const auth = useContext(AuthContext);
     const { game } = useParams();
     const history = useHistory();
 
@@ -26,9 +24,6 @@ const GamesPage = () => {
         <>
             {game ?
                 (<>
-
-
-
                     <div className='pwnz-button pwnz-m10 pwnz-fs25' >
                         <div onClick={cancelGamePick}>Back to the games list</div>
                     </div>
@@ -46,7 +41,6 @@ const GamesPage = () => {
                 </>)
                 :
                 (<>
-
                     <div className='services-header'>
                         <p className='pwnz-fs25 pwnz-t-c'>Games avaible</p>
                     </div>

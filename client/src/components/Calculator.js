@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import $ from "jquery";
 import "./Calculator.css";
-import pwnzHint from "./PwnzHint";
 import PwnzHint from "./PwnzHint";
 
 class Calculator extends Component {
@@ -531,10 +530,6 @@ class Calculator extends Component {
     });
   };
 
-  handleHistoryPClick = (e) => {
-    let target = $(e.target);
-  };
-
   handleMouseOver=(e)=> {
     console.log(e.target)
   }
@@ -634,10 +629,7 @@ class Calculator extends Component {
               })}
             </div>
             <div className={historyClassName}>
-              <div
-                className="calc-history-p"
-                onClick={this.handleHistoryPClick}
-              >
+              <div className="calc-history-p">
                 {history.map((item, index) => {
                   return (
                     <div className="calc-history-item" key={index}>

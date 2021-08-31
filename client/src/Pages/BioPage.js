@@ -1,13 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
 import { getAge } from '../components/pwnz';
 
 
 const BioPage = () => {
-
-    const auth = useContext(AuthContext); //const {token,userName}=useContext(AuthContext);
-
     const [mern, setMern] = useState('MERN');
     const toggleMern = () => {
         if (mern === 'MERN') {
@@ -17,17 +13,13 @@ const BioPage = () => {
         }
     }
 
-
-
-
-
     return (
         <div className='biopage-container'>
             <div className='aboutMe'>
                 <p className='pwnz-p10 pwnz-m0'>
                     Hello, my name is Dmitrii and Im a {getAge(new Date(1993, 2, 5))} years old human being
                     <br />
-                    Im glad to welcome you on my <a className='pwnz-clickable' onClick={toggleMern}>{mern}</a> stack project I made to learn something new.
+                    Im glad to welcome you on my <a href='/#' className='pwnz-clickable' onClick={toggleMern}>{mern}</a> stack project I made to learn something new.
                     Almost every component is a react class component, but all pages and some components (
                     <Link to={{ pathname: '/services/redux' }}>redux sample</Link>
                     &nbsp;and&nbsp;

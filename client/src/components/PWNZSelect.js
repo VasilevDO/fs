@@ -1,5 +1,4 @@
 import { Component } from "react";
-import { StrictMode } from "react";
 import "./PWNZSelect.css";
 import $ from "jquery";
 

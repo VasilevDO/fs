@@ -1,8 +1,8 @@
 {
-    "port":80,
+    "port":5000,
     "mongoUri":"mongodb+srv://Dimamba:Qwertyqq13@cluster0.uog5p.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
     "jwtKey":"topsecretkeyforsure",
-    "baseUrl": "http://pwnzforever.ru",
+    "baseUrl": "http://localhost:5000",
     "emailer": "pwnzforevermailer@gmail.com",
     "emailerPassword": "Dfcbkmtd3993"
   }
