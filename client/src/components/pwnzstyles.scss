@@ -13,9 +13,16 @@ html {
     line-height: $mainLineHeight;
 }
 
+.pwnz-d-n {
+    display:none;
+}
+
+.pwnz-d-b {
+    display:block;
+}
+
 body {
     min-width: 1366px;
-   
     margin:0px;
     box-sizing: border-box;
 }
@@ -167,7 +174,6 @@ table {
     -moz-box-shadow: $mainButtonShadows;
     box-shadow: $mainButtonShadows;
     border-radius: $mainButtonBorderRadius;
-
     div {
         display: table-cell;
         height:100%;
@@ -175,10 +181,13 @@ table {
         text-align: center;
         padding:5px;
     }
-
     &:hover {
         background-color: $mainButtonHoverColor;
     }
+}
+
+.pwnz-color-red {
+    color:red;
 }
 
 .biopage-container {

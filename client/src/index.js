@@ -43,7 +43,6 @@ $(document).ready(() => {
     } else if (target.closest('.pwnz-buttonWdropmenu').length === 0) {
       closeDropmenus();
     }
-
     if (target.hasClass('pwnz-buttonWithToggleMenu-button')) {
       if (target.hasClass('onCooldown')) return;
       if (target.hasClass('pwnz-button-show-hide')) {
@@ -57,8 +56,6 @@ $(document).ready(() => {
     if (target.hasClass('pwnz-buttonWithToggledDiv-closeButton')) {
       target.closest('.pwnz-toggleMenu').hide(Timing);
     }
-
-
     //for toggle menus
     // pwnz button with toggle menu
     //b for button, bd for button div, c for content (menu), cb for cancel button
@@ -80,7 +77,6 @@ $(document).ready(() => {
       currentButton.siblings().css('display', 'block');
     }
     // end of toggle menus
-
     //for dropdown menus
     if (target.closest('.pwnz-bwdm-bd').length > 0) {
       const newTarget = target.closest('.pwnz-bwdm-bd');
@@ -102,10 +98,8 @@ $(document).ready(() => {
     if (target.closest('.pwnz-bwdm').length < 1 || target.hasClass('pwnz-bwdm-cb')) {
       $('.pwnz-bwdm-c').hide(Timing);
     }
-
     //end of dropdown menus
   });
-
 })
 
 function toggleDropmenu(target) {

@@ -109,7 +109,7 @@ class Timer extends Component {
               maxOptionsHeight={300}
             ></PWNZSelect>
           </div>
-          <p style={{ "font-size": "16px" }}>:</p>
+          <p style={{ fontSize: "16px" }}>:</p>
           <div className="timer-minutes">
             <PWNZSelect
               className="calendar-pwnz-selector"

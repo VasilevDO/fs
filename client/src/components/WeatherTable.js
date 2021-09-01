@@ -645,8 +645,8 @@ export default class WeatherTable extends Component {
             </table>
           ) : null}
           {hourlyTableData && format === "hourly" ? (
-            <table>
-              <thead>
+            <table className='pwnz-pos-rel'>
+              <thead className='pwnz-theadMain'>
                 <tr>
                   <th colSpan="6">
                     <div className='pwnz-f-c'>

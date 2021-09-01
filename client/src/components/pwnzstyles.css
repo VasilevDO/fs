@@ -11,6 +11,14 @@ html {
   line-height: 1.5;
 }
 
+.pwnz-d-n {
+  display: none;
+}
+
+.pwnz-d-b {
+  display: block;
+}
+
 body {
   min-width: 1366px;
   margin: 0px;
@@ -187,6 +195,10 @@ table {
 
 .pwnz-button:hover {
   background-color: #8eb8e5;
+}
+
+.pwnz-color-red {
+  color: red;
 }
 
 .biopage-container {

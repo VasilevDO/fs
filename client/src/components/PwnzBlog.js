@@ -443,9 +443,10 @@ export default class PwnzBlog extends Component {
           </div>
         </div>
         <div className="pwnzBlog-container">
-          {posts.length ? posts.map((post) => {
+          {posts.length ? posts.map((post,index) => {
             return <PwnzBlogPost
               post={post}
+              key={index}
               editable={this.props.user.userRights.canModerateBlog || post.owner === this.props.user.userId}
               delete={this.deletePost}
               change={this.updatePost}

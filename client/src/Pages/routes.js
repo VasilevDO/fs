@@ -1,5 +1,5 @@
 import React from 'react';
-import {Switch,Route,Redirect} from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import LinksPage from './LinksPage';
 import AuthPage from './AuthPage';
 import HomePage from './HomePage';
@@ -8,51 +8,47 @@ import ServicesPage from './ServicesPage';
 import ResetPage from './ResetPage.js'
 import BioPage from './BioPage';
 
-
-
-const useRoutes = isAuthenticated=> {
-    console.log(isAuthenticated);
+const useRoutes = isAuthenticated => {
     if (isAuthenticated) {
         return (
             <Switch>
                 <Route path='/home' exact>
-                    <HomePage/>
+                    <HomePage />
                 </Route>
                 <Route path='/links' exact>
-                    <LinksPage/>
+                    <LinksPage />
                 </Route>
                 <Route path='/services' exact>
-                    <ServicesPage/>
+                    <ServicesPage />
                 </Route>
                 <Route path='/services/:service' exact>
-                    <ServicesPage/>
+                    <ServicesPage />
                 </Route>
                 <Route path='/games' exact>
-                    <GamesPage/>
+                    <GamesPage />
                 </Route>
                 <Route path='/games/:game' exact>
-                    <GamesPage/>
+                    <GamesPage />
                 </Route>
                 <Route path='/bio' exact>
-                    <BioPage/>
+                    <BioPage />
                 </Route>
-                <Redirect to='/home'/>
+                <Redirect to='/home' />
             </Switch>
         )
     } else {
         return (
             <Switch>
                 <Route path='/auth' exact>
-                    <AuthPage/>
+                    <AuthPage />
                 </Route>
                 <Route path='/reset/:id' exact>
                     <ResetPage />
                 </Route>
-                <Redirect to ='/auth'/>
+                <Redirect to='/auth' />
             </Switch>
         )
     }
 }
-
 
 export default useRoutes;

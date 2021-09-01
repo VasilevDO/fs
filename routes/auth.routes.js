@@ -212,7 +212,6 @@ async (request,response)=>{
 router.post('/userRights',async (request, response)=> {
     try {
         const {id}=request.body;
-        console.log(request.body);
         const user=await User.findOne({_id:id});
 
         if (!user) {
@@ -222,7 +221,6 @@ router.post('/userRights',async (request, response)=> {
         if (user.status==='admin') {
             userRights.canModerateBlog=true;
         };
-        console.log(userRights);
         return response.status(201).json(userRights)
 
     } catch (e) {

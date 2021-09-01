@@ -38,7 +38,6 @@ function getURL(city, time) {
 
 router.post('/', auth,async (request, response)=> {
     try {
-        console.log(request.body);
         const {city,time} = request.body;
         const cityObj=getURL(city||cities[0],time);
 

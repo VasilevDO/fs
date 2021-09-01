@@ -21,7 +21,6 @@ const ServicesPage = () => {
     const auth = useContext(AuthContext);
     const { service } = useParams();
     const history = useHistory();
-    console.log(service);
 
     const handlePick = async (serviceName) => {
         history.push(`/services/${serviceName.toLowerCase()}`)

@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
-import React, { useRef,useState } from 'react';
-import { createString, createAsyncString } from '../redux/actions';
+import React, { useRef, useState } from 'react';
+import { createString, deleteString, createAsyncString, deleteAsyncString } from '../redux/actions';
 
-const ReduxSample = ({ state, createString, createAsyncString }) => {
-    const [inputValue,setInputValue]=useState('');
+const ReduxSample = ({ state, createString, deleteString, createAsyncString, deleteAsyncString }) => {
+    const [inputValue, setInputValue] = useState('');
     const inputRef = useRef();
     const alert = state.alert;
 
-    const handleInputChange=(e)=>{
+    const handleInputChange = (e) => {
         setInputValue(e.target.value);
     }
 
@@ -37,7 +37,7 @@ const ReduxSample = ({ state, createString, createAsyncString }) => {
                         onChange={handleInputChange}
                     ></input>
                 </div>
-                <div className='pwnz-f-es'>
+                <div className='pwnz-f-es pwnz-mt10'>
                     <div className='pwnz-f-cc pwnz-f-grow1'>
                         <div className='pwnz-button'>
                             <div onClick={addString}>Add string</div>
@@ -45,8 +45,13 @@ const ReduxSample = ({ state, createString, createAsyncString }) => {
                         {state.strings.length || state.asyncStrings.length ?
                             <div className='pwnz-mt10 pwnz-bb-lightgray pwnz-w100'>
                             </div> : null}
-                        {state.strings.map(string => (
-                            <p className='pwnz-mb0'>{string}</p>
+                        {state.strings.map((string, index) => (
+                            <div className='pwnz-f-c pwnz-mt10' key={index}>
+                                <p className='pwnz-m0'>{string}</p>
+                                <div className='pwnz-button pwnz-ml10 pwnz-color-red' >
+                                    <div onClick={() => deleteString(index)}>X</div>
+                                </div>
+                            </div>
                         ))}
                     </div>
                     <div className='pwnz-f-cc pwnz-f-grow1'>
@@ -56,8 +61,13 @@ const ReduxSample = ({ state, createString, createAsyncString }) => {
                         {state.asyncStrings.length || state.strings.length ?
                             <div className='pwnz-mt10 pwnz-bb-lightgray pwnz-w100 '>
                             </div> : null}
-                        {state.asyncStrings.map(string => (
-                            <p className='pwnz-mb0'>{string}</p>
+                        {state.asyncStrings.map((string,index) => (
+                            <div className='pwnz-f-c pwnz-mt10' key={index}>
+                                <p className='pwnz-m0'>{string}</p>
+                                <div className='pwnz-button pwnz-ml10 pwnz-color-red' >
+                                    <div onClick={() => deleteAsyncString(index)}>X</div>
+                                </div>
+                            </div>
                         ))}
                     </div>
                 </div>
@@ -67,7 +77,6 @@ const ReduxSample = ({ state, createString, createAsyncString }) => {
 }
 
 const mapStateToProps = state => {
-    console.log(state);
     return {
         state: state.reduxSample,
         loading: state.app.loading
@@ -76,7 +85,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     createString,
-    createAsyncString
+    deleteString,
+    createAsyncString,
+    deleteAsyncString
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReduxSample);

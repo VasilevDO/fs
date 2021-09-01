@@ -97,7 +97,6 @@ class Task extends Component {
   }
 
   render() {
-
     const format = this.state.format;
     const task = this.state.task;
     const text = task.text;
