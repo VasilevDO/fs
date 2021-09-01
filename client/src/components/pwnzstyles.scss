@@ -312,3 +312,10 @@ table {
 .auth-form {
     @include mainForm();
 }
+
+.pwnz-sticky0 {
+    position: sticky;
+    top: 0;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+    background-color: #cee5f2;
+}

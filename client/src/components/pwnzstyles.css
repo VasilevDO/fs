@@ -404,4 +404,13 @@ table {
   border: 2px solid lightgray;
   border-radius: 4px;
 }
+
+.pwnz-sticky0 {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  -webkit-box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+          box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+  background-color: #cee5f2;
+}
 /*# sourceMappingURL=pwnzstyles.css.map */

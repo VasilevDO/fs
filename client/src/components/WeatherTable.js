@@ -646,7 +646,7 @@ export default class WeatherTable extends Component {
           ) : null}
           {hourlyTableData && format === "hourly" ? (
             <table className='pwnz-pos-rel'>
-              <thead className='pwnz-theadMain'>
+              <thead className='pwnz-sticky0'>
                 <tr>
                   <th colSpan="6">
                     <div className='pwnz-f-c'>
@@ -695,7 +695,7 @@ export default class WeatherTable extends Component {
           ) : null}
           {dailyTableData && format === "daily" ? (
             <table>
-              <thead>
+              <thead className='pwnz-sticky0'>
                 <tr>
                   <th className='pwnz-clickable' onClick={this.sortDailyByDate}>Date</th>
                   <th className='pwnz-clickable' onClick={this.sortDailyByTime}>Sunrise</th>
