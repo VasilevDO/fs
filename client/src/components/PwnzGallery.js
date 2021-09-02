@@ -385,7 +385,7 @@ class PwnzGallery extends Component {
                                 <div className='pwnz-dropmenu pwnz-dropmenu-down-left pwnz-p10 pwnz-w400' style={{ display: 'none' }}>
                                     <div className='pwnz-dropmenu-inner'>
                                         <div className="pwnzGallery-rangeSliderDiv">
-                                            <span>Images height:</span>
+                                            <span className='pwnz-mr10'>Images height:</span>
                                             <input type="range" min="100" max="1000" onChange={this.handleImageWidthChange} value={imagesMaxHeight} />
                                         </div>
                                         <div className='pwnz-dropmenu-checkbox'>

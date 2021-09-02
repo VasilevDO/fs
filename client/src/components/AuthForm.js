@@ -19,8 +19,8 @@ class AuthForm extends Component {
             passwordAlert: null,
             nameAlert: null
         }
-        this.passwordRef=createRef();
-        this.confirmPasswordRef=createRef();
+        this.passwordRef = createRef();
+        this.confirmPasswordRef = createRef();
     }
 
     handleLoginTabClick = () => {
@@ -314,7 +314,10 @@ class AuthForm extends Component {
                                 </button>
                             </div>
                             {form === 'login' ?
-                                <p className='auth-form-forgot-password' onClick={this.handleForgotPasswordClick}>Forgot password?</p>
+                                <div className='pwnz-mt10 pwnz-f-bc'>
+                                    <span>Login as guest</span>
+                                    <span className='auth-form-forgot-password' onClick={this.handleForgotPasswordClick}>Forgot password?</span>
+                                </div>
                                 : null}
                         </div>
 

@@ -54,11 +54,11 @@
 .pwnzGallery-rangeSliderDiv {
     display:flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .pwnzGallery-rangeSliderDiv > span {
     white-space: nowrap;
-    margin:0;
 }
 
 .pwnzGallery-rangeSliderDiv > input {

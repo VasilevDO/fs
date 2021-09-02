@@ -109,14 +109,14 @@ class Task extends Component {
     const updatedTask={...this.state.task,text:this.state.text};
     await this.props.taskChange(updatedTask);
     this.setState({
-      text:'',
+      text:null,
       editable:false
     })
   }
 
   discardChanges=()=>{
     this.setState({
-      text:'',
+      text:null,
       editable:false
     })
   }

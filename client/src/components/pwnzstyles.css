@@ -50,7 +50,7 @@ input:not(.default)[type="password"] {
   -webkit-text-security: disc !important;
 }
 
-input:not(.default):not(.default) {
+input:not(.default):not([type="checkbox"]) {
   background-color: #ebf9fe;
   border: none;
   border-bottom: 1px solid #9e9e9e;

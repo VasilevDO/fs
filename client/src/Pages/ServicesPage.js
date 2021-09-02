@@ -67,7 +67,7 @@ const ServicesPage = () => {
                                 cardDescription="To-do list helps you to know whats next"
                                 buttonHandler={handlePick}
                                 logo={todolistPNG}
-                                buttonText="Open weather table"></PwnzCard>
+                                buttonText="Open to-do list"></PwnzCard>
                         </div>
                         <div className='pwnz-m10'>
                             <PwnzCard
@@ -97,7 +97,7 @@ const ServicesPage = () => {
                         <div className='pwnz-m10'>
                             <PwnzCard
                                 cardTitle="Redux"
-                                cardDescription="My first meeting with Redux state container (react-redux connect). There you can add some strings and nothing more"
+                                cardDescription="Redux state container sample (react-redux connect). You can add strings. You can delete strings."
                                 buttonHandler={handlePick}
                                 logo={reduxPng}
                                 buttonText="Open redux sample"></PwnzCard>
