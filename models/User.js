@@ -4,7 +4,7 @@ const schema=new Schema({
     email:{type:String, required:true,unique:true},
     password:{type:String,required:true},
     name:{type:String,required:true, unique:true},
-    status:{type:String,defalut:'user'},
+    status:{type:String,default:'user'},
     passwordResetId:{type:String},
     links:[{
         type: Types.ObjectId,ref:'Link'

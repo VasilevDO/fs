@@ -39,10 +39,22 @@ const AuthPage=()=> {
         }
     }
 
+    const handleGuestLogin=async()=>{
+        try {
+                const data=await request('/api/auth/login', 'GET', null);
+                auth.login(data.token, data.userId,data.userName,data.userRights);
+        } catch (e) {
+            setMessage({
+                text:e.message,
+                type:'negative'
+            });
+        }
+    }
+
     return (
         <>
         <div className='auth-page pwnz-f-c'>
-             <AuthForm handleAuthFormSubmit={handleAuth} message={message}></AuthForm>                     
+             <AuthForm handleAuthFormSubmit={handleAuth} onGuestLogin={handleGuestLogin} message={message}></AuthForm>                     
         </div>
         </>
     )

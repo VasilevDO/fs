@@ -111,6 +111,29 @@ async (request,response)=>{
     }
 });
 
+router.get('/login', 
+async (request,response)=>{
+    try {
+        const guests=await User.find({status:'guest'});
+        const email=`guest_${guests.length+1}@pwnz-guests.pog`;
+        const hashedPassword=await bcrypt.hash(`guest_${guests.length}`,12);
+        name = `Guest_${guests.length+1}`;
+        const user=new User({email,password:hashedPassword,name:name,status:'guest'});
+        await user.save();
+        const token=jwt.sign(
+            {userId:user.id},
+            config.get('jwtKey'),
+            {expiresIn:'1h'}
+        )
+        console.log(user);
+        response.json({token,userId:user.id,userName:user.name,userStatus:user.status});
+
+    } catch (e) {
+        console.log(e.message);
+        response.status(500).json({message:'Wrong email or password'});
+    }
+});
+
 // /api/auth/recover
 router.post('/recover', 
 [
@@ -199,7 +222,7 @@ async (request,response)=>{
 
         const hashedPassword=await bcrypt.hash(password,12);
         user.password=hashedPassword;
-        delete user.passwordResetId;
+        user.set('passwordResetId',undefined,{strict:false});
         await user.save();
         response.json({message:'Password succesfully changed'});
     } catch (e) {

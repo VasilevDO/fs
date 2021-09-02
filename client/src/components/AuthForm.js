@@ -168,6 +168,10 @@ class AuthForm extends Component {
         });
     }
 
+    handleGuestLogin=()=>{
+        this.props.onGuestLogin();
+    }
+
     handleForgotPasswordClick = () => {
         this.setState({
             form: 'recover'
@@ -315,8 +319,8 @@ class AuthForm extends Component {
                             </div>
                             {form === 'login' ?
                                 <div className='pwnz-mt10 pwnz-f-bc'>
-                                    <span>Login as guest</span>
-                                    <span className='auth-form-forgot-password' onClick={this.handleForgotPasswordClick}>Forgot password?</span>
+                                    <span className='pwnz-href' onClick={this.handleGuestLogin}>Login as guest</span>
+                                    <span className='pwnz-href' onClick={this.handleForgotPasswordClick}>Forgot password?</span>
                                 </div>
                                 : null}
                         </div>
