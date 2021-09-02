@@ -194,25 +194,24 @@ export default class PwnzBlogPost extends Component {
                           <div className='pwnz-bwtm-b' onClick={this.turnEditMode}>Edit</div>
                           <div style={{ display: 'none' }} className='pwnz-bwtm-b pwnz-disabled pwnz-nowrap'>Save changes?</div>
                         </div>
-                        <div className='pwnz-bwtm-c pwnz-f-c' style={{ display: 'none' }}>
-
+                        <div className='pwnz-bwtm-c pwnz-f-c pwnz-mt5' style={{ display: 'none' }}>
                           <div className='pwnz-button pwnz-f-grow1' onClick={this.saveChanges}>
-                            <div className='pwnz-nowrap pwnz-nowrap pwnz-bwtm-cb'>Yes</div>
+                            <div className='pwnz-nowrap pwnz-nowrap pwnz-bwtm-cb pwnz-bwdm-cb'>Yes</div>
                           </div>
                           <div className='pwnz-button pwnz-f-grow1'>
                             <div className='pwnz-nowrap pwnz-bwtm-cb' onClick={this.discardChanges}>No</div>
                           </div>
                         </div>
                       </div>
-                      <div className='pwnz-bwtm'>
+                      <div className='pwnz-bwtm pwnz-mt5'>
                         <div className='pwnz-button pwnz-bwtm-bd'>
                           <div className='pwnz-bwtm-b'>Delete</div>
                           <div style={{ display: 'none' }} className='pwnz-bwtm-b pwnz-disabled pwnz-nowrap'>Are you sure?</div>
                         </div>
-                        <div className='pwnz-bwtm-c pwnz-f-c' style={{ display: 'none' }}>
+                        <div className='pwnz-bwtm-c pwnz-f-c pwnz-mt5' style={{ display: 'none' }}>
 
                           <div className='pwnz-button pwnz-f-grow1'>
-                            <div className='pwnz-nowrap' onClick={this.deletePost}>Yes</div>
+                            <div className='pwnz-nowrap pwnz-bwdm-cb pwnz-bwtm-cb' onClick={this.deletePost}>Yes</div>
                           </div>
                           <div className='pwnz-button pwnz-f-grow1'>
                             <div className='pwnz-nowrap pwnz-bwtm-cb'>No</div>
@@ -221,7 +220,7 @@ export default class PwnzBlogPost extends Component {
                       </div>
                     </>
                     : null}
-                  <div className='pwnz-button'>
+                  <div className='pwnz-button pwnz-mt5'>
                     <div className='pwnz-nowrap' onClick={this.reportPost}>Report</div>
                   </div>
                 </div>

@@ -83,7 +83,7 @@ class DatePicker extends Component {
       <>
         <div className="date-picker">
           <div className='pwnz-bwdm'>
-            <div className='pwnz-button pwnz-bwdm-bd'>
+            <div className={'pwnz-button pwnz-bwdm-bd'+(this.props.disabled?' pwnz-disabled':'')}>
               <div className='pwnz-bwdm-b pwnz-nowrap'>{buttonText}</div>
             </div>
             <div className='pwnz-bwdm-c pwnz-bwdm-downLeft' style={{ display: 'none' }}>

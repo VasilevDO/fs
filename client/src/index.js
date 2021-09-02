@@ -9,8 +9,9 @@ import './index.css';
 import App from './App';
 import { rootReducer } from './redux/rootReducer';
 import { checkForBannedWords, checkInputNotEmpty } from './redux/middleware';
+import { Timing, NavHeight } from './pwnzVariables';
 
-const Timing = 500;
+
 const store = createStore(rootReducer, compose(
   applyMiddleware(
     thunk,
@@ -96,10 +97,30 @@ $(document).ready(() => {
       }
     }
     if (target.closest('.pwnz-bwdm').length < 1 || target.hasClass('pwnz-bwdm-cb')) {
+      console.log('kek')
       $('.pwnz-bwdm-c').hide(Timing);
     }
     //end of dropdown menus
-  });
+    //scroll top 0
+    if (target.hasClass('pwnz-scrollTop0')) {
+      $('html,body').animate({
+        scrollTop: 0
+      }, Timing/2,'swing')
+    }
+    //end of scroll top 0
+  });//end of window click handler
+
+  window.addEventListener('scroll', function(e){
+    const topOffset=window.pageYOffset || document.documentElement.scrollTop;
+    if (topOffset>NavHeight) {
+      $('.pwnz-scrollTopButton').removeClass('pwnz-d-n');
+    } else {
+      $('.pwnz-scrollTopButton').addClass('pwnz-d-n');
+    }
+  })
+  
+
+
 })
 
 function toggleDropmenu(target) {

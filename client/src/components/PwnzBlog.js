@@ -391,7 +391,7 @@ export default class PwnzBlog extends Component {
         </div>
         <div className='pwnzBlog-controls pwnz-f-c-stretch pwnz-mb10'>
           <div className='pwnz-select'>
-            <span className='pwnz-nowrap'>Sorted by {this.state.sortBy}</span>
+            <span className='pwnz-nowrap'>Sort by </span>
             <select className='pwnz-f-grow1 pwnz-wa' onChange={this.handleSortChange} value={!!this.state.sortBy} >
               <option value='' hidden>{this.state.sortBy[0].toUpperCase() + this.state.sortBy.slice(1)}</option>
               <option value="date" >Date</option>
@@ -443,7 +443,7 @@ export default class PwnzBlog extends Component {
           </div>
         </div>
         <div className="pwnzBlog-container">
-          {posts.length ? posts.map((post,index) => {
+          {posts.length ? posts.map((post, index) => {
             return <PwnzBlogPost
               post={post}
               key={index}

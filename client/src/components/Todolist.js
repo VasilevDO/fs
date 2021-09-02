@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./Todolist.css";
 import $ from "jquery";
 import DatePicker from "./DatePicker.js";
-import { Loader } from './Loader';
 import PwnzTextContainer from './PwnzTextContainer';
 
 class Task extends Component {
@@ -10,7 +9,9 @@ class Task extends Component {
     super(props);
     this.state = {
       format: this.props.format || "basic",
-      task: this.props.task
+      task: this.props.task,
+      editable:false,
+      text:null
     };
   }
 
@@ -23,6 +24,11 @@ class Task extends Component {
     mini: 'Del',
     basic: 'Delete'
   };
+
+  optionsButton= {
+    mini: 'Opt',
+    basic: 'Options'
+  }
 
   dateToStrFormat = (date) => {
     if (!date) return null;
@@ -87,10 +93,38 @@ class Task extends Component {
       return this.statusChangeButton[this.state.format][2];
   };
 
+  turnEditMode=()=>{
+    this.setState({
+      editable:true
+    })
+  }
+
+  handleTextChange=(newText)=>{
+    this.setState({
+      text:newText
+    })
+  }
+
+  saveChanges=async ()=>{
+    const updatedTask={...this.state.task,text:this.state.text};
+    await this.props.taskChange(updatedTask);
+    this.setState({
+      text:'',
+      editable:false
+    })
+  }
+
+  discardChanges=()=>{
+    this.setState({
+      text:'',
+      editable:false
+    })
+  }
+
   componentDidUpdate(prevProps) {
     if (prevProps.task !== this.props.task) {
       this.setState({
-        task:this.props.task
+        task: this.props.task
       })
 
     }
@@ -99,87 +133,68 @@ class Task extends Component {
   render() {
     const format = this.state.format;
     const task = this.state.task;
-    const text = task.text;
-    const className = "todolist-task";
+    const text = this.state.text===null?task.text:this.state.text;
     const datePickerText = task.doneDate || task.deadline;
     const statusButtonText = this.getStatusButtonText(task.status);
 
-    if (format === "mini") {
-      return (
-        <div className="todolist-task pwnz-f-c">
-
-          <PwnzTextContainer
-            value={text}
-            editable={false}
-            minHeight={25}
-            maxHeight={90}
-            textAlign={"left"}
-          />
-
-          <DatePicker
-            format={format}
-            selectedDate={datePickerText}
-            datePick={this.handleDatePick}
-            disabled={this.state.task.doneDate}
-          />
-
-          <div className='pwnz-button pwnz-f-c pwnz-ml5' >
-            <div onClick={this.handleStatusChange}>{statusButtonText}</div>
-          </div>
-
-          <div className='pwnz-bwdm pwnz-ml5'>
-            <div className='pwnz-button pwnz-bwdm-bd'>
-              <div className='pwnz-bwdm-b'>{this.deleteButton[format]}</div>
+    return (
+      <div className="todolist-task pwnz-f-c">
+        <PwnzTextContainer
+          value={text}
+          editable={this.state.editable}
+          onChange={this.handleTextChange}
+          minHeight={25}
+          maxHeight={90}
+          textAlign={"left"}
+        />
+        <DatePicker
+          format={format}
+          selectedDate={datePickerText}
+          datePick={this.handleDatePick}
+          disabled={this.state.task.doneDate}
+        />
+        <div className='pwnz-bwdm pwnz-ml5'>
+        <div className='pwnz-dotsButton-mini pwnz-bwdm-bd'>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+          <div className='pwnz-bwdm-c pwnz-bwdm-downLeft pwnz-p10' style={{ display: 'none' }}>
+            <div className='pwnz-button pwnz-f-c pwnz-w100' >
+              <div className='pwnz-nowrap pwnz-bwdm-cb' onClick={this.handleStatusChange}>{statusButtonText}</div>
             </div>
-            <div className='pwnz-bwdm-c pwnz-bwdm-downLeft pwnz-p10' style={{ display: 'none' }}>
-              <p className='pwnz-nowrap pwnz-mt0'>Are you sure?</p>
-              <div className='pwnz-f-c'>
+            <div className='pwnz-bwtm pwnz-mt5'>
+              <div className='pwnz-button pwnz-bwtm-bd'>
+                <div className='pwnz-bwtm-b' onClick={this.turnEditMode}>Edit</div>
+                <div style={{ display: 'none' }} className='pwnz-bwtm-b pwnz-disabled pwnz-nowrap'>Save changes?</div>
+              </div>
+              <div className='pwnz-bwtm-c pwnz-f-c pwnz-mt5' style={{ display: 'none' }}>
+                <div className='pwnz-button pwnz-f-grow1' >
+                  <div className='pwnz-nowrap pwnz-nowrap pwnz-bwdm-cb pwnz-bwtm-cb' onClick={this.saveChanges}>Yes</div>
+                </div>
+                <div className='pwnz-button pwnz-f-grow1 pwnz-ml5'>
+                  <div className='pwnz-nowrap pwnz-bwtm-cb' onClick={this.discardChanges}>No</div>
+                </div>
+              </div>
+            </div>
+            <div className='pwnz-bwtm'>
+              <div className='pwnz-button pwnz-bwtm-bd pwnz-mt5'>
+                <div className='pwnz-bwtm-b'>{this.deleteButton[format]}</div>
+                <div style={{ display: 'none' }} className='pwnz-bwtm-b pwnz-disabled pwnz-nowrap'>Are you sure?</div>
+              </div>
+              <div className='pwnz-bwtm-c pwnz-f-c pwnz-mt5' style={{ display: 'none' }}>
                 <div className='pwnz-button pwnz-f-grow1'>
-                  <div className='pwnz-nowrap' onClick={this.deleteTask}>Yes</div>
+                  <div className='pwnz-nowrap pwnz-bwdm-cb pwnz-bwtm-cb' onClick={this.deleteTask}>Yes</div>
                 </div>
-                <div className='pwnz-button pwnz-f-grow1 pwnz-ml10'>
-                  <div className='pwnz-nowrap pwnz-bwdm-cb'>No</div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      );
-    } else if (format === "basic") {
-      return (
-        <div className={className}>
-          <p>
-            <div className='pwnz-bwdm pwnz-ml5'>
-              <div className='pwnz-button pwnz-bwdm-bd'>
-                <div className='pwnz-bwdm-b'>{this.deleteButton[format]}</div>
-              </div>
-              <div className='pwnz-bwdm-c pwnz-bwdm-downLeft pwnz-p10' style={{ display: 'none' }}>
-                <p className='pwnz-nowrap pwnz-mt0'>Are you sure?</p>
-                <div className='pwnz-f-c'>
-                  <div className='pwnz-button pwnz-f-grow1'>
-                    <div className='pwnz-nowrap' onClick={this.deleteTask}>Yes</div>
-                  </div>
-                  <div className='pwnz-button pwnz-f-grow1 pwnz-ml10'>
-                    <div className='pwnz-nowrap pwnz-bwdm-cb'>No</div>
-                  </div>
+                <div className='pwnz-button pwnz-f-grow1 pwnz-ml5'>
+                  <div className='pwnz-nowrap pwnz-bwtm-cb'>No</div>
                 </div>
               </div>
             </div>
-            <div className='pwnz-button pwnz-f-c pwnz-ml5' >
-            <div onClick={this.handleStatusChange}>{statusButtonText}</div>
           </div>
-            <DatePicker
-              format={format}
-              selectedDate={datePickerText}
-              datePick={this.handleDatePick}
-              disabled={this.state.task.doneDate}
-            ></DatePicker>
-            {text}
-          </p>
         </div>
-      );
-    }
+      </div>
+    );
   }
 }
 
@@ -363,10 +378,6 @@ class Todolist extends Component {
   }
 
   render() {
-
-    if (this.state.loading) {
-      return <Loader />
-    }
 
     const format = this.state.format;
     const tasks = this.state.tasks;
