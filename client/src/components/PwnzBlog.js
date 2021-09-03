@@ -180,11 +180,13 @@ export default class PwnzBlog extends Component {
         userId: this.props.user.userId,
         Authorization: `Bearer ${this.props.user.token}`
       };
-      const response = await fetch('/api/blog/delete', { method, body, headers })
+      const response = await fetch('/api/blog/delete', { method, body, headers });
       if (response.status === 201) {
         const newPosts = this.state.posts.filter(post => post._id !== postId);
+        const newPostsToShow = this.state.postsToShow.filter(post => post._id !== postId);
         this.setState({
-          posts: newPosts
+          posts: newPosts,
+          postsToShow:newPostsToShow
         })
       }
     } catch (e) {

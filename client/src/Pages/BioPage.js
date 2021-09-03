@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAge } from '../components/pwnz';
 
-
 const BioPage = () => {
     const [mern, setMern] = useState('MERN');
     const toggleMern = () => {
@@ -43,7 +42,6 @@ const BioPage = () => {
                         <br />
                         Technologies/libraries used:
                         <ul className='default pwnz-mt0'>
-                            
                             <li>MongoDB</li>
                             <li>Express</li>
                             <li>React</li>

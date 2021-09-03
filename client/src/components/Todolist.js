@@ -385,7 +385,6 @@ class Todolist extends Component {
     const doneTasks = tasks.filter((task) => task.status === "done");
     const archivedTasks = tasks.filter((task) => task.status === "archived");
 
-
     if (format === "mini") {
       return (
         <div className="todolist-item-mini">
@@ -480,5 +479,3 @@ class Todolist extends Component {
 
 export default Todolist;
 
-/**
- */

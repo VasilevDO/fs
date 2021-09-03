@@ -413,7 +413,6 @@ export default class WeatherTable extends Component {
     }
   };
 
-
   componentDidMount = async () => {
     const cities = await this.getCities();
     const weatherObj = await this.getWeatherData(this.state.city);
@@ -429,9 +428,6 @@ export default class WeatherTable extends Component {
       loading: false
     });
   }
-
-
-
 
   render() {
 
