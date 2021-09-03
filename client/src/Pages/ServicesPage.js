@@ -59,7 +59,6 @@ const ServicesPage = () => {
                     <div className='services-header'>
                         <p className='pwnz-fs25 pwnz-t-c'>Services available</p>
                     </div>
-
                     <div className='services-container'>
                         <div className='pwnz-m10'>
                             <PwnzCard

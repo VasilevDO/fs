@@ -8,7 +8,12 @@ module.exports={
         canAddBlogPosts:true,
         canSendFeedback:true
     },
+    guest:{
+        canAddBlogPosts:true,
+        canSendFeedback:true
+    },
     banned:{
-        canAddBlogPosts:false
+        canAddBlogPosts:false,
+        canSendFeedback:true
     }
 }

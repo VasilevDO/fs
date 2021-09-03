@@ -218,7 +218,10 @@ table {
 }
 
 .biopage-container .aboutMe {
-  font-size: 24px;
+  font-size: 16px;
+  background-color: #d7f3fe;
+  border: 2px solid lightgray;
+  border-radius: 4px;
 }
 
 .page-container {

@@ -15,48 +15,57 @@ const BioPage = () => {
 
     return (
         <div className='biopage-container'>
-            <div className='aboutMe'>
-                <p className='pwnz-p10 pwnz-m0'>
-                    Hello, my name is Dmitrii and Im a {getAge(new Date(1993, 2, 5))} years old human being
-                    <br />
-                    Im glad to welcome you on my <a href='/#' className='pwnz-clickable' onClick={toggleMern}>{mern}</a> stack project I made to learn something new.
-                    Almost every component is a react class component, but all pages and some components (
-                    <Link to={{ pathname: '/services/redux' }}>redux sample</Link>
-                    &nbsp;and&nbsp;
-                    <Link to={{ pathname: '/services/currency' }}>currency rates table</Link>
-                    ) are react functional components controlled by hooks.
-                    <br />
-                    At the start of this project I used materializecss to style, but then I realized I want to style components my own way, so I migrated to the
-                    basic CSS3 and SASS (Im using Live Sass Compiler) later.
-                    <br/>
-                    Also Im trying to keep it useful, so there you can find some services/games Im using on a daily basis.
-                    <br />
-                    To check them please, visit
-                    <Link to={{ pathname: '/services' }}> services </Link>
-                    and
-                    <Link to={{ pathname: '/games' }}> games </Link> pages.
-                    <br />
-                    Some information:
-                    <br />
-                    This project came up with some mixing technologies (using both raw CSS and SASS for example), because Im new to this big (for me)
-                    project and i have to try a lot to find the way that fits me. So you can find react class components mixing with some react
-                    hooks.
-
-                    <br />
-                    Please welcome to leave some feedback so I can fix some bugs/process issues and make this project better.
-                    <br />
-                    Even if its short and offensive (like garbage).
-                    <br />
-
-
-                    There are services powered by 3rd party apis:&nbsp;
-                    <Link to={{ pathname: '/services/weather' }}>weather service</Link>,&nbsp;
-                    <Link to={{ pathname: '/services/currency' }}>currency rates table</Link>,&nbsp;
-                    <Link to={{ pathname: '/games/sudokuapi' }}>sudoku game</Link>.
-                </p>
+            <div className='aboutMe pwnz-m20 pwnz-p20'>
+                <div className='pwnz-fs23 pwnz-bb-lightgray'>
+                    <span>
+                        Hello, my name is Dmitrii and Im an {getAge(new Date(1993, 2, 5))} years old web developer (beginner) from Saint-Petersburg, Russia.
+                        <br />
+                        Im glad to welcome you on my <span className='pwnz-clickable' onClick={toggleMern}>{mern}</span> stack project I made to learn something new.
+                    </span>
+                </div>
+                <div>
+                    <p>
+                        Also Im trying to keep it useful, so there you can find some services/games I really use.
+                        To check them please, visit the&nbsp;
+                        <Link to={{ pathname: '/services' }}>services</Link>
+                        &nbsp;and&nbsp;
+                        <Link to={{ pathname: '/games' }}>games</Link> pages.
+                        <br />
+                        <span className='pwnz-fwb'>Note:</span> this project came up with some mixing (using both raw CSS and SASS for example), because
+                        and I have to try a lot to find a better way. So you can find react class components mixed with react
+                        functional components, react-redux connect mixed with react-redux hooks. And some duct tape.
+                        <br />
+                        There are services powered by 3rd party APIs:&nbsp;
+                        <Link to={{ pathname: '/services/weather' }}>weather service</Link>,&nbsp;
+                        <Link to={{ pathname: '/services/currency' }}>currency rates table</Link>,&nbsp;
+                        <Link to={{ pathname: '/games/sudokuapi' }}>sudoku game</Link>.
+                        <br />
+                        <br />
+                        Technologies/libraries used:
+                        <ul className='default pwnz-mt0'>
+                            
+                            <li>MongoDB</li>
+                            <li>Express</li>
+                            <li>React</li>
+                            <li>Node</li>
+                            <li>MaterializeCSS</li>
+                            <li>SASS</li>
+                            <li>Webpack</li>
+                            <li>Redux</li>
+                            <li>Jquery</li>
+                        </ul>
+                    </p>
+                </div>
+                <div className='pwnz-bt-lightgray'>
+                    <p className='pwnz-m0'>
+                        Feel free to leave some feedback so I can fix some bugs/process issues and make this project better.
+                        <br />
+                        Very appreciated.
+                        <br />
+                        Even if its short and offensive.
+                    </p>
+                </div>
             </div>
-
-
         </div>
 
     )

@@ -50,13 +50,12 @@ router.post('/like', auth, async (request, response) => {
         const { postId } = request.body;
         const post = await Post.findOne({ _id: postId });
         if (post.likedBy.find(item => item == userId)) {
-            post.likedBy = post.likedBy.filter(item => item != userId);
+            post.likedBy = post.likedBy.filter(item => item !== userId);
         } else {
             post.likedBy.push(userId);
-            post.dislikedBy = post.likedBy.filter(item => item != userId);
+            post.dislikedBy = post.dislikedBy.filter(item => item !== userId);
         }
         await post.save();
-        console.log(post);
         response.status(201).json({ post })
     } catch (e) {
         response.status(500).json({ message: 'Something went wrong. Try again later' });
@@ -69,7 +68,7 @@ router.post('/dislike', auth, async (request, response) => {
         const { postId } = request.body;
         const post = await Post.findOne({ _id: postId });
         if (post.dislikedBy.find(item => item == userId)) {
-            post.dislikedBy = post.likedBy.filter(item => item != userId);
+            post.dislikedBy = post.dislikedBy.filter(item => item != userId);
         } else {
             post.dislikedBy.push(userId);
             post.likedBy = post.likedBy.filter(item => item != userId);
@@ -90,7 +89,6 @@ router.post('/report', auth, async (request, response) => {
         }
         const userId = request.headers.userid;
         const post = await Post.findOne({ _id: postId });
-        console.log(post);
         if (post.reports.find(item=>item.reporter===userId)) {
             response.status(500).json({ message: 'Post already has been reported' });
             return;

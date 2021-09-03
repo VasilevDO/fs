@@ -105,7 +105,6 @@ export default class PwnzBlogPost extends Component {
     }
   }
 
-
   render() {
     const { title, text, format, dateEdited } = this.state;
     const titleHeight = {},

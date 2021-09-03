@@ -4,14 +4,14 @@ const config=require('config');
 const jwt=require('jsonwebtoken');
 const {check, validationResult}=require('express-validator');
 const User=require('../models/User');
+const Task=require('../models/TodolistTask');
+const Image=require('../models/Image');
 const router = Router();
 const nodemailer = require('nodemailer');
-
 
 const randomFromAtoB=(a,b)=> {
     return Math.round(a - 0.5 + Math.random() * (b - a + 1));
 }
-
 const generatePasswordResetId=(length)=> {
     let id='';
     const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -21,6 +21,36 @@ const generatePasswordResetId=(length)=> {
     return id;
 }
 
+const copyUserGoldTasks=async(userId)=>{
+    const userGold=await User.findOne({status:'usergoldstandart'});
+    const tasks=await Task.find({owner:userGold._id});
+    tasks.forEach(async task=>{
+        const newTask=new Task({
+            text:task.text,
+            status:task.status,
+            owner:userId
+        })
+        await newTask.save();
+    })
+}
+
+const copyUserGoldImages=async(userId)=>{
+    const userGold=await User.findOne({status:'usergoldstandart'});
+    const images=await Image.find({owner:userGold._id});
+    images.forEach(async image=>{
+        const newImage=new Image({
+            url:image.url,
+            owner:userId
+        })
+        if (image.description) {
+            newImage.description = image.description;
+        }
+        if (image.tags) {
+            newImage.tags = image.tags;
+        }
+        await newImage.save();
+    })
+}
 
 // /api/auth/register
 router.post('/register',
@@ -54,7 +84,8 @@ router.post('/register',
         }
         const hashedPassword=await bcrypt.hash(password,12);
         const user=new User({email,password:hashedPassword,name:name,status:'user'});
-
+        await copyUserGoldTasks(user._id);
+        await copyUserGoldImages(user._id);
         await user.save();
         const token=jwt.sign(
             {userId:user.id},
@@ -62,7 +93,6 @@ router.post('/register',
             {expiresIn:'1h'}
         )
         response.json({token,userId:user.id,userName:user.name,userStatus:user.status});
-
     } catch (e) {
         response.status(500).json({message:e.message});
         //response.status(500).json({message:'Something went wrong. Try again later'});
@@ -119,15 +149,15 @@ async (request,response)=>{
         const hashedPassword=await bcrypt.hash(`guest_${guests.length}`,12);
         name = `Guest_${guests.length+1}`;
         const user=new User({email,password:hashedPassword,name:name,status:'guest'});
+        await copyUserGoldTasks(user._id);
+        await copyUserGoldImages(user._id);
         await user.save();
         const token=jwt.sign(
             {userId:user.id},
             config.get('jwtKey'),
             {expiresIn:'1h'}
         )
-        console.log(user);
         response.json({token,userId:user.id,userName:user.name,userStatus:user.status});
-
     } catch (e) {
         console.log(e.message);
         response.status(500).json({message:'Wrong email or password'});

@@ -21,6 +21,10 @@
     padding:10px;
 }
 
+.pwnz-p20 {
+    padding:20px;
+}
+
 .pwnz-p0 {
     padding:0 !important;
 }
@@ -43,6 +47,10 @@
 
 .pwnz-m10 {
     margin:10px;
+}
+
+.pwnz-m20 {
+    margin:20px;
 }
 
 .pwnz-m5 {
@@ -128,6 +136,10 @@
 
 .pwnz-t-c {
     text-align: center;
+}
+
+.pwnz-t-r {
+    text-align: right;
 }
 
 .pwnz-t-dn {
@@ -323,6 +335,10 @@
     font-weight: normal;
 }
 
+.pwnz-fwb {
+    font-weight: bold;
+}
+
 .pwnz-wa {
     width:auto;
 }
@@ -360,6 +376,10 @@
 
 .pwnz-bb-lightgray {
     border-bottom:1px solid lightgray;
+}
+
+.pwnz-bt-lightgray {
+    border-top:1px solid lightgray;
 }
 
 .pwnz-40x40 {

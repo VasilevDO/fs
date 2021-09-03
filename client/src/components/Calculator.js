@@ -29,22 +29,22 @@ class Calculator extends Component {
     ["0", ".", "=", "+"]
   ];
 
-  constants=[
+  constants = [
     {
-      symb:'Pi',
-      val:Math.PI
+      symb: 'Pi',
+      val: Math.PI
     },
     {
-      symb:'Infinity',
-      val:+Infinity
+      symb: 'Infinity',
+      val: +Infinity
     },
     {
-      symb:'rdm',
-      val:'random'
+      symb: 'rdm',
+      val: 'random'
     }
   ]
-    
-  
+
+
 
   methods = [
     //p for priority and f for func
@@ -218,7 +218,7 @@ class Calculator extends Component {
 
       function checkValid(str) {
         let validChars = ["\\.", "e"];
-        validChars.push(...constants.map(item=>item.symb));
+        validChars.push(...constants.map(item => item.symb));
         brackets.forEach((item) => validChars.push(item.open, item.close));
         methods.forEach((item) => {
           item.op.length === 1
@@ -233,10 +233,10 @@ class Calculator extends Component {
         );
         let validRegExp = new RegExp(
           "[" +
-            validSymbols.join("\\") +
-            "]|" +
-            validWords.join("|") +
-            "|\\d+(\\.\\d+)?(e[-+]\\d+)?", //this one for numbers
+          validSymbols.join("\\") +
+          "]|" +
+          validWords.join("|") +
+          "|\\d+(\\.\\d+)?(e[-+]\\d+)?", //this one for numbers
           "g"
         );
 
@@ -338,7 +338,7 @@ class Calculator extends Component {
       }
 
       function calculateStr(str) {
-        console.log('strBefore'+str)
+        console.log('strBefore' + str)
         if (str[0] === "+") str = str.slice(1); //we dont need that +
         let scOps = methods
           .filter((method) => method.argsQ === 1)
@@ -350,10 +350,10 @@ class Calculator extends Component {
           .filter((method) => method.p === 2)
           .map((method) => method.op); //Second priority operators
         //now we have to turn constants into numbers
-        str=str.replace(new RegExp(constants.map(c=>c.symb).join('|'),'g'),(match)=>{
-           return match=constants.find(c=>c.symb===match).val;
+        str = str.replace(new RegExp(constants.map(c => c.symb).join('|'), 'g'), (match) => {
+          return match = constants.find(c => c.symb === match).val;
         })
-        console.log('strAfter'+str)
+        console.log('strAfter' + str)
         //then we have to do single operators maths
         let scMethodSymbol = str.match(new RegExp(scOps.join("|")));
         while (scMethodSymbol) {
@@ -367,8 +367,8 @@ class Calculator extends Component {
             res +
             str.slice(
               scMethodSymbol.index +
-                Math.max(0, methodSymbolLength) +
-                Math.max(0, aLength)
+              Math.max(0, methodSymbolLength) +
+              Math.max(0, aLength)
             );
           scMethodSymbol = str.match(new RegExp(scOps.join("|")));
         }
@@ -377,7 +377,7 @@ class Calculator extends Component {
         let fpMethodSymbol = str.match(
           new RegExp("\\" + fpOps.join("|\\"))
         );
-        console.log('fp'+fpMethodSymbol)
+        console.log('fp' + fpMethodSymbol)
         while (fpMethodSymbol) {
           let { res, aLength, bLength, methodSymbolLength } = calculateOp(
             str,
@@ -423,7 +423,7 @@ class Calculator extends Component {
       }
       let basicValue = "";
       let methods = this.methods;
-      let constants=this.constants;
+      let constants = this.constants;
       let brackets = this.brackets;
       str = replaceCommasWidthDots(str);
       if (!str) return basicValue;
@@ -518,7 +518,7 @@ class Calculator extends Component {
 
   handleCharsAfterCommaBlur = (e) => {
     let target = $(e.target);
-    let newVal = target.val()||this.charsAfterCommaDefault;
+    let newVal = target.val() || this.charsAfterCommaDefault;
     this.setState({
       charsAfterComma: newVal
     });
@@ -530,12 +530,12 @@ class Calculator extends Component {
     });
   };
 
-  handleMouseOver=(e)=> {
+  handleMouseOver = (e) => {
     console.log(e.target)
   }
 
-  hintTimer=null;
-  timing=1000;
+  hintTimer = null;
+  timing = 1000;
 
   handleMouseEnterButton = (e) => {
     const coords = e.target.getBoundingClientRect();
@@ -570,9 +570,23 @@ class Calculator extends Component {
     }
   };
 
-  hints={
-    'mod':'modA or mod(A) - returns modulo of A',
-    'rdm':'rdmA or randomA - returns random number from 0 to A',
+  hints = {
+    'Pi': 'Pi - returns mathematical constant 3.14159265359...',
+    'AC': 'Clears input field',
+    'cos': 'cosA - returns cosine of A in radians',
+    'sin': 'sinA - returns sine of A in radians',
+    'tan': 'tanA - returns tangent of A in radians',
+    'ctg': 'ctgA - returns cotangent of A in radians',
+    'sqrt': 'sqrtA - returns square root of A',
+    'cbrt': 'cbrtA - returns cube root of A',
+    'abs': 'absA - returns absolute value of A',
+    'rdm': 'rdmA or randomA - returns random number from 0 to A',
+    '!': 'A! - returns factorial of A',
+    '^': 'A^B - returns the value of A to the power of B',
+    'ln': 'lnA - returns the natural logarithm of A',
+    'log': 'logA - returns the base-10 logarithm of A',
+    '%': 'A% - returns A/100',
+    'mod': 'modA or mod(A) - returns modulo of A',
   }
 
   render() {
@@ -587,13 +601,12 @@ class Calculator extends Component {
       : "Show more";
 
     const charsAfterComma = this.state.charsAfterComma;
-    const hint=this.state.hint;
+    const hint = this.state.hint;
 
     return (
       <>
         <div className="calc-body">
-          <div className="calc-inputs">
-
+          <div className="calc-inputs pwnz-f-c">
             <input
               className="calc-expression-input"
               placeholder='Enter expression'
@@ -602,14 +615,26 @@ class Calculator extends Component {
               onKeyPress={this.handleKeyPress}
             ></input>
             <div className='calc-div-for-p'><p>Decimal places:</p></div>
-            
-            
             <input
               value={charsAfterComma}
               onChange={this.handleCharsAfterCommaChange}
               onBlur={this.handleCharsAfterCommaBlur}
               className="calc-chars-after-comma-input"
             ></input>
+            <div className='pwnz-bwdm'>
+              <div className='pwnz-bwdm-bd'>
+                <div className='pwnz-bwdm-b pwnz-t-c pwnz-clickable pwnz-fs25 pwnz-ml10'>?</div>
+              </div>
+              <div className='pwnz-bwdm-c pwnz-bwdm-downLeft pwnz-p10 pwnz-w400' style={{ display: 'none' }}>
+                <span>Example of using operators:
+                  <br />
+                  operator(A) or operatorA: sqrt(4) = sqrt4 = 2
+                  AoperatorB: 4/2 = 2
+                  <br />
+                  Hold cursor on the operator button to see specified information
+                </span>
+              </div>
+            </div>
           </div>
           <div className="calc-command-area">
             <div className="calc-buttons" onClick={this.handleButtonClick}>
@@ -620,7 +645,7 @@ class Calculator extends Component {
                       return (
                         <>
                           <button key={button} onMouseEnter={this.handleMouseEnterButton} onMouseLeave={this.handleMouseLeaveButton}>{button}</button>
-                          {hint?<PwnzHint hint={hint}></PwnzHint>:null}
+                          {hint ? <PwnzHint hint={hint}></PwnzHint> : null}
                         </>
                       )
                     })}
@@ -635,7 +660,6 @@ class Calculator extends Component {
                     <div className="calc-history-item" key={index}>
                       <p>{item.ab}</p>
                       <p>&nbsp;{item.op}&nbsp;</p>
-
                       <p>{item.res}</p>
                     </div>
                   );

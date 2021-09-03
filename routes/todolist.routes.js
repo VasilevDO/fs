@@ -7,17 +7,11 @@ const router=Router();
 router.post('/create', auth,async (request, response)=> {
     try {
         const {text,status}=request.body.task;
-        /**const existing=await Image.findOne({url});
-
-        if (existing) {
-            return response.json({message:'Image already been saved'});
-        }   */
         const task=new Task ({
             text:text,status:status,owner:request.user.userId
         })
         await task.save();
         response.status(201).json(task);
-
     } catch (e) {
         response.status(500).json({message:'Something went wrong. Try again later'});
     }
