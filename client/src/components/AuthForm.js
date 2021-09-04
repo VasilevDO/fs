@@ -130,7 +130,6 @@ class AuthForm extends Component {
     handleInputChange = (e) => {
         if (e.target.name === 'password') {
             this.validatePassword($(this.passwordRef.current));
-            console.log($(this.confirmPasswordRef.current).is(':visible'));
             if ($(this.confirmPasswordRef.current).is(':visible')) {
                 this.validatePasswordConfirm($(this.confirmPasswordRef.current));
             }

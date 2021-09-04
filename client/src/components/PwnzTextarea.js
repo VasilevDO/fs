@@ -29,9 +29,6 @@ export default class PwnzTextarea extends Component {
     if (currentRows === previousRows) {
       textarea.rows = currentRows;
     }
-    console.log(textarea.scrollHeight)
- 
-    console.log(currentRows)
 
     if (currentRows >= maxRows) {
       textarea.rows = maxRows;
@@ -51,8 +48,6 @@ export default class PwnzTextarea extends Component {
   adjustHeight=()=>{
     const textarea = this.textareaRef.current;
     const min=this.props.minHeight;
-    console.log('sH'+textarea.scrollHeight)
-    console.log('oH'+textarea.offsetHeight)
     if (textarea.scrollHeight>textarea.offsetHeight) {
       this.setState({
         value: textarea.value,

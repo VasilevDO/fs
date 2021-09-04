@@ -25,10 +25,8 @@ router.post('/update', auth,async (request, response)=> {
             if (task[key]!==updatedTask[key]) task[key]=updatedTask[key];
         }
         await task.save(); 
-        console.log(task);
         response.status(201).json(task);
     } catch (e) {
-        console.log(e.message);
         response.status(500).json({message:'Something went wrong. Try again later'});
     }
 })

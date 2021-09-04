@@ -24,7 +24,6 @@ router.post('/save', auth, async (request, response) => {
 
 router.post('/edit', auth, async (request, response) => {
     try {
-        console.log(request.body);
         const { id, description, tags } = request.body;
         const image = await Image.findOne({ _id: id });
         if (description) {

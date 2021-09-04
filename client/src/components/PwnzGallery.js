@@ -199,7 +199,6 @@ class PwnzGallery extends Component {
         };
         const { image } = await fetch('/api/image/edit', { method, body, headers })
             .then(data => data.json());
-        console.log(image);
         const images = this.state.images.map(item => {
             return item._id === image._id ? image : item;
         })
@@ -231,7 +230,6 @@ class PwnzGallery extends Component {
                 })
             }
         } catch (e) {
-            console.log(e.message);
         }
     }
 
@@ -279,7 +277,6 @@ class PwnzGallery extends Component {
                 })
             }
         } catch (e) {
-            console.log(e.message);
         }
     }
 

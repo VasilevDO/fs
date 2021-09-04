@@ -287,9 +287,6 @@ class Calculator extends Component {
 
       function calculateOp(str, method, index, opBeforeA) {
         str = trimOps(str);
-
-        console.log(method);
-
         let a, b;
         let currentMethod = methods.filter(
           (methodObj) => methodObj.op === method
@@ -338,7 +335,6 @@ class Calculator extends Component {
       }
 
       function calculateStr(str) {
-        console.log('strBefore' + str)
         if (str[0] === "+") str = str.slice(1); //we dont need that +
         let scOps = methods
           .filter((method) => method.argsQ === 1)
@@ -353,7 +349,6 @@ class Calculator extends Component {
         str = str.replace(new RegExp(constants.map(c => c.symb).join('|'), 'g'), (match) => {
           return match = constants.find(c => c.symb === match).val;
         })
-        console.log('strAfter' + str)
         //then we have to do single operators maths
         let scMethodSymbol = str.match(new RegExp(scOps.join("|")));
         while (scMethodSymbol) {
@@ -377,7 +372,6 @@ class Calculator extends Component {
         let fpMethodSymbol = str.match(
           new RegExp("\\" + fpOps.join("|\\"))
         );
-        console.log('fp' + fpMethodSymbol)
         while (fpMethodSymbol) {
           let { res, aLength, bLength, methodSymbolLength } = calculateOp(
             str,
@@ -388,7 +382,6 @@ class Calculator extends Component {
             str.slice(0, fpMethodSymbol.index - aLength) +
             res +
             str.slice(fpMethodSymbol.index + methodSymbolLength + bLength);
-          //console.log("new str:" + str);
           fpMethodSymbol = str.match(
             new RegExp("[\\" + fpOps.join("\\") + "]")
           );
@@ -434,7 +427,6 @@ class Calculator extends Component {
       let result = Number(calculateStr(resultStr)).toFixed(charsAfterComma);
       return Number(result).toString();
     } catch (e) {
-      console.log(e.message);
       return "Wrong expression";
     }
   };
@@ -531,7 +523,6 @@ class Calculator extends Component {
   };
 
   handleMouseOver = (e) => {
-    console.log(e.target)
   }
 
   hintTimer = null;
@@ -539,7 +530,6 @@ class Calculator extends Component {
 
   handleMouseEnterButton = (e) => {
     const coords = e.target.getBoundingClientRect();
-    console.log(e.target.innerText);
     const yOffset = document.documentElement.scrollTop;
     const xOffset = document.documentElement.scrollLeft;
     const hint = {};

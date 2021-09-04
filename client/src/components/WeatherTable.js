@@ -382,7 +382,6 @@ export default class WeatherTable extends Component {
       return cities;
 
     } catch (e) {
-      console.log(e.message);
     }
   }
 
@@ -405,11 +404,8 @@ export default class WeatherTable extends Component {
 
       const weatherObj = await fetch('/api/weather', { method, body, headers })
         .then(data => data.json());
-
       return weatherObj;
-
     } catch (e) {
-      console.log(e.message);
     }
   };
 
@@ -466,7 +462,7 @@ export default class WeatherTable extends Component {
             <div className='pwnz-select pwnz-f-grow1'>
               <select className='pwnz-t-c pwnz-w100 pwnz-mr5' onChange={this.handleCityChange}>
                 {this.state.cities.map(item => {
-                  if (item.name===city.name) {
+                  if (item.name === city.name) {
                     return <option value={item.name} hidden selected>{item.name}</option>
                   }
                   return (

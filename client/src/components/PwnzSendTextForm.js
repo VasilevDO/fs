@@ -13,7 +13,6 @@ export const PwnzSendTextForm = (props)=> {
 
     const submitForm=()=>{
         if (!formText) {
-            console.log('1')
             setAlert({
                 status:'red',
                 text:'Text field can not be empty'

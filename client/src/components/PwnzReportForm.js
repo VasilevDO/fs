@@ -37,7 +37,6 @@ class PwnzReportForm extends Component {
     }
 
     render() {
-        console.log(this.props.post);
         return (
             <div className='pwnz-reportForm'>
                 {this.props.message ?

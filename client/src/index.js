@@ -97,7 +97,6 @@ $(document).ready(() => {
       }
     }
     if (target.closest('.pwnz-bwdm').length < 1 || target.hasClass('pwnz-bwdm-cb')) {
-      console.log('kek')
       $('.pwnz-bwdm-c').hide(Timing);
     }
     //end of dropdown menus

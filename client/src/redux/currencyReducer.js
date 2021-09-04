@@ -27,19 +27,14 @@ export const currencyReducer=(state=initialState,action)=> {
             }
         }
         case CURRENCY_CHANGE_BASE_CURRENCY:{ 
-
             const currency=state.currency;
-            const rates=currency.rates;
-            
+            const rates=currency.rates;        
             const base=action.payload;
             const k=1/rates[base];
-            console.log(rates);
             for (let key in rates) {
                     rates[key]=(rates[key]*k);
-            }
-            
+            }  
             currency.rates=rates;
-            console.log(currency.rates);
             return {
                 ...state,baseCurrency:action.payload,currency:currency
             }

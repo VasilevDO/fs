@@ -72,10 +72,7 @@ export default class PwnzBlog extends Component {
           newPostTitle: ''
         })
       }
-
-
     } catch (e) {
-      console.log(e.message);
     }
   }
 
@@ -110,7 +107,6 @@ export default class PwnzBlog extends Component {
         return;//there is should be some error handler
       }
     } catch (e) {
-      console.log(e.message);
     }
   }
 
@@ -144,7 +140,6 @@ export default class PwnzBlog extends Component {
         return;//there is should be some error handler
       }
     } catch (e) {
-      console.log(e.message);
     }
   }
 
@@ -165,7 +160,6 @@ export default class PwnzBlog extends Component {
         return post;
       });
     } catch (e) {
-      console.log(e.message);
     }
   }
 
@@ -190,7 +184,6 @@ export default class PwnzBlog extends Component {
         })
       }
     } catch (e) {
-      console.log(e.message);
     }
   }
 
@@ -209,7 +202,6 @@ export default class PwnzBlog extends Component {
       }
       const post = await fetch('/api/blog/update', { method, body, headers })
         .then(data => data.json())
-      console.log(post);
       const newPosts = this.state.posts.map((item) => {
         if (item._id !== post._id) return item;
         return post;
@@ -218,7 +210,6 @@ export default class PwnzBlog extends Component {
         posts: newPosts
       });
     } catch (e) {
-      console.log(e.message);
     }
   }
 
@@ -341,9 +332,7 @@ export default class PwnzBlog extends Component {
       this.setState({
         reportFormMessage: response.message
       })
-
     } catch (e) {
-      console.log(e.message);
     }
   }
 

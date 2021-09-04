@@ -8,7 +8,7 @@ const isProd=!isDev;
 
 module.exports = {
     context: path.resolve(__dirname),
-    mode: "development",
+    mode: process.env.NODE_ENV,
     entry: ['@babel/polyfill', `./src/index.js`],
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -24,6 +24,11 @@ module.exports = {
             }
         }
     },
+    performance: {
+        hints: isProd?"error":"warning",
+        maxEntrypointSize: 1024000,
+        maxAssetSize: 1024000
+      },
     resolve: {
         extensions: ['.jsx', '.js', '.json']
     },

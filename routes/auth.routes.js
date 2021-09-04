@@ -159,7 +159,6 @@ async (request,response)=>{
         )
         response.json({token,userId:user.id,userName:user.name,userStatus:user.status});
     } catch (e) {
-        console.log(e.message);
         response.status(500).json({message:'Wrong email or password'});
     }
 });
@@ -212,9 +211,7 @@ async (request,response)=>{
 
         transporter.sendMail(mailOptions, function (error, data) {
             if (error) {
-                console.log('Mailer crashed');
-            } else {
-                console.log('Email succesfully sent');
+                console.log(error);
             }
         })
 
@@ -222,7 +219,6 @@ async (request,response)=>{
         await user.save();
         response.json({message:'Email succesfully sent'});
     } catch (e) {
-        console.log(e.message);
         response.status(500).json({message:'Something went wrong. Try again later.'});
     }
 });
@@ -256,7 +252,6 @@ async (request,response)=>{
         await user.save();
         response.json({message:'Password succesfully changed'});
     } catch (e) {
-        console.log(e.message);
         response.status(500).json({message:'Something went wrong. Try again later.'});
     }
 });

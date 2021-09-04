@@ -15,10 +15,8 @@ router.get('/:code',async(request,response)=>{
         response.status(404).json('Link not found');
 
     } catch (e) {
-        console.log(e.message);
         response.status(500).json({message:'Something went wrong. Try again later'})
     }
-
 })
 
 

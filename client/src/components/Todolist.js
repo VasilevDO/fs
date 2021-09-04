@@ -286,7 +286,6 @@ class Todolist extends Component {
         })
       }
     } catch (e) {
-      console.log(e.message);
     }
   }
 
@@ -312,7 +311,6 @@ class Todolist extends Component {
         });
       };
     } catch (e) {
-      console.log(e.message);
     }
   }
 
@@ -328,7 +326,6 @@ class Todolist extends Component {
         .then(data => data.json());
       return tasks;
     } catch (e) {
-      console.log(e.message);
     }
   }
 
@@ -363,7 +360,6 @@ class Todolist extends Component {
         })
       }
     } catch (e) {
-      console.log(e.message);
     }
   }
 

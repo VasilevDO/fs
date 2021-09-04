@@ -22,7 +22,6 @@ const  DetailPage = () => {
             });
             setLink(fetched);
         } catch (e) {
-            console.log(e);
         }
     
     },[token,linkId,request]);
