@@ -1,6 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-
-const storageName = 'userData';
+import { userCookie } from '../pwnzVariables';
 
 export const useAuth = () => {
     const [token, setToken] = useState(null);
@@ -14,7 +13,7 @@ export const useAuth = () => {
         setToken(jwtToken);
         setUserId(id);
         setUserName(name);
-        localStorage.setItem(storageName, JSON.stringify({
+        localStorage.setItem(userCookie, JSON.stringify({
             userId: id, token: jwtToken, userName: name
         }));
         setReady(true);
@@ -39,12 +38,12 @@ export const useAuth = () => {
         setUserId(null);
         setUserName(null);
         setUserRights(null);
-        localStorage.removeItem(storageName);
+        localStorage.removeItem(userCookie);
     }, []);
 
     useEffect(() => {
         const storageLogin= async()=>{
-            const data = JSON.parse(localStorage.getItem(storageName));
+            const data = JSON.parse(localStorage.getItem(userCookie));
             if (data && data.token) {
                 await login(data.token, data.userId, data.userName);
             }

@@ -2,8 +2,6 @@ import React, {useContext, useState } from 'react';
 import {useHttp} from '../hooks/http.hook';
 import {AuthContext} from '../context/AuthContext';
 import AuthForm from '../components/AuthForm';
-import './AuthPage.css';
-
 
 const AuthPage=()=> {
     const auth=useContext(AuthContext);
@@ -52,11 +50,9 @@ const AuthPage=()=> {
     }
 
     return (
-        <>
-        <div className='auth-page pwnz-f-c'>
+        <div className='authpage-container'>
              <AuthForm handleAuthFormSubmit={handleAuth} onGuestLogin={handleGuestLogin} message={message}></AuthForm>                     
         </div>
-        </>
     )
 }
 

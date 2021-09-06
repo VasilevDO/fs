@@ -7,6 +7,7 @@ import GamesPage from './GamesPage';
 import ServicesPage from './ServicesPage';
 import ResetPage from './ResetPage.js'
 import BioPage from './BioPage';
+import VideoPage from './VideoPage';
 
 const useRoutes = isAuthenticated => {
     if (isAuthenticated) {
@@ -32,6 +33,9 @@ const useRoutes = isAuthenticated => {
                 </Route>
                 <Route path='/bio' exact>
                     <BioPage />
+                </Route>
+                <Route path='/video' exact>
+                    <VideoPage/>
                 </Route>
                 <Redirect to='/home' />
             </Switch>

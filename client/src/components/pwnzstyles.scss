@@ -13,14 +13,6 @@ html {
     line-height: $mainLineHeight;
 }
 
-.pwnz-d-n {
-    display:none !important;
-}
-
-.pwnz-d-b {
-    display:block !important;
-}
-
 body {
     min-width: 1366px;
     margin:0px;
@@ -32,21 +24,11 @@ ul:not(.default) {
     list-style-type: none;
 }
 
-.input-field {
-    position: relative;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    label {
-        font-size: $mainFontSize*0.9;
-        color:$lightTextColor;
-    }
-}
-
-.pwnz-input {
-    position: relative;
-}
-
 input:not(.default) {
+    &:focus-visible {
+        outline:none;
+        border-bottom: 1px solid #1e88e5 !important;
+    }
     &[type="password"] {
         -webkit-text-security: disc !important;
     }
@@ -83,6 +65,10 @@ textarea {
     font-size: 100%;
     line-height: 1.15;
     margin: 0;
+    &:focus-visible {
+        outline:none;
+        border: 1px solid #1e88e5 !important;
+    }
 }
 
 table {
@@ -90,6 +76,27 @@ table {
     display: table;
     border-collapse: collapse;
     border-spacing: 0;
+}
+
+.pwnz-container {
+    width:100%;
+    height:100%;
+    flex-grow:1;
+    display:flex;
+}
+
+.input-field {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    label {
+        font-size: $mainFontSize*0.9;
+        color:$lightTextColor;
+    }
+}
+
+.pwnz-input {
+    position: relative;
 }
 
 .pwnz-nav {
@@ -144,6 +151,8 @@ table {
 }
 
 .page-container {
+    min-height:100vh;
+    @include flex(column,space-between);
     background-color: $mainBackgroundColor;
     select {
         background-color: $lighterFormColor;
@@ -160,6 +169,107 @@ table {
         border-radius: $mainBorderRadius;
     }
 }
+
+.error-page-container {
+    min-height: 100vh;
+    @include flex(row,center);
+    background-color: $mainBackgroundColor;
+}
+
+.pwnz-errorMessage {
+    @include mainForm();
+}
+
+.authpage-container {
+    height:100vh;
+    width:100vw;
+    @include flex(row,center);
+}
+
+.resetpage-container {
+    height:100vh;
+    width:100vw;
+    @include flex(row,center);
+}
+
+.homepage-container {
+    display:flex;
+    width:100%;
+    .pwnz-blog {
+        flex-grow:1;
+        padding:20px;
+    }
+    .pwnz-widgets {
+        width:500px;
+        height:100%;
+        display:flex;
+        flex-direction: column;
+        align-items: flex-end;
+        margin:10px;
+    }
+    .pwnz-widgets > * {
+        margin: 10px 0;
+    }
+}
+
+.servicespage-container {
+    display:flex;
+    flex-direction: column;
+    width:100%;
+    .services-container {
+        display:flex;
+        justify-content: center;
+        align-items:flex-start;
+    }
+    .services-service {
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        margin:auto;
+    }
+    
+    .big-button {
+        font-size:24px;
+        padding:10px;
+        margin:10px;
+    }
+}
+
+.gamespage-container {
+    display:flex;
+    flex-direction: column;
+    width:100%;
+    .games-container {
+        display:flex;
+        justify-content: center;
+        align-items:flex-start;  
+    }
+    .games-container > div {
+        margin:10px;
+    }
+    .games-game {
+        display:flex;
+        justify-content: center;
+        margin:auto;
+    }
+    .big-button {
+        font-size:24px;
+        padding:10px;
+        margin:10px;
+    }
+}
+
+.biopage-container {
+    @include flex(column,flex-start);
+    .aboutMe {
+        font-size: 16px;
+        @include mainForm();
+    }
+}
+
+.videopage-container {
+    flex-grow:1;
+}   
 
 
 .pwnz-button {
@@ -186,22 +296,6 @@ table {
 
 .pwnz-color-red {
     color:red;
-}
-
-.biopage-container {
-    @include flexCenter(column);
-
-    .aboutMe {
-        font-size: 16px;
-        @include mainForm();
-    }
-}
-
-
-
-.page-container {
-    min-height:100vh;
-    @include flex(column,space-between)
 }
 
 .pwnz-ul-hor {

@@ -8,7 +8,6 @@ import Todolist from '../components/Todolist';
 import ReduxSample from '../components/ReduxSample'
 import Currency from '../components/Currency';
 import { AuthContext } from '../context/AuthContext';
-import './ServicesPage.css'
 
 import galleryPNG from '../assets/gallery.png';
 import calculatorPNG from '../assets/calculator.png';
@@ -30,13 +29,14 @@ const ServicesPage = () => {
     }
 
     return (
-        <>
+        <div className='servicespage-container'>
             {service ?
                 (<>
-                    <div className='pwnz-button pwnz-m10 pwnz-fs25' >
-                        {<div onClick={cancelPick}>Back to the services list</div>}
+                    <div>
+                        <div className='pwnz-button pwnz-m10 pwnz-fs25' >
+                            {<div onClick={cancelPick}>Back to the services list</div>}
+                        </div>
                     </div>
-
                     <div className='services-container'>
                         {service === 'calculator' ?
                             <Calculator></Calculator>
@@ -111,7 +111,7 @@ const ServicesPage = () => {
                         </div>
                     </div>
                 </>)}
-        </>
+        </div>
     )
 }
 

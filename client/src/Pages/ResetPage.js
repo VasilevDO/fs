@@ -1,46 +1,42 @@
 import React, { useState } from 'react';
 import { useHttp } from '../hooks/http.hook';
 import ResetForm from '../components/ResetForm';
-import './ResetPage.css';
-import {useLocation,useHistory } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 
 const ResetPage = () => {
     const [message, setMessage] = useState(null);
     const { request } = useHttp(); //const {loading,request,error,clearError} = useHttp();
     const location = useLocation();
-    const history=useHistory();
+    const history = useHistory();
 
     const handleReset = async (data) => {
         try {
-            const form={
-                password:data.password,
-                passwordResetId:location.pathname.match(/(?<=\/reset\/)[0-9A-Za-z]+/)[0]
+            const form = {
+                password: data.password,
+                passwordResetId: location.pathname.match(/(?<=\/reset\/)[0-9A-Za-z]+/)[0]
             }
-            
             const respData = await request('/api/auth/reset', 'POST', { ...form });
             setMessage({
-                text:respData.message,
-                type:'positive'
+                text: respData.message,
+                type: 'positive'
             });
 
-            setTimeout(()=>{
+            setTimeout(() => {
                 history.push('/');
-            },2000)
+            }, 2000)
 
         } catch (e) {
             setMessage({
-                text:e.message,
-                type:'negative'
+                text: e.message,
+                type: 'negative'
             });
         }
     }
 
     return (
-        <>
-           <div className='reset-page valign-wrapper pwnz-f-c'>
-                <ResetForm handleResetFormSubmit={handleReset} message={message}></ResetForm>
-            </div>
-        </>
+        <div className='resetpage-container'>
+            <ResetForm handleResetFormSubmit={handleReset} message={message}></ResetForm>
+        </div>
     )
 }
 

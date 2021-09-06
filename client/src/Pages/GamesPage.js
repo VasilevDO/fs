@@ -4,7 +4,6 @@ import Tictactoe from '../components/Tictactoe';
 import Sudoku from '../components/Sudoku';
 import SudokuApi from '../components/SudokuApi';
 import PwnzCard from '../components/PwnzCard';
-import './GamesPage.css'
 import TictactoeLogo from '../assets/tictactoe/tictactoeLogo.jpg'
 import SudokuLogo from '../assets/sudoku/SudokuLogo.jpg'
 
@@ -21,13 +20,14 @@ const GamesPage = () => {
     }
 
     return (
-        <>
+        <div className='gamespage-container'>
             {game ?
                 (<>
-                    <div className='pwnz-button pwnz-m10 pwnz-fs25' >
-                        <div onClick={cancelGamePick}>Back to the games list</div>
+                    <div>
+                        <div className='pwnz-button pwnz-m10 pwnz-fs25' >
+                            <div onClick={cancelGamePick}>Back to the games list</div>
+                        </div>
                     </div>
-
                     <div className='games-game'>
                         {game === 'tictactoe' ?
                             <Tictactoe></Tictactoe>
@@ -67,7 +67,7 @@ const GamesPage = () => {
                             buttonText="Play"></PwnzCard>
                     </div>
                 </>)}
-        </>
+        </div>
     )
 }
 
