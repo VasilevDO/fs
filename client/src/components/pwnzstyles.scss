@@ -1,5 +1,6 @@
 @import './pwnzstylesVariables';
 @import './pwnzstylesFunctions';
+@import './pwnzstylesAnimations';
 
 *, *:before, *:after {
     box-sizing: inherit;
@@ -449,4 +450,14 @@ table {
       }
   }
 
-  
+  .pwnz-alert-red {
+      color:red;
+  }
+
+  .pwnz-alert-green {
+      color:green;
+  }
+
+    .pwnz-infinitySpin360 {
+    animation: spin360 2s ease infinite;
+  }

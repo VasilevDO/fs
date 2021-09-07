@@ -14,7 +14,9 @@ export default class PwnzBlog extends Component {
       postsToShow: [],
       loading: true,
       sortBy: 'date',
+      newPostAlert: null,
       searchCriteria: {
+        caseSensitive: false,
         searchInNumber: true,
         searchInText: true,
         searchInTitle: true,
@@ -49,6 +51,15 @@ export default class PwnzBlog extends Component {
 
   createPost = async () => {
     try {
+      if (!this.state.newPostText || !this.state.newPostTitle) {
+        this.setState({
+          alert: {
+            status: 'red',
+            message: 'Title and text fields can not be empty'
+          }
+        })
+        return;
+      }
       const method = 'POST';
       const body = JSON.stringify({
         text: this.state.newPostText,
@@ -69,7 +80,8 @@ export default class PwnzBlog extends Component {
           posts: [post, ...this.state.posts],
           postsToShow: [post, ...this.state.postsToShow],
           newPostText: '',
-          newPostTitle: ''
+          newPostTitle: '',
+          alert: null
         })
       }
     } catch (e) {
@@ -180,14 +192,12 @@ export default class PwnzBlog extends Component {
         const newPostsToShow = this.state.postsToShow.filter(post => post._id !== postId);
         this.setState({
           posts: newPosts,
-          postsToShow:newPostsToShow
+          postsToShow: newPostsToShow
         })
       }
     } catch (e) {
     }
   }
-
-
 
   updatePost = async (updatedPost) => {
     try {
@@ -242,25 +252,30 @@ export default class PwnzBlog extends Component {
     const target = $(e.target);
     const searchCriteria = this.state.searchCriteria;
 
-    if (target.attr('for') === 'number') {
+    if (target.attr('name') === 'number') {
       searchCriteria.searchInNumber = !searchCriteria.searchInNumber
-    } else if (target.attr('for') === 'text') {
+    } else if (target.attr('name') === 'text') {
       searchCriteria.searchInText = !searchCriteria.searchInText
-    } else if (target.attr('for') === 'title') {
+    } else if (target.attr('name') === 'title') {
       searchCriteria.searchInTitle = !searchCriteria.searchInTitle
-    } else if (target.attr('for') === 'author') {
+    } else if (target.attr('name') === 'author') {
       searchCriteria.searchInAuthor = !searchCriteria.searchInAuthor
+    } else if (target.attr('name') === 'case') {
+      searchCriteria.caseSensitive = !searchCriteria.caseSensitive
     }
     this.setState({
       searchCriteria: searchCriteria,
       postsToShow: this.searchPosts(this.state.posts, this.state.searchInput, searchCriteria)
     })
-
   }
 
   searchPosts = (posts, value, criteria) => {
     if (!value) return posts;
     if (!Object.entries(criteria).filter(item => item[1] !== false).length) return posts;
+    const isCaseSensitive = criteria.caseSensitive;
+    if (!isCaseSensitive) {
+      value = value.toLowerCase();
+    }
     const filteredPosts = new Set();
     if (criteria.searchInNumber) {
       posts.forEach(post => {
@@ -269,17 +284,17 @@ export default class PwnzBlog extends Component {
     }
     if (criteria.searchInText) {
       posts.forEach(post => {
-        if (~('' + post.text).indexOf(value)) filteredPosts.add(post);
+        if (~('' + (isCaseSensitive ? post.text : post.text.toLowerCase()).indexOf(value))) filteredPosts.add(post);
       })
     }
     if (criteria.searchInTitle) {
       posts.forEach(post => {
-        if (~('' + post.title).indexOf(value)) filteredPosts.add(post);
+        if (~('' + (isCaseSensitive ? post.title : post.title.toLowerCase()).indexOf(value))) filteredPosts.add(post);
       })
     }
     if (criteria.searchInAuthor) {
       posts.forEach(post => {
-        if (~('' + post.createdBy).indexOf(value)) filteredPosts.add(post);
+        if (~('' + (isCaseSensitive ? post.createdBy : post.createdBy.toLowerCase()).indexOf(value))) filteredPosts.add(post);
       })
     }
     return Array.from(filteredPosts);
@@ -338,7 +353,7 @@ export default class PwnzBlog extends Component {
 
   render() {
     const posts = this.state.postsToShow;
-    const { searchInNumber, searchInTitle, searchInAuthor, searchInText } = this.state.searchCriteria;
+    const { searchInNumber, searchInTitle, searchInAuthor, searchInText, caseSensitive } = this.state.searchCriteria;
 
     return (
       <div className="pwnzBlog" >
@@ -346,13 +361,18 @@ export default class PwnzBlog extends Component {
           <div className='pwnz-bwtm-bd pwnz-f pwnzBlog-newPostFormHeader'>
             <div className='pwnz-f-grow1 pwnz-f-vc'><span>Have something new? Let us know!</span></div>
             <div className='pwnz-f-shrink1'>
-              <div className='pwnz-button pwnz-f-c' >
+              <div className='pwnz-button pwnz-f-c'>
                 <div className='pwnz-bwtm-b pwnz-nowrap'>Write new post</div>
                 <div style={{ display: 'none' }} className='pwnz-bwtm-b pwnz-nowrap'>Hide form</div>
               </div>
             </div>
           </div>
           <div className='pwnz-bwtm-c pwnzBlog-newPostForm' style={{ display: 'none' }}>
+            {this.state.alert ?
+              <div className={'pwnz-alert-' + this.state.alert.status}>
+                <p className='pwnz-t-c pwnz-m0'>{this.state.alert.message}</p>
+              </div>
+              : null}
             <div className="pwnzBlog-newPostForm-title">
               <span>New post title</span>
               <PwnzTextContainer
@@ -411,22 +431,26 @@ export default class PwnzBlog extends Component {
             </div>
             <div className='pwnz-bwdm-c pwnz-bwdm-downLeft pwnz-p10' style={{ display: 'none' }}>
               <div className='pwnz-bwdm-c-inner'>
-                <span className='pwnz-nowrap pwnz-m0'>Search in</span>
+                <div className='pwnz-checkbox'>
+                  <span className='pwnz-nowrap'>Case sensitive</span>
+                  <input name='case' type='checkbox' checked={caseSensitive} onChange={this.handleSearchSettingsChange} />
+                </div>
+                <span className='pwnz-nowrap pwnz-m0'>Search in:</span>
                 <div className='pwnz-checkbox'>
                   <span>#</span>
-                  <input for='number' type='checkbox' checked={searchInNumber} onChange={this.handleSearchSettingsChange} />
+                  <input name='number' type='checkbox' checked={searchInNumber} onChange={this.handleSearchSettingsChange} />
                 </div>
                 <div className='pwnz-checkbox'>
                   <span>Author</span>
-                  <input for='author' type='checkbox' checked={searchInAuthor} onChange={this.handleSearchSettingsChange} />
+                  <input name='author' type='checkbox' checked={searchInAuthor} onChange={this.handleSearchSettingsChange} />
                 </div>
                 <div className='pwnz-checkbox'>
                   <span>Title</span>
-                  <input for='title' type='checkbox' checked={searchInTitle} onChange={this.handleSearchSettingsChange} />
+                  <input name='title' type='checkbox' checked={searchInTitle} onChange={this.handleSearchSettingsChange} />
                 </div>
                 <div className='pwnz-checkbox'>
                   <span>Text</span>
-                  <input for='text' type='checkbox' checked={searchInText} onChange={this.handleSearchSettingsChange} />
+                  <input name='text' type='checkbox' checked={searchInText} onChange={this.handleSearchSettingsChange} />
                 </div>
 
               </div>

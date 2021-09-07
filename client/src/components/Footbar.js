@@ -44,7 +44,7 @@ export const Footbar = () => {
     return (
         <div className='pwnz-footbar'>
             <ul className='pwnz-ul-hor'>
-                <li><Link to='/video' className='pwnz-footbar-button pwnz-f-c pwnz-t-dn'>You have to click this button</Link></li>
+                <li><Link to='/video' className='pwnz-footbar-button pwnz-f-c pwnz-t-dn'>Button under construction</Link></li>
                 <li><div className='pwnz-footbar-button pwnz-f-c' onClick={showFeedbackForm}>Feedback</div></li>
             </ul>
             <p className='pwnz-t-c pwnz-m0'>pwnzforever 2021 - {new Date().getFullYear()}</p>

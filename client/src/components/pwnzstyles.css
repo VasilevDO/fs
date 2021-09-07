@@ -1,3 +1,17 @@
+@-webkit-keyframes spin360 {
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin360 {
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+  }
+}
+
 *, *:before, *:after {
   -webkit-box-sizing: inherit;
           box-sizing: inherit;
@@ -652,5 +666,18 @@ table {
   cursor: pointer;
   margin: 5px 2px;
   padding: 0;
+}
+
+.pwnz-alert-red {
+  color: red;
+}
+
+.pwnz-alert-green {
+  color: green;
+}
+
+.pwnz-infinitySpin360 {
+  -webkit-animation: spin360 2s ease infinite;
+          animation: spin360 2s ease infinite;
 }
 /*# sourceMappingURL=pwnzstyles.css.map */

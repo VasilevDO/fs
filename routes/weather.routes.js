@@ -4,7 +4,6 @@ const auth=require('../middleware/auth.middleware');
 const router=Router();
 const axios = require('axios');
 
-
 class City {
     constructor(name, lat, lon) {
       this.name = name;
@@ -40,17 +39,16 @@ router.post('/', auth,async (request, response)=> {
     try {
         const {city,time} = request.body;
         const cityObj=getURL(city||cities[0],time);
-
-        const futureWeather = await axios.get(cityObj.future)
-        const pastTodayWeather = await axios.get(cityObj.pastToday)
-        const pastYesterdayWeather = await axios.get(cityObj.pastYesterday)
-
-        response.status(201).json({
+        const futureWeather = await axios.get(cityObj.future);
+        const pastTodayWeather = await axios.get(cityObj.pastToday);
+        const pastYesterdayWeather = await axios.get(cityObj.pastYesterday);
+        response.status(500).json({message:'Service is currently unavailable'});
+        return;
+        response.status(200).json({
             futureWeather:futureWeather.data,
             pastTodayWeather:pastTodayWeather.data,
             pastYesterdayWeather:pastYesterdayWeather.data
         })
-
     } catch (e) {
         response.status(500).json({message:'Service is currently unavailable'});
     }
@@ -59,14 +57,9 @@ router.post('/', auth,async (request, response)=> {
 router.get('/cities', auth,async (request, response)=> {
     try {
         response.status(201).json({cities});
-
     } catch (e) {
         response.status(500).json({message:'Service is currently unavailable'});
     }
 })
 
-
 module.exports=router;
-
-
-

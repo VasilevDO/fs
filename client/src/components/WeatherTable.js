@@ -196,7 +196,6 @@ const prepareWeatherData = (weatherObj) => {
       icon: weatherObj.futureWeather.current.weather[0].icon
     }
   };
-
   return { current, hourlyObj, daily, mini };
 };
 
@@ -215,19 +214,31 @@ export default class WeatherTable extends Component {
       todayWeather: null,
       tomorrowWeather: null
     };
-
   }
 
   updateTable = async () => {
-    const weatherObj = await this.getWeatherData(this.state.city);
-    const { current, hourlyObj, daily, mini } = prepareWeatherData(weatherObj);
     this.setState({
-      currentTableData: current,
-      hourlyTableData: hourlyObj,
-      dailyTableData: daily,
-      miniTableData: mini,
-      timeUpdated: getDateToString(new Date(Date.now())).split(" ")[0]
+      updating:true
     });
+    const weatherObj = await this.getWeatherData(this.state.city);
+    if (!weatherObj||weatherObj.message) {
+      this.setState({
+        message:'Error occured, try again later.',
+        loading: false,
+        updating:false
+      })
+    } else {
+      const { current, hourlyObj, daily, mini } = prepareWeatherData(weatherObj);
+      this.setState({
+        currentTableData: current,
+        hourlyTableData: hourlyObj,
+        dailyTableData: daily,
+        miniTableData: mini,
+        timeUpdated: getDateToString(new Date(Date.now())).split(" ")[0],
+        message:null,
+        updating:false
+      });
+    }
   };
 
   handleFormatChange = (e) => {
@@ -404,7 +415,7 @@ export default class WeatherTable extends Component {
 
       const weatherObj = await fetch('/api/weather', { method, body, headers })
         .then(data => data.json());
-      return weatherObj;
+        return weatherObj;
     } catch (e) {
     }
   };
@@ -412,17 +423,25 @@ export default class WeatherTable extends Component {
   componentDidMount = async () => {
     const cities = await this.getCities();
     const weatherObj = await this.getWeatherData(this.state.city);
-    const { current, hourlyObj, daily, mini } = prepareWeatherData(weatherObj);
-    this.setState({
-      cities: cities,
-      city: cities[0],
-      currentTableData: current,
-      hourlyTableData: hourlyObj,
-      dailyTableData: daily,
-      miniTableData: mini,
-      timeUpdated: getDateToString(new Date(Date.now())).split(" ")[0],
-      loading: false
-    });
+    if (!weatherObj||weatherObj.message) {
+      this.setState({
+        message:'Error occured, try again later.',
+        loading: false
+      })
+    } else {
+      const { current, hourlyObj, daily, mini } = prepareWeatherData(weatherObj);
+        this.setState({
+          cities: cities,
+          city: cities[0],
+          currentTableData: current,
+          hourlyTableData: hourlyObj,
+          dailyTableData: daily,
+          miniTableData: mini,
+          timeUpdated: getDateToString(new Date(Date.now())).split(" ")[0],
+          loading: false,
+          message:null
+        });
+    }
   }
 
   render() {
@@ -440,6 +459,18 @@ export default class WeatherTable extends Component {
     const miniTableData = this.state.miniTableData;
 
     const hourlyTableData = this.state.hourlyTableData;
+
+    if (this.state.message) {
+      return (
+        <div className='pwnz-weatherTable-micro pwnz-f-c pwnz-p5'>
+          <span>{this.state.message}</span> 
+          <div className='pwnz-button pwnz-f-c pwnz-ml5' >
+            <div onClick={this.updateTable} className={'pwnz-fs23'+(this.state.updating?' pwnz-infinitySpin360':'')}>🗘</div>
+          </div>
+        </div>
+      )
+    }
+
     const hourlyTableDay = this.state.hourlyTableDay;
     const hourlyTableTitle =
       hourlyTableDay[0].toUpperCase() +

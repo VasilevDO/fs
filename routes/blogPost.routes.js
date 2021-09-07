@@ -15,6 +15,13 @@ router.post('/create', auth, async (request, response) => {
             return;
         }
         const { text, title, createdBy } = request.body;
+        if (!text||!title) {
+            const alert={
+                status:'red',
+                message:'Title and text fields can not be empty'
+            }
+            response.status(200).json({alert});
+        }
         const number = await Post.countDocuments() + 1;
         const post = new Post({
             text: text, title: title, owner: request.user.userId, createdBy: createdBy, number: number
