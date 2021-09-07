@@ -12,6 +12,7 @@ class Calculator extends Component {
       historyExpanded: false,
       charsAfterComma: this.props.value || this.charsAfterCommaDefault
     };
+    this.mainInputRef=React.createRef();
   }
 
   charsAfterCommaDefault = 5;
@@ -35,6 +36,10 @@ class Calculator extends Component {
       val: Math.PI
     },
     {
+      symb: 'E',
+      val: Math.exp(1)
+    },
+    {
       symb: 'Infinity',
       val: +Infinity
     },
@@ -43,8 +48,6 @@ class Calculator extends Component {
       val: 'random'
     }
   ]
-
-
 
   methods = [
     //p for priority and f for func
@@ -463,6 +466,7 @@ class Calculator extends Component {
     this.setState({
       input: inputVal + target.text()
     });
+    this.mainInputRef.current.focus();
   };
 
   handleKeyPress = (e) => {
@@ -562,6 +566,7 @@ class Calculator extends Component {
 
   hints = {
     'Pi': 'Pi - returns mathematical constant 3.14159265359...',
+    'E': 'E - returns mathematical constant 2.71828182846...',
     'AC': 'Clears input field',
     'cos': 'cosA - returns cosine of A in radians',
     'sin': 'sinA - returns sine of A in radians',
@@ -576,13 +581,13 @@ class Calculator extends Component {
     'ln': 'lnA - returns the natural logarithm of A',
     'log': 'logA - returns the base-10 logarithm of A',
     '%': 'A% - returns A/100',
-    'mod': 'modA or mod(A) - returns modulo of A',
+    'mod': 'AmodB - returns modulo of A/B',
   }
 
   render() {
     const buttonsArr = this.buttons;
     const inputValue = this.state.input;
-    const history = this.state.history.reverse();
+    const history = this.state.history;
     const historyClassName =
       "calc-history " +
       (this.state.historyExpanded ? "history-expanded" : "history-reduced");
@@ -603,6 +608,7 @@ class Calculator extends Component {
               value={inputValue}
               onChange={this.handleInputChange}
               onKeyPress={this.handleKeyPress}
+              ref={this.mainInputRef}
             ></input>
             <div className='calc-div-for-p'><p>Decimal places:</p></div>
             <input
@@ -645,7 +651,7 @@ class Calculator extends Component {
             </div>
             <div className={historyClassName}>
               <div className="calc-history-p">
-                {history.map((item, index) => {
+                {history.reverse().map((item, index) => {
                   return (
                     <div className="calc-history-item" key={index}>
                       <p>{item.ab}</p>
