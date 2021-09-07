@@ -42,8 +42,6 @@ router.post('/', auth,async (request, response)=> {
         const futureWeather = await axios.get(cityObj.future);
         const pastTodayWeather = await axios.get(cityObj.pastToday);
         const pastYesterdayWeather = await axios.get(cityObj.pastYesterday);
-        response.status(500).json({message:'Service is currently unavailable'});
-        return;
         response.status(200).json({
             futureWeather:futureWeather.data,
             pastTodayWeather:pastTodayWeather.data,

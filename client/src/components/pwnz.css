@@ -150,8 +150,6 @@
     display:block !important;
 }
 
-
-
 .pwnz-button {
     display: table;
     vertical-align: middle;
@@ -383,4 +381,14 @@
 .pwnz-40x40 {
     width:40px;
     height:40px;
+}
+
+.pwnz-30x30 {
+    width:30px;
+    height:30px;
+}
+
+.pwnz-20x20 {
+    width:20px;
+    height:20px;
 }
