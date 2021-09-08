@@ -2,6 +2,9 @@ import { connect } from 'react-redux';
 import React from 'react';
 import { getCurrency, changeBaseCurrency } from '../redux/currencyActions';
 import { unixToBeautifulDateWithTime } from './pwnz';
+import { CURRENCY_GET_CURRENCY } from '../redux/types';
+
+import refreshPNG from '../assets/buttons/refresh.png';
 
 
 const Currency = ({ state, user, getCurrency, changeBaseCurrency }) => {
@@ -9,6 +12,8 @@ const Currency = ({ state, user, getCurrency, changeBaseCurrency }) => {
     const dateUpdated = state.currency.timestamp;
     const rates = state.currency.rates || {};
     const baseCurrency = state.baseCurrency;
+    const processing = state.processing;
+
     return (
         <>
             <div className='currency'>
@@ -18,9 +23,9 @@ const Currency = ({ state, user, getCurrency, changeBaseCurrency }) => {
                             <th colSpan={Object.keys(rates).length}>
                                 {dateUpdated ?
                                     <div className='pwnz-f-c'>
-                                        <span className='pwnz-f-grow1'> {unixToBeautifulDateWithTime(dateUpdated)}</span>
-                                        <div className='pwnz-button pwnz-ml10' >
-                                            <div className='pwnz-fs23 pwnz-fwn' onClick={() => getCurrency(user.token)}>🗘</div>
+                                        <span className='pwnz-f-grow1'>Rates provided: {unixToBeautifulDateWithTime(dateUpdated)}</span>
+                                        <div className='pwnz-imgButton pwnz-ml10' onClick={() => getCurrency(user.token)}>
+                                            <img className={'pwnz-20x20' + (processing.includes(CURRENCY_GET_CURRENCY) ? ' pwnz-infinitySpin360' : '')} src={refreshPNG} alt='' />
                                         </div>
                                     </div>
                                     : 'Want to know currency rates?'}
@@ -30,10 +35,10 @@ const Currency = ({ state, user, getCurrency, changeBaseCurrency }) => {
                             <th colSpan={Object.keys(rates).length}>
                                 <div className='pwnz-select pwnz-f-grow1'>
                                     {dateUpdated ?
-                                        <select className='pwnz-t-c pwnz-w100 pwnz-mr5' onChange={(e) => changeBaseCurrency(e.target.value)}>
+                                        <select className='pwnz-t-c pwnz-w100 pwnz-mr5' value={baseCurrency} onChange={(e) => changeBaseCurrency(e.target.value)}>
                                             {Object.entries(rates).map(currency => {
                                                 if (currency[0] === baseCurrency) {
-                                                    return <option value={currency[0]} selected hidden>{currency[0]}</option>
+                                                    return <option value={currency[0]} hidden>{currency[0]}</option>
                                                 } else {
                                                     return (
                                                         <option value={currency[0]}>{currency[0]}</option>
@@ -42,11 +47,13 @@ const Currency = ({ state, user, getCurrency, changeBaseCurrency }) => {
                                             })}
                                         </select>
                                         :
-                                        <div className='pwnz-button pwnz-w100' >
-                                            <div onClick={() => getCurrency(user.token)}>Get rates</div>
+                                        <div className={'pwnz-button pwnz-w100' + (processing.includes(CURRENCY_GET_CURRENCY) ? ' pwnz-animatedLoading' : '')}>
+                                            <div onClick={() => {
+                                                if (processing.includes(CURRENCY_GET_CURRENCY)) return;
+                                                getCurrency(user.token);
+                                            }}>Get rates</div>
                                         </div>
                                     }
-
                                 </div>
                             </th>
                         </tr>
@@ -61,12 +68,9 @@ const Currency = ({ state, user, getCurrency, changeBaseCurrency }) => {
                                 }
                             })}
                         </tr>
-
                     </thead>
                     <tbody>
-
                         <tr>
-
                             {Object.entries(rates).map(currency => {
                                 if (currency[0] === baseCurrency) {
                                     return null;
@@ -79,8 +83,6 @@ const Currency = ({ state, user, getCurrency, changeBaseCurrency }) => {
                         </tr>
                     </tbody>
                 </table>
-
-
             </div>
         </>
     )

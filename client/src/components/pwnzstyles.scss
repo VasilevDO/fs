@@ -295,6 +295,23 @@ table {
     }
 }
 
+.pwnz-imgButton {
+    background-color: $mainButtonColor;
+    @include flexCenter(row);
+    cursor: pointer;
+    outline: none;
+    -webkit-box-shadow: $mainButtonShadows;
+    -moz-box-shadow: $mainButtonShadows;
+    box-shadow: $mainButtonShadows;
+    border-radius: $mainButtonBorderRadius;
+    img {
+        margin:5px;
+    }
+    &:hover {
+        background-color: $mainButtonHoverColor;
+    }
+}
+
 .pwnz-color-red {
     color:red;
 }
@@ -460,4 +477,21 @@ table {
 
     .pwnz-infinitySpin360 {
     animation: spin360 2s ease infinite;
+  }
+
+  .pwnz-animatedLoading {
+        background-repeat: no-repeat;
+        background-image:   linear-gradient(to right, $mainButtonHoverColor 100%, $mainButtonHoverColor 100%),
+                            linear-gradient(to bottom, $mainButtonHoverColor 100%, $mainButtonHoverColor 100%),
+                            linear-gradient(to right, $mainButtonHoverColor 100%, $mainButtonHoverColor 100%),
+                            linear-gradient(to bottom, $mainButtonHoverColor 100%, $mainButtonHoverColor 100%);
+        background-size:    100% 2px,
+                            2px 100%,
+                            100% 2px,
+                            2px 100%;
+        background-position:    0 0,
+                                100% 0,
+                                100% 100%,
+                                0 100%;
+        animation: backgroundLoading 3s cubic-bezier(0.19, 1, 0.22, 1) infinite;
   }

@@ -1,11 +1,31 @@
 import { connect } from 'react-redux';
 import React, { useRef, useState } from 'react';
 import { createString, deleteString, createAsyncString, deleteAsyncString } from '../redux/actions';
+import { CREATE_ASYNC_STRING, DELETE_ASYNC_STRING } from '../redux/types';
 
 const ReduxSample = ({ state, createString, deleteString, createAsyncString, deleteAsyncString }) => {
     const [inputValue, setInputValue] = useState('');
     const inputRef = useRef();
     const alert = state.alert;
+    const processing = state.processing;
+
+    console.log(processing);
+
+    const handleClick=(e)=>{
+        // if (processing) {
+        //     e.stopPropagation()
+        // }
+    }
+
+    const handleKeyPress=(e)=>{
+        // if (processing) {
+        //     e.stopPropagation();
+        //     return;
+        // } 
+        // if (e.key==='Enter') {
+        //     e.target.click();
+        // }
+    }
 
     const handleInputChange = (e) => {
         setInputValue(e.target.value);
@@ -18,14 +38,20 @@ const ReduxSample = ({ state, createString, deleteString, createAsyncString, del
     }
 
     const addAsyncString = () => {
+        if (processing.includes(CREATE_ASYNC_STRING)) return;
         const string = inputRef.current.value;
         createAsyncString(string);
         setInputValue('');
     }
 
+    const removeAsyncString = (index) => {
+        if (processing.includes(DELETE_ASYNC_STRING)) return;
+        deleteAsyncString(index);
+    }
+
     return (
         <>
-            <div className='pwnz-col mainForm pwnz-p10 pwnz-w600'>
+            <div className='pwnz-col mainForm pwnz-p10 pwnz-w600' onClickCapture={handleClick} onKeyPressCapture={handleKeyPress}>
                 <div>
                     {alert ?
                         <p className={'pwnz-t-c pwnz-mt0 pwnz-alert-' + alert.status}>{alert.text}</p>
@@ -40,7 +66,10 @@ const ReduxSample = ({ state, createString, deleteString, createAsyncString, del
                 <div className='pwnz-f-es pwnz-mt10'>
                     <div className='pwnz-f-cc pwnz-f-grow1'>
                         <div className='pwnz-button'>
-                            <div onClick={addString}>Add string</div>
+                            <div 
+                            tabIndex='0'
+                            onClick={addString} 
+                            >Add string</div>
                         </div>
                         {state.strings.length || state.asyncStrings.length ?
                             <div className='pwnz-mt10 pwnz-bb-lightgray pwnz-w100'>
@@ -49,14 +78,21 @@ const ReduxSample = ({ state, createString, deleteString, createAsyncString, del
                             <div className='pwnz-f-c pwnz-mt10' key={index}>
                                 <p className='pwnz-m0'>{string}</p>
                                 <div className='pwnz-button pwnz-ml10 pwnz-color-red' >
-                                    <div onClick={() => deleteString(index)}>X</div>
+                                    <div 
+                                    tabIndex='0'
+                                    onClick={() => deleteString(index)}
+                                    >X</div>
                                 </div>
                             </div>
                         ))}
                     </div>
                     <div className='pwnz-f-cc pwnz-f-grow1'>
-                        <div className='pwnz-button pwnz-ml10' >
-                            <div onClick={addAsyncString}>Add async string (1 second delay)</div>
+                        <div className={'pwnz-button'+(processing.includes(CREATE_ASYNC_STRING)?' pwnz-animatedLoading':'')}>
+                            <div 
+                            tabIndex='0'
+                            process={CREATE_ASYNC_STRING}
+                            onClick={addAsyncString}
+                            >Add async string (random delay from 1 to 5 seconds)</div>
                         </div>
                         {state.asyncStrings.length || state.strings.length ?
                             <div className='pwnz-mt10 pwnz-bb-lightgray pwnz-w100 '>
@@ -64,8 +100,11 @@ const ReduxSample = ({ state, createString, deleteString, createAsyncString, del
                         {state.asyncStrings.map((string,index) => (
                             <div className='pwnz-f-c pwnz-mt10' key={index}>
                                 <p className='pwnz-m0'>{string}</p>
-                                <div className='pwnz-button pwnz-ml10 pwnz-color-red' >
-                                    <div onClick={() => deleteAsyncString(index)}>X</div>
+                                <div className={'pwnz-button pwnz-ml10 pwnz-color-red'+(processing.includes(DELETE_ASYNC_STRING)?' pwnz-animatedLoading':'')}>
+                                    <div 
+                                    tabIndex='0'
+                                    onClick={()=>removeAsyncString(index)}
+                                    >X</div>
                                 </div>
                             </div>
                         ))}
@@ -78,8 +117,7 @@ const ReduxSample = ({ state, createString, deleteString, createAsyncString, del
 
 const mapStateToProps = state => {
     return {
-        state: state.reduxSample,
-        loading: state.app.loading
+        state: state.reduxSample
     }
 }
 

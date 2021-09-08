@@ -220,14 +220,14 @@ export default class WeatherTable extends Component {
 
   updateTable = async () => {
     this.setState({
-      updating: true
+      processing: true
     });
     const weatherObj = await this.getWeatherData(this.state.city);
     if (!weatherObj || weatherObj.message) {
       this.setState({
         message: 'Error occured, try again later.',
         loading: false,
-        updating: false
+        processing: false
       })
     } else {
       const { current, hourlyObj, daily, mini } = prepareWeatherData(weatherObj);
@@ -238,7 +238,7 @@ export default class WeatherTable extends Component {
         miniTableData: mini,
         timeUpdated: getDateToString(new Date(Date.now())).split(" ")[0],
         message: null,
-        updating: false
+        processing: false
       });
     }
   };
@@ -466,10 +466,8 @@ export default class WeatherTable extends Component {
       return (
         <div className='pwnz-weatherTable-micro pwnz-f-c pwnz-p5'>
           <span>{this.state.message}</span>
-          <div className='pwnz-button pwnz-f-c pwnz-ml5' >
-            <div onClick={this.updateTable} className={'pwnz-fs23' + (this.state.updating ? ' pwnz-infinitySpin360' : '')}>
-              <img className='pwnz-20x20' src={refreshPNG} />
-            </div>
+          <div className='pwnz-imgButton pwnz-ml5' onClick={this.updateTable}>
+            <img className={'pwnz-20x20' + (this.state.processing ? ' pwnz-infinitySpin360' : '')} src={refreshPNG} alt='' />
           </div>
         </div>
       )
@@ -506,8 +504,8 @@ export default class WeatherTable extends Component {
                 })}
               </select>
             </div>
-            <div className='pwnz-button pwnz-f-c pwnz-ml5' >
-                <img onClick={this.updateTable} className={'pwnz-20x20' + (this.state.updating ? ' pwnz-infinitySpin360' : '')} src={refreshPNG} />
+            <div className='pwnz-imgButton pwnz-ml5' onClick={this.updateTable}>
+              <img className={'pwnz-20x20' + (this.state.processing ? ' pwnz-infinitySpin360' : '')} src={refreshPNG} alt='' />
             </div>
           </div>
           <div className='pwnz-p5'>
@@ -557,7 +555,7 @@ export default class WeatherTable extends Component {
                 <option value="daily">Daily</option>
               </select>
               <span className='pwnz-nowrap'>Last update: {timeUpdated || "none"}</span>
-              <div className='pwnz-button pwnz-f-c' >
+              <div className={'pwnz-button pwnz-f-c'+(this.state.processing?' pwnz-animatedLoading':'')}>
                 <div onClick={this.updateTable}>Update</div>
               </div>
             </div>

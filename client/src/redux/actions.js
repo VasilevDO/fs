@@ -1,4 +1,4 @@
-import { CREATE_ASYNC_STRING, CREATE_STRING, SHOW_LOADER, HIDE_ALERT, HIDE_LOADER, SHOW_ALERT, DELETE_STRING, DELETE_ASYNC_STRING } from "./types";
+import { CREATE_ASYNC_STRING, CREATE_STRING, SHOW_LOADER, HIDE_ALERT, HIDE_LOADER, SHOW_ALERT, DELETE_STRING, DELETE_ASYNC_STRING, START_PROCESSING, END_PROCESSING } from "./types";
 
 export function createString(string) {
     return dispatch => {
@@ -16,21 +16,35 @@ export function deleteString(index) {
 
 export function createAsyncString(string) {
     return async dispatch => {
-        dispatch(showLoader());
         dispatch(hideAlert());
-        await new Promise(resolve => setTimeout(resolve, 1000));//async operations should be there
-        dispatch({ type: CREATE_ASYNC_STRING, payload: string })
-        dispatch(hideLoader());
+        dispatch(startProcessing(CREATE_ASYNC_STRING));
+        await new Promise(resolve => setTimeout(resolve, +1000 + Math.random() * 4000));//async operations should be there
+        dispatch({ type: CREATE_ASYNC_STRING, payload: string });
+        dispatch(endProcessing(CREATE_ASYNC_STRING));
     }
 }
 
 export function deleteAsyncString(index) {
     return async dispatch => {
-        dispatch(showLoader());
         dispatch(hideAlert());
-        await new Promise(resolve => setTimeout(resolve, 1000));//async operations should be there
+        dispatch(startProcessing(DELETE_ASYNC_STRING));
+        await new Promise(resolve => setTimeout(resolve, +1000 + Math.random() * 4000));//async operations should be there
         dispatch({ type: DELETE_ASYNC_STRING, payload: index })
-        dispatch(hideLoader());
+        dispatch(endProcessing(DELETE_ASYNC_STRING));
+    }
+}
+
+export function startProcessing(process) {
+    return {
+        type: START_PROCESSING,
+        payload: process
+    }
+}
+
+export function endProcessing(process) {
+    return {
+        type: END_PROCESSING,
+        payload: process
     }
 }
 

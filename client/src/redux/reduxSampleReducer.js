@@ -1,11 +1,11 @@
-import { CREATE_ASYNC_STRING, CREATE_STRING, SHOW_ALERT, HIDE_ALERT, DELETE_STRING, DELETE_ASYNC_STRING } from "./types"
+import { CREATE_ASYNC_STRING, CREATE_STRING, SHOW_ALERT, HIDE_ALERT, DELETE_STRING, DELETE_ASYNC_STRING, START_PROCESSING, END_PROCESSING } from "./types"
 
 const initialState = {
     strings: [],
     asyncStrings: [],
-    inputValue: ''
+    inputValue: '',
+    processing:[]
 }
-
 
 export const reduxSampleReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -34,6 +34,16 @@ export const reduxSampleReducer = (state = initialState, action) => {
         case HIDE_ALERT: {
             return {
                 ...state, alert: false
+            }
+        }
+        case START_PROCESSING: {
+            return {
+                ...state, processing: state.processing.concat(action.payload)
+            }
+        }
+        case END_PROCESSING: {
+            return {
+                ...state, processing:state.processing.filter(item=>item!==action.payload)
             }
         }
         default: return state

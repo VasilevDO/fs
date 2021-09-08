@@ -16,6 +16,7 @@ export function getUser() {
     }
 }
 export function setUser(user) {
+    console.log(user);
     return {
         type: SET_USER, payload: user
     }

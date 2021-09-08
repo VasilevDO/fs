@@ -18,7 +18,7 @@ function App() {
   const dispatch=useDispatch();
   const { token, login, logout, userId, userName, userRights, ready } = useAuth();
 
-  if (token&&!Object.keys(user).length) {
+  if (token&&userId&&userName&&userRights&&!Object.keys(user).length) {
     dispatch(setUser({
       id:userId,
       name:userName,
