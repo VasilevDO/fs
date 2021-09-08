@@ -9,8 +9,6 @@ const ReduxSample = ({ state, createString, deleteString, createAsyncString, del
     const alert = state.alert;
     const processing = state.processing;
 
-    console.log(processing);
-
     const handleClick=(e)=>{
         // if (processing) {
         //     e.stopPropagation()

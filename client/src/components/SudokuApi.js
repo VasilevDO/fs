@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
 import "./Sudoku.css";
 import { Loader } from './Loader';
+import {getApiBoard} from '../redux/sudokuApiActions';
 
 
 class SudokuApi extends Component {
@@ -13,8 +15,7 @@ class SudokuApi extends Component {
       alert: null,
       solutionVisible: false,
       wrongCellsVisible: false,
-      difficulty: "medium",
-      loading: true
+      difficulty: "medium"
     };
   }
 
@@ -236,14 +237,6 @@ class SudokuApi extends Component {
     })
   }
 
-  encodeBoard = (board) => board.reduce((result, row, i) => result + `%5B${encodeURIComponent(row)}%5D${i === board.length - 1 ? '' : '%2C'}`, '')
-
-  encodeParams = (params) =>
-    Object.keys(params)
-      .map(key => key + `=%5B${this.encodeBoard(params[key])}%5D`)
-      .join('&');
-
-
   getBoard = async () => {
     try {
       let startingBoard = await fetch(`https://sugoku.herokuapp.com/board?difficulty=${this.state.difficulty}`)
@@ -272,7 +265,7 @@ class SudokuApi extends Component {
     this.setState({
       loading: true
     })
-    const { startingBoard, solvedBoard} = await this.getBoard();
+    const { startingBoard, solvedBoard } = await this.getBoard();
     this.setState({
       startingBoard: startingBoard,
       solvedBoard: solvedBoard,
@@ -284,32 +277,25 @@ class SudokuApi extends Component {
 
 
   componentDidMount = async () => {
-    const { startingBoard, solvedBoard} = await this.getBoard();
-    this.setState({
-      startingBoard: startingBoard,
-      solvedBoard: solvedBoard,
-      board: startingBoard,
-      loading: false
-    });
+      this.props.getApiBoard(this.state.difficulty);
+    // const { startingBoard, solvedBoard } = await this.getBoard();
+    // this.setState({
+    //   startingBoard: startingBoard,
+    //   solvedBoard: solvedBoard,
+    //   board: startingBoard,
+    //   loading: false
+    // });
   }
 
-
-
   render() {
+    console.log(this.props);
 
-
-    if (this.state.loading) {
-      return <Loader />
-    }
-
-    const difficulty = this.state.difficulty;
-    const startingBoard = this.state.startingBoard;
-    const board = this.state.solutionVisible
-      ? this.state.solvedBoard
-      : this.state.board;
-
+    const {difficulty, alert}=this.state;
+    const startingBoard=this.state.startingBoard||Array(9).fill(Array(9).fill(1));
+    const solvedBoard=this.state.solvedBoard||Array(9).fill(Array(9).fill(1));
+    const board=this.state.board||Array(9).fill(Array(9).fill(1));
+    const boardToShow=(this.state.solutionVisible? solvedBoard: board)||Array(9).fill(Array(9).fill(1));
     let disabled, cellY, cellX, cellStyle;
-    const alert = this.state.alert;
     const sudokuBoardStyle = {
       backgroundColor: alert ? (alert === "done" ? "green" : "red") : null
     };
@@ -322,19 +308,19 @@ class SudokuApi extends Component {
 
     const boardDivs = [
       [
-        this.createBoardDiv(0, 0, board),
-        this.createBoardDiv(0, 3, board),
-        this.createBoardDiv(0, 6, board)
+        this.createBoardDiv(0, 0, boardToShow),
+        this.createBoardDiv(0, 3, boardToShow),
+        this.createBoardDiv(0, 6, boardToShow)
       ],
       [
-        this.createBoardDiv(3, 0, board),
-        this.createBoardDiv(3, 3, board),
-        this.createBoardDiv(3, 6, board)
+        this.createBoardDiv(3, 0, boardToShow),
+        this.createBoardDiv(3, 3, boardToShow),
+        this.createBoardDiv(3, 6, boardToShow)
       ],
       [
-        this.createBoardDiv(6, 0, board),
-        this.createBoardDiv(6, 3, board),
-        this.createBoardDiv(6, 6, board)
+        this.createBoardDiv(6, 0, boardToShow),
+        this.createBoardDiv(6, 3, boardToShow),
+        this.createBoardDiv(6, 6, boardToShow)
       ]
     ];
 
@@ -344,7 +330,7 @@ class SudokuApi extends Component {
           <div className="sudoku-buttons" style={sudokuBoardStyle}>
             <div className='sudoku-buttons-row'>
               <div className='pwnz-button' >
-                <div onClick={this.getNewBoard}>Set new puzzle</div>
+                <div onClick={this.setNewBoard}>Set new puzzle</div>
               </div>
               <div>
                 <select value={difficulty} onChange={this.handleDifficultyChange} className='browser-default'>
@@ -416,4 +402,15 @@ class SudokuApi extends Component {
   }
 }
 
-export default SudokuApi;
+const mapStateToProps = state => {
+  console.log(state);
+  return {
+    state: state.sudokuApi
+  }
+}
+
+const mapDispatchToProps = {
+  getApiBoard
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SudokuApi);
