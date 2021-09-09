@@ -1,25 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { applyMiddleware, compose, createStore } from 'redux';
-import thunk from 'redux-thunk';
 import $ from 'jquery';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import App from './App';
-import { rootReducer } from './redux/rootReducer';
-import { checkForBannedWords, checkInputNotEmpty } from './redux/middleware';
 import { Timing, NavHeight } from './pwnzVariables';
 
-
-const store = createStore(rootReducer, compose(
-  applyMiddleware(
-    thunk,
-    checkForBannedWords,
-    checkInputNotEmpty
-  ),
-  // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-));
+import {store} from './redux/store';
 
 const app = (
   <Provider store={store}>

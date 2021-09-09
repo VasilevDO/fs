@@ -48,3 +48,11 @@ export function endAppProcessing(process) {
         payload: process
     }
 }
+
+
+export function loadingFailed(process) {
+    return {
+        type:LOADING_FAILED,
+        payload:process
+    }
+}

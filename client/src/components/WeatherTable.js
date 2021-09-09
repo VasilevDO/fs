@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import $ from "jquery";
 
+import { getWeatherData } from "../redux/weatherActions";
+
 import "./WeatherTable.css";
 
 import refreshPNG from '../assets/buttons/refresh.png';
@@ -432,13 +434,16 @@ class WeatherTable extends Component {
 
   render() {
 
+    const reduxState=this.props.state;
+
+
     const format = this.state.format;
     const city = this.state.city;
     const currentTableData = this.state.currentTableData;
     const miniTableData = this.state.miniTableData;
     const hourlyTableData = this.state.hourlyTableData;
 
-    console.log(this.state);
+    console.log(reduxState);
 
     if ((!currentTableData || !miniTableData || !hourlyTableData) && this.state.message) {
       return (
@@ -456,7 +461,7 @@ class WeatherTable extends Component {
         <div className='pwnz-weatherTable-micro pwnz-f-cc pwnz-p5'>
           <span className='pwnz-bb-lightgray pwnz-mb5 pwnz-fwb'>Want to know weather?</span>
           <div className={'pwnz-button pwnz-f-c' + (this.state.processing ? ' pwnz-animatedLoading' : '')}>
-            <div onClick={this.updateTable} className='pwnz-fwb'>Get weather data</div>
+            <div onClick={()=>this.props.getWeatherData(this.state.city)} className='pwnz-fwb'>Get weather data</div>
           </div>
         </div>
       )
@@ -771,7 +776,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-
+  getWeatherData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WeatherTable);
