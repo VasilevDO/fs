@@ -518,6 +518,11 @@ table {
   background-color: #8eb8e5;
 }
 
+.pwnz-button-disabled {
+  background-color: lightgray !important;
+  pointer-events: none;
+}
+
 .pwnz-color-red {
   color: red;
 }

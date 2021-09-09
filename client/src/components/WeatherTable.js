@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import "./WeatherTable.css";
+import { connect } from 'react-redux';
 import $ from "jquery";
-import { Loader } from './Loader';
+
+import "./WeatherTable.css";
 
 import refreshPNG from '../assets/buttons/refresh.png';
 
@@ -44,6 +45,7 @@ class CurrentWeather {
     this.pop = currentObj.pop;
   }
 }
+
 class DayWeather {
   constructor(dayObj) {
     this.date = getDateFromUTC(dayObj.dt);
@@ -201,11 +203,10 @@ const prepareWeatherData = (weatherObj) => {
   return { current, hourlyObj, daily, mini };
 };
 
-export default class WeatherTable extends Component {
+class WeatherTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
       format: this.props.format || 'current', //avaible formats: micro, mini, hourly, daily, current
       currentTableData: null,
       hourlyTableData: null,
@@ -225,8 +226,7 @@ export default class WeatherTable extends Component {
     const weatherObj = await this.getWeatherData(this.state.city);
     if (!weatherObj || weatherObj.message) {
       this.setState({
-        message: 'Error occured, try again later.',
-        loading: false,
+        message: 'Failed to load weather data, try again later.',
         processing: false
       })
     } else {
@@ -393,7 +393,6 @@ export default class WeatherTable extends Component {
       const { cities } = await fetch('/api/weather/cities', { method, body, headers })
         .then(data => data.json());
       return cities;
-
     } catch (e) {
     }
   }
@@ -409,12 +408,10 @@ export default class WeatherTable extends Component {
         city: this.state.city,
         time: time
       });
-
       const headers = {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${this.props.user.token}`
       };
-
       const weatherObj = await fetch('/api/weather', { method, body, headers })
         .then(data => data.json());
       return weatherObj;
@@ -423,51 +420,43 @@ export default class WeatherTable extends Component {
   };
 
   componentDidMount = async () => {
-    const cities = await this.getCities();
-    const weatherObj = await this.getWeatherData(this.state.city);
-    if (!weatherObj || weatherObj.message) {
-      this.setState({
-        message: 'Error occured, try again later.',
-        loading: false
-      })
-    } else {
-      const { current, hourlyObj, daily, mini } = prepareWeatherData(weatherObj);
+    try {
+      const cities = await this.getCities();
       this.setState({
         cities: cities,
-        city: cities[0],
-        currentTableData: current,
-        hourlyTableData: hourlyObj,
-        dailyTableData: daily,
-        miniTableData: mini,
-        timeUpdated: getDateToString(new Date(Date.now())).split(" ")[0],
-        loading: false,
-        message: null
+        city: cities[0]
       });
+    } catch (e) {
     }
   }
 
   render() {
 
-    if (this.state.loading) {
-      return <Loader />
-    }
-
     const format = this.state.format;
-
     const city = this.state.city;
-
     const currentTableData = this.state.currentTableData;
-
     const miniTableData = this.state.miniTableData;
-
     const hourlyTableData = this.state.hourlyTableData;
 
-    if (this.state.message) {
+    console.log(this.state);
+
+    if ((!currentTableData || !miniTableData || !hourlyTableData) && this.state.message) {
       return (
         <div className='pwnz-weatherTable-micro pwnz-f-c pwnz-p5'>
           <span>{this.state.message}</span>
           <div className='pwnz-imgButton pwnz-ml5' onClick={this.updateTable}>
             <img className={'pwnz-20x20' + (this.state.processing ? ' pwnz-infinitySpin360' : '')} src={refreshPNG} alt='' />
+          </div>
+        </div>
+      )
+    }
+
+    if (!currentTableData || !miniTableData || !hourlyTableData) {
+      return (
+        <div className='pwnz-weatherTable-micro pwnz-f-cc pwnz-p5'>
+          <span className='pwnz-bb-lightgray pwnz-mb5 pwnz-fwb'>Want to know weather?</span>
+          <div className={'pwnz-button pwnz-f-c' + (this.state.processing ? ' pwnz-animatedLoading' : '')}>
+            <div onClick={this.updateTable} className='pwnz-fwb'>Get weather data</div>
           </div>
         </div>
       )
@@ -555,7 +544,7 @@ export default class WeatherTable extends Component {
                 <option value="daily">Daily</option>
               </select>
               <span className='pwnz-nowrap'>Last update: {timeUpdated || "none"}</span>
-              <div className={'pwnz-button pwnz-f-c'+(this.state.processing?' pwnz-animatedLoading':'')}>
+              <div className={'pwnz-button pwnz-f-c' + (this.state.processing ? ' pwnz-animatedLoading' : '')}>
                 <div onClick={this.updateTable}>Update</div>
               </div>
             </div>
@@ -773,3 +762,16 @@ export default class WeatherTable extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    state: state.weather,
+    processing: state.app.processing
+  }
+}
+
+const mapDispatchToProps = {
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WeatherTable);

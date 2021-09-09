@@ -1,4 +1,4 @@
-import { GET_USER, SET_USER, SHOW_LOADER, HIDE_LOADER } from "./types";
+import { GET_USER, SET_USER, SHOW_LOADER, HIDE_LOADER, APP_START_PROCESSING, APP_END_PROCESSING } from "./types";
 
 export function getUser() {
     return async dispatch => {
@@ -16,7 +16,6 @@ export function getUser() {
     }
 }
 export function setUser(user) {
-    console.log(user);
     return {
         type: SET_USER, payload: user
     }
@@ -36,3 +35,16 @@ export function hideLoader() {
 }
 
 
+export function startAppProcessing(process) {
+    return {
+        type: APP_START_PROCESSING,
+        payload: process
+    }
+}
+
+export function endAppProcessing(process) {
+    return {
+        type: APP_END_PROCESSING,
+        payload: process
+    }
+}

@@ -1,7 +1,9 @@
 import { SUDOKUAPI_GET_NEW_BOARD } from "./types";
+import { startAppProcessing, endAppProcessing } from "./appActions";
 
 export function getApiBoard(difficulty) {
     return async dispatch => {
+        dispatch(startAppProcessing(SUDOKUAPI_GET_NEW_BOARD));
         const encodeBoard = (board) => board.reduce((result, row, i) => result + `%5B${encodeURIComponent(row)}%5D${i === board.length - 1 ? '' : '%2C'}`, '')
         const encodeParams = (params) =>
             Object.keys(params)
@@ -31,5 +33,6 @@ export function getApiBoard(difficulty) {
                 startingBoard,solvedBoard
             ]
         })
+        dispatch(endAppProcessing(SUDOKUAPI_GET_NEW_BOARD));
     }
 }

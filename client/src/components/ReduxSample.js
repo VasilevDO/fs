@@ -48,7 +48,6 @@ const ReduxSample = ({ state, createString, deleteString, createAsyncString, del
     }
 
     return (
-        <>
             <div className='pwnz-col mainForm pwnz-p10 pwnz-w600' onClickCapture={handleClick} onKeyPressCapture={handleKeyPress}>
                 <div>
                     {alert ?
@@ -109,7 +108,6 @@ const ReduxSample = ({ state, createString, deleteString, createAsyncString, del
                     </div>
                 </div>
             </div>
-        </>
     )
 }
 

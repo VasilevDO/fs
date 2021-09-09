@@ -312,6 +312,11 @@ table {
     }
 }
 
+.pwnz-button-disabled {
+    background-color: lightgray !important;
+    pointer-events: none;
+}
+
 .pwnz-color-red {
     color:red;
 }
@@ -495,3 +500,4 @@ table {
                                 0 100%;
         animation: backgroundLoading 3s cubic-bezier(0.19, 1, 0.22, 1) infinite;
   }
+

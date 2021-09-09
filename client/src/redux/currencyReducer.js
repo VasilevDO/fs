@@ -8,7 +8,6 @@ const initialState = {
 }
 
 export const currencyReducer = (state = initialState, action) => {
-    console.log(action)
     switch (action.type) {
         case CURRENCY_GET_CURRENCY: {
             const rates = action.payload.rates;
