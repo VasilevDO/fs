@@ -1,4 +1,4 @@
-import { GET_USER, SET_USER, SHOW_LOADER, HIDE_LOADER, APP_START_PROCESSING, APP_END_PROCESSING } from "./types";
+import { GET_USER, SET_USER, SHOW_LOADER, HIDE_LOADER, APP_START_PROCESSING, APP_END_PROCESSING, LOADING_FAILED } from "./types";
 
 export function getUser() {
     return async dispatch => {

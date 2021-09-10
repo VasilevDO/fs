@@ -93,6 +93,11 @@ export function getMonthName(monthNumber) {
   return monthNames[monthNumber];
 }
 
+export function firstLetterUp(str) {
+  return str[0].toUpperCase()+str.slice(1);
+}
+
+
 /**
  Button with toggle menu
   <div className='pwnz-bwtm'>

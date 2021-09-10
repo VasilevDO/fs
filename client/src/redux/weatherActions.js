@@ -15,17 +15,15 @@ export function getWeatherData(city) {
                 city: city,
                 time: time
             });
-
             const headers = {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${store.getState().app.user.token}`
             };
-            const weatherObj = await fetch('/api/weather', { method, body, headers })
+            const {weather,cities} = await fetch('/api/weather', { method, body, headers })
                 .then(data => data.json());
-            console.log('ckek2')
             dispatch({
                 type: WEATHER_GET_WEATHER,
-                payload: weatherObj
+                payload:[weather,cities]
             });
         } catch (e) {
             loadingFailed(WEATHER_GET_WEATHER);
