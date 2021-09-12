@@ -19,7 +19,7 @@ class WeatherTable extends Component {
         asc: true
       },
       dailySortedBy: {
-        by: 'time',
+        by: 'date',
         asc: true
       }
     };
@@ -62,36 +62,79 @@ class WeatherTable extends Component {
     this.props.getWeatherData(this.state.city)
   }
 
-  handleHourlySortChange=(e)=>{
-    const current=this.state.hourlySortedBy;
-    const next={
-      asc:true
+  handleHourlySortChange = (e) => {
+    const current = this.state.hourlySortedBy;
+    const next = {
+      asc: true
     };
-    next.by=(e.target.innerText.split(',')[0]).toLowerCase();
-    if (next.by==='temperature') next.by='temp';
-    if (next.by==='wind speed') next.by='windSpeed';
-    if (current.by===next.by) {
-      next.asc=!current.asc;
+    next.by = (e.target.innerText.split(',')[0]).toLowerCase().replace(/[\s↑↓]/g, '');
+    console.log(next);
+    if (next.by === 'temperature') next.by = 'temp';
+    if (next.by === 'windspeed') next.by = 'windSpeed';
+    if (current.by === next.by) {
+      next.asc = !current.asc;
     }
     this.setState({
-      hourlySortedBy:next
+      hourlySortedBy: next
     })
   }
 
-  sortHourlyByDateStr=(a,b) => {
-    const asc=this.state.hourlySortedBy.asc;
-    if (a.date>b.date) return asc?1:-1;
-    if (a.date===b.date) return 0;
-    if (a.date<b.date) return asc?-1:1;
+  handleDailySortChange = (e) => {
+    const current = this.state.dailySortedBy;
+    const next = {
+      asc: true
+    };
+    next.by = (e.target.innerText.split(',')[0]).toLowerCase().replace(/[\s↑↓]/g, '');
+    if (next.by === 'temperature') next.by = 'temp';
+    if (next.by === 'windspeed') next.by = 'windSpeed';
+    if (current.by === next.by) {
+      next.asc = !current.asc;
+    }
+    this.setState({
+      dailySortedBy: next
+    })
   }
 
-  sortHourlyByValue=(a,b) => {
-    const {by,asc}=this.state.hourlySortedBy;
-    const first=+(typeof a[by]==='string'?-1:a[by]);
-    const second=+(typeof b[by]==='string'?-1:b[by]);
-    if (first>second) return asc?1:-1;
-    if (first===second) return 0;
-    if (first<second) return asc?-1:1;
+  sortHourlyByDateStr = (a, b) => {
+    const asc = this.state.hourlySortedBy.asc;
+    if (a.date > b.date) return asc ? 1 : -1;
+    if (a.date === b.date) return 0;
+    if (a.date < b.date) return asc ? -1 : 1;
+  }
+
+  sortDailyByDateStr = (a, b) => {
+    const asc = this.state.dailySortedBy.asc;
+    if (a.date > b.date) return asc ? 1 : -1;
+    if (a.date === b.date) return 0;
+    if (a.date < b.date) return asc ? -1 : 1;
+  }
+
+  sortDailyByTemperature = (a, b) => {
+    const asc = this.state.dailySortedBy.asc;
+    const first = (+a.temp.max + a.temp.min) / 2;
+    const second = (+b.temp.max + b.temp.min) / 2;
+    console.log(first);
+    if (first > second) return asc ? 1 : -1;
+    if (first === second) return 0;
+    if (first < second) return asc ? -1 : 1;
+  }
+
+  sortHourlyByValue = (a, b) => {
+    const { by, asc } = this.state.hourlySortedBy;
+    const first = +(typeof a[by] === 'string' ? -1 : a[by]);
+    const second = +(typeof b[by] === 'string' ? -1 : b[by]);
+    if (first > second) return asc ? 1 : -1;
+    if (first === second) return 0;
+    if (first < second) return asc ? -1 : 1;
+  }
+
+  sortDailyByValue = (a, b) => {
+    const { by, asc } = this.state.dailySortedBy;
+    const first = +(typeof a[by] === 'string' ? -1 : a[by]);
+    const second = +(typeof b[by] === 'string' ? -1 : b[by]);
+    if (first > second) return asc ? 1 : -1;
+    if (first === second) return 0;
+    if (first < second) return asc ? -1 : 1;
   }
 
   switchHourlyTableDay = () => {
@@ -105,23 +148,33 @@ class WeatherTable extends Component {
     const reduxState = this.props.state;
     const processing = this.props.processing;
     const { current, mini, hourlyObj, daily } = reduxState.data;
+    const format = this.state.format;
+    const hourlySortedBy = this.state.hourlySortedBy;
 
-    const hourlySortedBy=this.state.hourlySortedBy;
-    console.log(hourlySortedBy)
-
-    for (let key in hourlyObj) {
-      if (hourlySortedBy.by==='time') {
-        hourlyObj[key].sort(this.sortHourlyByDateStr);
-      } else if (hourlySortedBy.by==='temp'||hourlySortedBy.by==='windSpeed'||hourlySortedBy.by==='humidity'||hourlySortedBy.by==='pop') {
-        hourlyObj[key].sort(this.sortHourlyByValue);
+    if (format === 'hourly') {
+      for (let key in hourlyObj) {
+        if (hourlySortedBy.by === 'time') {
+          hourlyObj[key].sort(this.sortHourlyByDateStr);
+        } else if (hourlySortedBy.by === 'temp' || hourlySortedBy.by === 'windSpeed' || hourlySortedBy.by === 'humidity' || hourlySortedBy.by === 'pop') {
+          hourlyObj[key].sort(this.sortHourlyByValue);
+        }
       }
     }
 
-    console.log(hourlyObj);
-
+    const dailySortedBy = this.state.dailySortedBy;
+    if (format === 'daily') {
+      console.log(dailySortedBy);
+      if (dailySortedBy.by === 'date' || dailySortedBy.by === 'sunset' || dailySortedBy.by === 'sunrise') {
+        daily.sort(this.sortDailyByDateStr);
+      } else if (dailySortedBy.by === 'temp') {
+        daily.sort(this.sortDailyByTemperature);
+      } else {
+        daily.sort(this.sortDailyByValue);
+      }
+    }
 
     const { cities } = reduxState;
-    const format = this.state.format;
+
     const city = this.state.city || (cities ? cities[0] : null);
     const timeUpdated = reduxState.data.current?.date.split(' ')[0];
     const hourlyTableDay = this.state.hourlyTableDay;
@@ -329,12 +382,42 @@ class WeatherTable extends Component {
                 </th>
               </tr>
               <tr>
-                <td className='pwnz-clickable' onClick={this.handleHourlySortChange}>Time</td>
+                <td className='pwnz-clickable' onClick={this.handleHourlySortChange}>
+                  {'Time' + (hourlySortedBy?.by === 'time' ?
+                    hourlySortedBy.asc ?
+                      ' ↑'
+                      : ' ↓'
+                    : '')}
+                </td>
                 <td>Weather</td>
-                <td className='pwnz-clickable' onClick={this.handleHourlySortChange}>Temperature, C</td>
-                <td className='pwnz-clickable' onClick={this.handleHourlySortChange}>Wind speed, km/h</td>
-                <td className='pwnz-clickable' onClick={this.handleHourlySortChange}>Humidity, %</td>
-                <td className='pwnz-clickable' onClick={this.handleHourlySortChange}>Pop, %</td>
+                <td className='pwnz-clickable' onClick={this.handleHourlySortChange}>
+                  {'Temperature, C' + (hourlySortedBy?.by === 'temp' ?
+                    hourlySortedBy.asc ?
+                      ' ↑'
+                      : ' ↓'
+                    : '')}
+                </td>
+                <td className='pwnz-clickable' onClick={this.handleHourlySortChange}>
+                  {'Wind speed, km/h' + (hourlySortedBy?.by === 'windSpeed' ?
+                    hourlySortedBy.asc ?
+                      ' ↑'
+                      : ' ↓'
+                    : '')}
+                </td>
+                <td className='pwnz-clickable' onClick={this.handleHourlySortChange}>
+                  {'Humidity, %' + (hourlySortedBy?.by === 'humidity' ?
+                    hourlySortedBy.asc ?
+                      ' ↑'
+                      : ' ↓'
+                    : '')}
+                </td>
+                <td className='pwnz-clickable' onClick={this.handleHourlySortChange}>
+                  {'Pop, %' + (hourlySortedBy?.by === 'pop' ?
+                    hourlySortedBy.asc ?
+                      ' ↑'
+                      : ' ↓'
+                    : '')}
+                </td>
               </tr>
             </thead>
             <tbody>
@@ -365,14 +448,58 @@ class WeatherTable extends Component {
           <table>
             <thead className='pwnz-sticky0'>
               <tr>
-                <th className='pwnz-clickable' onClick={this.sortDailyByDate}>Date</th>
-                <th className='pwnz-clickable' onClick={this.sortDailyByTime}>Sunrise</th>
-                <th className='pwnz-clickable' onClick={this.sortDailyByTime}>Sunset</th>
-                <th>Weather</th>
-                <th className='pwnz-clickable' onClick={this.sortDailyByTemperature}>Temperature, C</th>
-                <th className='pwnz-clickable' onClick={this.sortDailyByValue}>Wind speed, km/h</th>
-                <th className='pwnz-clickable' onClick={this.sortDailyByValue}>Humidity, %</th>
-                <th className='pwnz-clickable' onClick={this.sortDailyByValue}>Pressure, Pa</th>
+                <td className='pwnz-clickable' onClick={this.handleDailySortChange}>
+                  {'Date' + (dailySortedBy?.by === 'date' ?
+                    dailySortedBy.asc ?
+                      ' ↑'
+                      : ' ↓'
+                    : '  ')}
+                </td>
+                <td className='pwnz-clickable' onClick={this.handleDailySortChange}>
+                  {'Sunrise' + (dailySortedBy?.by === 'sunrise' ?
+                    dailySortedBy.asc ?
+                      ' ↑'
+                      : ' ↓'
+                    : '  ')}
+                </td>
+                <td className='pwnz-clickable' onClick={this.handleDailySortChange}>
+                  {'Sunset' + (dailySortedBy?.by === 'sunset' ?
+                    dailySortedBy.asc ?
+                      ' ↑'
+                      : ' ↓'
+                    : '  ')}
+                </td>
+                <td>Weather</td>
+                <td className='pwnz-clickable' onClick={this.handleDailySortChange}>
+                  {'Temperature, C' + (dailySortedBy?.by === 'temp' ?
+                    dailySortedBy.asc ?
+                      ' ↑'
+                      : ' ↓'
+                    : '  ')}
+                </td>
+                <td className='pwnz-clickable' onClick={this.handleDailySortChange}>
+                  {'Wind speed, km/h' + (dailySortedBy?.by === 'windSpeed' ?
+                    dailySortedBy.asc ?
+                      ' ↑'
+                      : ' ↓'
+                    : '  ')}
+                </td>
+                <td className='pwnz-clickable' onClick={this.handleDailySortChange}>
+                  {'Humidity, %' + (dailySortedBy?.by === 'humidity' ?
+                    dailySortedBy.asc ?
+                      ' ↑'
+                      : ' ↓'
+                    : '  ')}
+                </td>
+                <td className='pwnz-clickable' onClick={this.handleDailySortChange}>
+                  <span>
+                  {'Pressure, Pa' + (dailySortedBy?.by === 'pressure' ?
+                    dailySortedBy.asc ?
+                      ' ↑'
+                      : ' ↓'
+                    : '  ')}
+                    </span>
+                </td>
               </tr>
             </thead>
             <tbody>

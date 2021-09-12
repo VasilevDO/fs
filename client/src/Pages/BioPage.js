@@ -34,7 +34,7 @@ const BioPage = () => {
                         and I have to try a lot to find a better way. So you can find react class components mixed with react
                         functional components, react-redux connect mixed with react-redux hooks. And some duct tape.
                         <br />
-                        There are services powered by 3rd party APIs:&nbsp;
+                        There are services powered by 3rd party APIs and carefully stored using Redux:&nbsp;
                         <Link to={{ pathname: '/services/weather' }}>weather service</Link>,&nbsp;
                         <Link to={{ pathname: '/services/currency' }}>currency rates table</Link>,&nbsp;
                         <Link to={{ pathname: '/games/sudokuapi' }}>sudoku game</Link>.
