@@ -1,7 +1,7 @@
 import { Component } from "react";
 import "./DatePicker.css";
 import Calendar from "./Calendar.js";
-import { dateToString } from "./pwnz";
+import { dateStrToDate, dateToString } from "./pwnz";
 
 class DatePicker extends Component {
   constructor(props) {
@@ -86,7 +86,7 @@ class DatePicker extends Component {
       <>
         <div className="date-picker">
           <div className='pwnz-bwdm'>
-            <div className={'pwnz-button pwnz-bwdm-bd'+(this.props.disabled?' pwnz-disabled':'')+(currentDate>selectedDate?' pwnz-button-red':'')}>
+            <div className={'pwnz-button pwnz-bwdm-bd'+(this.props.disabled?' pwnz-disabled':'')+(dateStrToDate(currentDate)>dateStrToDate(selectedDate)?' pwnz-button-red':'')}>
               <div className='pwnz-bwdm-b pwnz-nowrap'>{buttonText}</div>
             </div>
             <div className='pwnz-bwdm-c pwnz-bwdm-downLeft' style={{ display: 'none' }}>

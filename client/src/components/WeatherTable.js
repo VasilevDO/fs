@@ -67,7 +67,7 @@ class WeatherTable extends Component {
     const next = {
       asc: true
     };
-    next.by = (e.target.innerText.split(',')[0]).toLowerCase().replace(/[\s↑↓]/g, '');
+    next.by = (e.currentTarget.innerText.split(',')[0]).toLowerCase().replace(/[\s↑↓]/g, '');
     if (next.by === 'temperature') next.by = 'temp';
     if (next.by === 'windspeed') next.by = 'windSpeed';
     if (current.by === next.by) {
@@ -83,7 +83,7 @@ class WeatherTable extends Component {
     const next = {
       asc: true
     };
-    next.by = (e.target.innerText.split(',')[0]).toLowerCase().replace(/[\s↑↓]/g, '');
+    next.by = (e.currentTarget.innerText.split(',')[0]).toLowerCase().replace(/[\s↑↓]/g, '');
     if (next.by === 'temperature') next.by = 'temp';
     if (next.by === 'windspeed') next.by = 'windSpeed';
     if (current.by === next.by) {
@@ -196,6 +196,8 @@ class WeatherTable extends Component {
       )
     }
 
+    const [iconHeight, iconWidth] = ['50px', '50px'];
+
     if (mini && format === 'micro') {
       return (
         <div className='pwnz-weatherTable-micro'>
@@ -215,6 +217,8 @@ class WeatherTable extends Component {
           </div>
           <div className='pwnz-f-c pwnz-p5'>
             <img
+              width={iconWidth}
+              height={iconHeight}
               alt="weather icon"
               src={`http://openweathermap.org/img/wn/${mini.currentWeather.icon}.png`}
             />
@@ -232,7 +236,6 @@ class WeatherTable extends Component {
         </div>
       )
     }
-
     return (
       <div className={"weather-table weather-table-" + format}>
         <div className="weather-table-controlsDiv">
@@ -267,6 +270,8 @@ class WeatherTable extends Component {
               <tr>
                 <td rowSpan="2">
                   <img
+                    width={iconWidth}
+                    height={iconHeight}
                     alt="weather icon"
                     src={`http://openweathermap.org/img/wn/${mini.currentWeather.icon}.png`}
                   />
@@ -321,6 +326,8 @@ class WeatherTable extends Component {
               <tr>
                 <td>
                   <img
+                    width={iconWidth}
+                    height={iconHeight}
                     alt="weather icon"
                     src={`http://openweathermap.org/img/wn/${current.icon}.png`}
                   />
@@ -337,6 +344,8 @@ class WeatherTable extends Component {
               <tr>
                 <td>
                   <img
+                    width={iconWidth}
+                    height={iconHeight}
                     alt="weather icon"
                     src={`http://openweathermap.org/img/wn/${daily[0].icon}.png`}
                   />
@@ -380,40 +389,55 @@ class WeatherTable extends Component {
               </tr>
               <tr>
                 <td className='pwnz-clickable' onClick={this.handleHourlySortChange}>
-                  {'Time' + (hourlySortedBy?.by === 'time' ?
-                    hourlySortedBy.asc ?
-                      ' ↑'
-                      : ' ↓'
-                    : '')}
+                  Time
+                  <span className='pwnz-pos-abs-r5'>
+                    {hourlySortedBy?.by === 'time' ?
+                      hourlySortedBy.asc ?
+                        ' ↑'
+                        : ' ↓'
+                      : null}
+                  </span>
                 </td>
                 <td>Weather</td>
                 <td className='pwnz-clickable' onClick={this.handleHourlySortChange}>
-                  {'Temperature, C' + (hourlySortedBy?.by === 'temp' ?
-                    hourlySortedBy.asc ?
-                      ' ↑'
-                      : ' ↓'
-                    : '')}
+                  Temperature, C
+                  <span className='pwnz-pos-abs-r5'>
+                    {hourlySortedBy?.by === 'temp' ?
+                      hourlySortedBy.asc ?
+                        ' ↑'
+                        : ' ↓'
+                      : null}
+                  </span>
                 </td>
                 <td className='pwnz-clickable' onClick={this.handleHourlySortChange}>
-                  {'Wind speed, km/h' + (hourlySortedBy?.by === 'windSpeed' ?
-                    hourlySortedBy.asc ?
-                      ' ↑'
-                      : ' ↓'
-                    : '')}
+                  Wind speed, km/h
+                  <span className='pwnz-pos-abs-r5'>
+                    {hourlySortedBy?.by === 'windSpeed' ?
+                      hourlySortedBy.asc ?
+                        ' ↑'
+                        : ' ↓'
+                      : null}
+                  </span>
                 </td>
                 <td className='pwnz-clickable' onClick={this.handleHourlySortChange}>
-                  {'Humidity, %' + (hourlySortedBy?.by === 'humidity' ?
-                    hourlySortedBy.asc ?
-                      ' ↑'
-                      : ' ↓'
-                    : '')}
+                  Humidity, %
+                  <span className='pwnz-pos-abs-r5'>
+                    {hourlySortedBy?.by === 'humidity' ?
+                      hourlySortedBy.asc ?
+                        ' ↑'
+                        : ' ↓'
+                      : null}
+                  </span>
                 </td>
                 <td className='pwnz-clickable' onClick={this.handleHourlySortChange}>
-                  {'Pop, %' + (hourlySortedBy?.by === 'pop' ?
-                    hourlySortedBy.asc ?
-                      ' ↑'
-                      : ' ↓'
-                    : '')}
+                  Pop, %
+                  <span className='pwnz-pos-abs-r5'>
+                    {hourlySortedBy?.by === 'pop' ?
+                      hourlySortedBy.asc ?
+                        ' ↑'
+                        : ' ↓'
+                      : null}
+                  </span>
                 </td>
               </tr>
             </thead>
@@ -425,6 +449,8 @@ class WeatherTable extends Component {
                       <td>{tr.time}</td>
                       <td>
                         <img
+                          width={iconWidth}
+                          height={iconHeight}
                           alt="weather icon"
                           src={`http://openweathermap.org/img/wn/${tr.todayIcon}.png`}
                         />
@@ -446,56 +472,75 @@ class WeatherTable extends Component {
             <thead className='pwnz-sticky0'>
               <tr>
                 <td className='pwnz-clickable' onClick={this.handleDailySortChange}>
-                  {'Date' + (dailySortedBy?.by === 'date' ?
-                    dailySortedBy.asc ?
-                      ' ↑'
-                      : ' ↓'
-                    : '  ')}
+                  Date
+                  <span className='pwnz-pos-abs-r5'>
+                    {dailySortedBy?.by === 'date' ?
+                      dailySortedBy.asc ?
+                        ' ↑'
+                        : ' ↓'
+                      : null}
+                  </span>
+                </td>
+                <td className='pwnz-clickable pwnz-pos-rel' onClick={this.handleDailySortChange}>
+                  Sunrise
+                  <span className='pwnz-pos-abs-r5'>
+                    {dailySortedBy?.by === 'sunrise' ?
+                      dailySortedBy.asc ?
+                        ' ↑'
+                        : ' ↓'
+                      : null}
+                  </span>
                 </td>
                 <td className='pwnz-clickable' onClick={this.handleDailySortChange}>
-                  {'Sunrise' + (dailySortedBy?.by === 'sunrise' ?
-                    dailySortedBy.asc ?
-                      ' ↑'
-                      : ' ↓'
-                    : '  ')}
-                </td>
-                <td className='pwnz-clickable' onClick={this.handleDailySortChange}>
-                  {'Sunset' + (dailySortedBy?.by === 'sunset' ?
-                    dailySortedBy.asc ?
-                      ' ↑'
-                      : ' ↓'
-                    : '  ')}
+                  Sunset
+                  <span className='pwnz-pos-abs-r5'>
+                    {dailySortedBy?.by === 'sunset' ?
+                      dailySortedBy.asc ?
+                        ' ↑'
+                        : ' ↓'
+                      : null}
+                  </span>
                 </td>
                 <td>Weather</td>
                 <td className='pwnz-clickable' onClick={this.handleDailySortChange}>
-                  {'Temperature, C' + (dailySortedBy?.by === 'temp' ?
-                    dailySortedBy.asc ?
-                      ' ↑'
-                      : ' ↓'
-                    : '  ')}
+                  Temperature, C
+                  <span className='pwnz-pos-abs-r5'>
+                    {dailySortedBy?.by === 'temp' ?
+                      dailySortedBy.asc ?
+                        ' ↑'
+                        : ' ↓'
+                      : null}
+                  </span>
                 </td>
                 <td className='pwnz-clickable' onClick={this.handleDailySortChange}>
-                  {'Wind speed, km/h' + (dailySortedBy?.by === 'windSpeed' ?
-                    dailySortedBy.asc ?
-                      ' ↑'
-                      : ' ↓'
-                    : '  ')}
+                  Wind speed, km/h
+                  <span className='pwnz-pos-abs-r5'>
+                    {dailySortedBy?.by === 'windSpeed' ?
+                      dailySortedBy.asc ?
+                        ' ↑'
+                        : ' ↓'
+                      : null}
+                  </span>
                 </td>
                 <td className='pwnz-clickable' onClick={this.handleDailySortChange}>
-                  {'Humidity, %' + (dailySortedBy?.by === 'humidity' ?
-                    dailySortedBy.asc ?
-                      ' ↑'
-                      : ' ↓'
-                    : '  ')}
+                  Humidity, %
+                  <span className='pwnz-pos-abs-r5'>
+                    {dailySortedBy?.by === 'humidity' ?
+                      dailySortedBy.asc ?
+                        ' ↑'
+                        : ' ↓'
+                      : null}
+                  </span>
                 </td>
                 <td className='pwnz-clickable' onClick={this.handleDailySortChange}>
-                  <span>
-                  {'Pressure, Pa' + (dailySortedBy?.by === 'pressure' ?
-                    dailySortedBy.asc ?
-                      ' ↑'
-                      : ' ↓'
-                    : '  ')}
-                    </span>
+                  Pressure, Pa
+                  <span className='pwnz-pos-abs-r5'>
+                    {dailySortedBy?.by === 'pressure' ?
+                      dailySortedBy.asc ?
+                        ' ↑'
+                        : ' ↓'
+                      : null}
+                  </span>
                 </td>
               </tr>
             </thead>
@@ -508,6 +553,8 @@ class WeatherTable extends Component {
                     <td>{day.sunset.split(" ")[0]}</td>
                     <td>
                       <img
+                        width={iconWidth}
+                        height={iconHeight}
                         alt="weather icon"
                         src={`http://openweathermap.org/img/wn/${day.icon}.png`}
                       />

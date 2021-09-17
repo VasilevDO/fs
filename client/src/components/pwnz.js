@@ -47,6 +47,18 @@ export function getBeautifulDate(dateStr) {
   )} ${year}`;
 }
 
+export function dateStrToDate(dateStr) {
+  if (dateStr?.split(' ').length-1) {
+    const [time,date]=dateStr.split(' ');
+    const [hour,minute]=time.split(':');
+    const [day,month,year]=date.split('.');
+    return new Date(year,month-1,day,hour,minute);
+  } else if (dateStr?.split(' ').length===1) {
+    const [day,month,year]=dateStr.split('.');
+    return new Date(year,month-1,day);
+  }
+}
+
 export function unixToBeautifulDateWithTime (unixTimestamp) {
   const date=new Date(unixTimestamp*1000);
   const year=date.getFullYear();

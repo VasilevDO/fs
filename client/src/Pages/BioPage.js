@@ -41,18 +41,19 @@ const BioPage = () => {
                         <br />
                         <br />
                         Technologies/libraries used:
-                        <ul className='default pwnz-mt0'>
-                            <li>MongoDB</li>
-                            <li>Express</li>
-                            <li>React</li>
-                            <li>Node</li>
-                            <li>MaterializeCSS</li>
-                            <li>SASS</li>
-                            <li>Webpack</li>
-                            <li>Redux</li>
-                            <li>Jquery</li>
-                        </ul>
                     </p>
+                    <ul className='default pwnz-mt0'>
+                        <li>MongoDB</li>
+                        <li>Express</li>
+                        <li>React</li>
+                        <li>Node</li>
+                        <li>MaterializeCSS</li>
+                        <li>SASS</li>
+                        <li>Webpack</li>
+                        <li>Redux</li>
+                        <li>Jquery</li>
+                    </ul>
+
                 </div>
                 <div className='pwnz-bt-lightgray'>
                     <p className='pwnz-m0'>

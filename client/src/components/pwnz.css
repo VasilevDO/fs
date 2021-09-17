@@ -263,6 +263,16 @@
     position: relative;
 }
 
+.pwnz-pos-abs-r0 {
+    position: absolute;
+    right:0;
+}
+
+.pwnz-pos-abs-r5 {
+    position: absolute;
+    right:5;
+}
+
 .pwnz-pos-fix {
     position: fixed;
 }

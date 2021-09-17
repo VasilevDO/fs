@@ -21,6 +21,7 @@ class PwnzCard extends Component {
     const pwnzCardDescription =
       this.props.cardDescription || "Card description";
     const pwnzCardLogoWidth = this.props.logoWidth || "150px";
+    const pwnzCardLogoHeight = this.props.logoHeight || "150px";
     const pwnzLogo = this.props.logo || pwnzCardLogo;
     const pwnzCardButtonText = this.props.buttonText || "Select";
     return (
@@ -29,7 +30,12 @@ class PwnzCard extends Component {
           <div className="pwnz-card-title">
             <p>{pwnzCardTitle}</p>
           </div>
-          <img src={pwnzLogo} alt={pwnzCardTitle} style={{ width: pwnzCardLogoWidth }}></img>
+          <img
+            width={pwnzCardLogoWidth}
+            height={pwnzCardLogoHeight}
+            src={pwnzLogo}
+            alt={pwnzCardTitle}
+          ></img>
           <div className="pwnz-card-description">
             <p> {pwnzCardDescription} </p>
           </div>
