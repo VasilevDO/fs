@@ -78,9 +78,6 @@ class Tictactoe extends Component {
 
   jumpTo(step) {
     this.setState({
-      history:[{
-        squares:Array(9).fill(null),
-      }],
       stepNumber:step,
       xIsNext:(step%2)===0,
     });
@@ -109,6 +106,7 @@ class Tictactoe extends Component {
   render() {
     const history=this.state.history;
     const current=history[this.state.stepNumber];
+    console.log(history);
     const winner=calculateWinner(current.squares);
     let opacity='opacity0';
     let status;
