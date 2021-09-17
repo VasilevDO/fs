@@ -68,7 +68,6 @@ class WeatherTable extends Component {
       asc: true
     };
     next.by = (e.target.innerText.split(',')[0]).toLowerCase().replace(/[\s↑↓]/g, '');
-    console.log(next);
     if (next.by === 'temperature') next.by = 'temp';
     if (next.by === 'windspeed') next.by = 'windSpeed';
     if (current.by === next.by) {
@@ -113,7 +112,6 @@ class WeatherTable extends Component {
     const asc = this.state.dailySortedBy.asc;
     const first = (+a.temp.max + a.temp.min) / 2;
     const second = (+b.temp.max + b.temp.min) / 2;
-    console.log(first);
     if (first > second) return asc ? 1 : -1;
     if (first === second) return 0;
     if (first < second) return asc ? -1 : 1;
@@ -163,7 +161,6 @@ class WeatherTable extends Component {
 
     const dailySortedBy = this.state.dailySortedBy;
     if (format === 'daily') {
-      console.log(dailySortedBy);
       if (dailySortedBy.by === 'date' || dailySortedBy.by === 'sunset' || dailySortedBy.by === 'sunrise') {
         daily.sort(this.sortDailyByDateStr);
       } else if (dailySortedBy.by === 'temp') {
