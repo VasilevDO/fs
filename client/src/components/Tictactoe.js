@@ -106,7 +106,6 @@ class Tictactoe extends Component {
   render() {
     const history=this.state.history;
     const current=history[this.state.stepNumber];
-    console.log(history);
     const winner=calculateWinner(current.squares);
     let opacity='opacity0';
     let status;
@@ -127,7 +126,7 @@ class Tictactoe extends Component {
       status='Next player: '+(this.state.players[this.state.xIsNext]);
     } else if (winner) {
       status='Winner: '+ (winner==='X'? this.state.players[true]:this.state.players[false]);
-    } else if (checkSquares(this.state.history)){
+    } else if (checkSquares(current.squares)){
      status='Tie';
       moves.splice(1,moves.length);
     } else {
@@ -206,7 +205,7 @@ return null;
 }
 
 function checkSquares(arr) {
- if (arr.concat().pop().squares.includes(null)) return false;
+ if (arr.concat().includes(null)) return false;
  return true;
 }
 
